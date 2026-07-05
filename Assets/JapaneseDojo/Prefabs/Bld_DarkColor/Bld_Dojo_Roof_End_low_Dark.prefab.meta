@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e2d4448fbd6fff9409e3bc2144356890
+timeCreated: 1572318054
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld_DarkColor/Bld_Dojo_Roof_End_low_Dark.prefab
+  uploadId: 336499

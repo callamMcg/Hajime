@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 57656d79b2de1ef4fba6a2d56f4ccd42
+timeCreated: 1572318495
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld/Dojo_A.prefab
+  uploadId: 336499

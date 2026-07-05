@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d72d3f4408c24da4e84fe1ec4aac0a96
+timeCreated: 1572309896
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld_DarkColor/Bld_Dojo_Floor_Wood_Dark.prefab
+  uploadId: 336499

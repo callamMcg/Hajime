@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 766bf3b7184e2c24f969bc71caa0bf64
+timeCreated: 1572310043
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Prop/Prop_Dojo_WoodSwordHolder_D.prefab
+  uploadId: 336499
