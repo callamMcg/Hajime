@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: eb0f7b73fba900d49b8b69136e7fe687
+timeCreated: 1572309893
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld_DarkColor/Bld_Dojo_Ceiling_Dark.prefab
+  uploadId: 336499

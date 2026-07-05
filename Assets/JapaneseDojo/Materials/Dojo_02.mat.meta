@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 12230fdf6808f7344b2830d567895799
+timeCreated: 1571105740
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Materials/Dojo_02.mat
+  uploadId: 336499

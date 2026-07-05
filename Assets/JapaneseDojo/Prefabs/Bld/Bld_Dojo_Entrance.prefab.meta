@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5e8c8f9fbe794604fb5bac1501b82a9b
+timeCreated: 1572309859
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld/Bld_Dojo_Entrance.prefab
+  uploadId: 336499
