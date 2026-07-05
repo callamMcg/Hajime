@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: deb96cc2b6d254e409c500e163bd0d31
+timeCreated: 1572309951
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld_DarkColor/Bld_Dojo_Wall_Window_Dark.prefab
+  uploadId: 336499

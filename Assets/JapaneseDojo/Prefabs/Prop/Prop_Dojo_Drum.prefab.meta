@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 979c70be6f2238f4aa7a6d372fe4d04b
+timeCreated: 1572310004
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Prop/Prop_Dojo_Drum.prefab
+  uploadId: 336499

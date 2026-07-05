@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a824d0c25a3ae9449a68ab9cbaffff48
+timeCreated: 1571122265
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Materials/Dojo_01_Window_Night.mat
+  uploadId: 336499

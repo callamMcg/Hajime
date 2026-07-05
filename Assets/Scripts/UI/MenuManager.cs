@@ -23,6 +23,13 @@ public class MenuManager : MonoBehaviour
     {
         if (openRootOnStart && rootScreen != null)
             Push(rootScreen);
+
+        if (InputReader.Instance != null)
+        {
+            Debug.Log("Here");
+
+            InputReader.Instance.Cancel += Back;
+        }
     }
 
     /*On Enable
@@ -30,8 +37,7 @@ public class MenuManager : MonoBehaviour
      */
     private void OnEnable()
     {
-        if (InputReader.Instance != null)
-            InputReader.Instance.Cancel += Back;
+
     }
 
     /*On OnDisable
@@ -71,6 +77,7 @@ public class MenuManager : MonoBehaviour
     public void Back()
     {
         if (transitioning || stack.Count == 0) return;
+        Debug.Log("Here");
         stack.Peek().OnBack();
     }
 
@@ -88,7 +95,7 @@ public class MenuManager : MonoBehaviour
         if (transitioning) yield break;
         transitioning = true;
         //2
-        if (stack.Count > 0)
+        if (stack.Count > 0 && screen != null)
             yield return stack.Peek().Exit(deactivate: true);
         //3
         screen.Bind(this);
@@ -106,6 +113,7 @@ public class MenuManager : MonoBehaviour
      */
     private IEnumerator PopRoutine()
     {
+        Debug.Log("Here");
         if (transitioning || stack.Count == 0) yield break;
         transitioning = true;
 

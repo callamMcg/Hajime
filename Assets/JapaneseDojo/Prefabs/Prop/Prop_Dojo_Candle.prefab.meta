@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5ae8c26f2ac313c4e9f1c861d898480b
+timeCreated: 1572309486
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Prop/Prop_Dojo_Candle.prefab
+  uploadId: 336499

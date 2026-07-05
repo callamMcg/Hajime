@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d3fe4849861769946b6ba8ec12a0bfe2
+timeCreated: 1572310027
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Prop/Prop_Dojo_HangingScroll_D.prefab
+  uploadId: 336499

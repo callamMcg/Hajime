@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f3cd69b7fbd079a4d896935ffd5532d3
+timeCreated: 1572309906
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld/Bld_Dojo_Wall_Center.prefab
+  uploadId: 336499

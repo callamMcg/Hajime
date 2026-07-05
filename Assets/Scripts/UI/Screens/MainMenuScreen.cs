@@ -15,7 +15,7 @@ public class MainMenuScreen : MenuScreen
     //----------Button Functions----------\\
     public void OpenControls() => Manager.Push(controlsScreen);
     public void OpenOptions() => Manager.Push(optionsScreen);
-    public void OpenTechniques() => Manager.Push(techniquesScreen);
+    public void OpenTechniques() { Manager.Push(techniquesScreen); Debug.Log(techniquesScreen); }
     public void StartGame() => SceneManager.LoadScene(loadingSceneName);
     public void QuitGame()
     {

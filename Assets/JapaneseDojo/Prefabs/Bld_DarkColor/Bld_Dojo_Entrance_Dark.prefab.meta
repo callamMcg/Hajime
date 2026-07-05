@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6f16ab45a700fbc47bf791837b0b4963
+timeCreated: 1572309859
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156771
+  packageName: Japanese Dojo
+  packageVersion: 1.0
+  assetPath: Assets/JapaneseDojo/Prefabs/Bld_DarkColor/Bld_Dojo_Entrance_Dark.prefab
+  uploadId: 336499
