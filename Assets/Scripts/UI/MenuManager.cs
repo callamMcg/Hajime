@@ -28,14 +28,6 @@ public class MenuManager : MonoBehaviour
             InputReader.Instance.Cancel += Back;
     }
 
-    /*On Enable
-     * Add Back to cancel button
-     */
-    private void OnEnable()
-    {
-
-    }
-
     /*On OnDisable
      * Remove Back from cancel button
      */
@@ -108,7 +100,6 @@ public class MenuManager : MonoBehaviour
      */
     private IEnumerator PopRoutine()
     {
-        Debug.Log("Here");
         if (transitioning || stack.Count == 0) yield break;
         transitioning = true;
 

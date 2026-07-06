@@ -3,41 +3,51 @@ using UnityEngine.UI;
 
 public class OptionsScreen : MenuScreen
 {
-    [Header("Controls")]
+    //----------Variables----------\\
+    //References
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider sensitivitySlider;
     [SerializeField] private Toggle fullscreenToggle;
 
+    //Setting Keys
     private const string VolumeKey = "opt_master_volume";
     private const string SensKey = "opt_sensitivity";
     private const string FullscreenKey = "opt_fullscreen";
 
-    private const float DefaultVolume = 0.8f;
-    private const float DefaultSens = 1f;
+    //Default Values
+    private const float DefaultVolume = 1;
+    private const float DefaultSens = 1;
 
+    //----------Event Loop----------\\
+    //Add listeners to sliders
     private void OnEnable()
     {
         masterVolumeSlider.onValueChanged.AddListener(ApplyVolume);
         fullscreenToggle.onValueChanged.AddListener(ApplyFullscreen);
     }
-
+    
+    //Remove Listeners from sliders
     private void OnDisable()
     {
         masterVolumeSlider.onValueChanged.RemoveListener(ApplyVolume);
         fullscreenToggle.onValueChanged.RemoveListener(ApplyFullscreen);
     }
 
+    //----------Protected Functions----------\\
+    /*On Enter
+     * 1 - Set values to default
+     */
     protected override void OnEnter()
     {
         masterVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(VolumeKey, DefaultVolume));
         sensitivitySlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(SensKey, DefaultSens));
-        fullscreenToggle.SetIsOnWithoutNotify(
-            PlayerPrefs.GetInt(FullscreenKey, Screen.fullScreen ? 1 : 0) == 1);
-
-        ApplyVolume(masterVolumeSlider.value);
-        ApplyFullscreen(fullscreenToggle.isOn);
+        fullscreenToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt(FullscreenKey, Screen.fullScreen ? 1 : 0) == 1);
     }
 
+    /*On Exit
+     * 1 - Set values
+     * 2 - Save
+     */
     protected override void OnExit()
     {
         PlayerPrefs.SetFloat(VolumeKey, masterVolumeSlider.value);
@@ -46,6 +56,7 @@ public class OptionsScreen : MenuScreen
         PlayerPrefs.Save();
     }
 
+    //----------Private Functions----------\\
     private void ApplyVolume(float v) => AudioListener.volume = v;
     private void ApplyFullscreen(bool on) => Screen.fullScreen = on;
 }

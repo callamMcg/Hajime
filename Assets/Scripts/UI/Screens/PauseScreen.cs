@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class PauseScreen : MenuScreen
 {
+    //----------Variables----------\\
+    //References
     [SerializeField] private MenuScreen controlsScreen;
     [SerializeField] private MenuScreen techniquesScreen;
 
+    //Bound controller
     private PauseController pauseController;
     public void BindController(PauseController pc) => pauseController = pc;
 
+    //----------Button functions----------\\
     public void OpenControls() => Manager.Push(controlsScreen);
     public void OpenTechniques() => Manager.Push(techniquesScreen);
-
     public void Resume() => pauseController.Resume();
     public void QuitToMenu() => pauseController.QuitToMenu();
-
-    // Back on the pause ROOT means resume, not pop into nothing.
+    
+    //----------Override functions----------\\
     public override void OnBack() => pauseController.Resume();
 }
