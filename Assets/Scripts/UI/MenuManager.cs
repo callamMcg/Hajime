@@ -25,11 +25,7 @@ public class MenuManager : MonoBehaviour
             Push(rootScreen);
 
         if (InputReader.Instance != null)
-        {
-            Debug.Log("Here");
-
             InputReader.Instance.Cancel += Back;
-        }
     }
 
     /*On Enable
@@ -77,7 +73,6 @@ public class MenuManager : MonoBehaviour
     public void Back()
     {
         if (transitioning || stack.Count == 0) return;
-        Debug.Log("Here");
         stack.Peek().OnBack();
     }
 
