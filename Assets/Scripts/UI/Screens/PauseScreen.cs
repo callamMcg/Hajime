@@ -6,6 +6,7 @@ public class PauseScreen : MenuScreen
     //References
     [SerializeField] private MenuScreen controlsScreen;
     [SerializeField] private MenuScreen techniquesScreen;
+    [SerializeField] private MenuScreen replayScreen;
 
     //Bound controller
     private PauseController pauseController;
@@ -14,6 +15,7 @@ public class PauseScreen : MenuScreen
     //----------Button functions----------\\
     public void OpenControls() => Manager.Push(controlsScreen);
     public void OpenTechniques() => Manager.Push(techniquesScreen);
+    public void OpenReplay() => Manager.Push(replayScreen);
     public void Resume() => pauseController.Resume();
     public void QuitToMenu() => pauseController.QuitToMenu();
     
