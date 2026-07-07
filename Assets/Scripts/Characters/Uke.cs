@@ -10,7 +10,7 @@ public class Uke : Judoka
     public void Pull(Vector2 pull)
     {
         Vector2 p = Vector2.right * pull.x;
-        p += Vector2.up * Mathf.Abs(pull.x) / 2;
+        p += Vector2.up * Mathf.Abs(pull.x) / 4;
         balance.SetBalance(p);
     }
 

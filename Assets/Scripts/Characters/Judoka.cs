@@ -2,9 +2,7 @@ using UnityEngine;
 
 //Insure all of the required components are attached to the character
 [RequireComponent(typeof(JudokaBody), typeof(Balance), typeof(Facing))]
-[RequireComponent(typeof(PolarMovement)
-    //, typeof(Gait)
-    )]
+[RequireComponent(typeof(PolarMovement), typeof(Gait))]
 public abstract class Judoka : MonoBehaviour
 {
     //------------------Variables------------------//
@@ -13,6 +11,7 @@ public abstract class Judoka : MonoBehaviour
     protected Balance balance;
     protected Facing facing;
     protected PolarMovement movement;
+    protected Gait gait;
 
     //Limbs
     [SerializeField] protected IKContext leftLeg;
@@ -37,12 +36,17 @@ public abstract class Judoka : MonoBehaviour
         balance = GetComponent<Balance>();
         facing = GetComponent<Facing>();
         movement = GetComponent<PolarMovement>();
+        gait = GetComponent<Gait>();
     }
 
     // Apply the balance limits
     protected virtual void Start() => balance.SetLimits(balanceLimits);
     //Look at opponent
-    protected virtual void Update() => facing.LookAt(opponent);
+    protected virtual void Update()
+    {
+        body.SetHeight(gait.Wave());
+        facing.LookAt(opponent);
+    }
 
     //------------------Replay Functions------------------//
 
