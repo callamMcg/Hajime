@@ -8,8 +8,8 @@ public class CombatCamera : MonoBehaviour
     [SerializeField] private Transform opponent;
 
     //Positioning
-    [SerializeField] private Vector3 leftShoulderOffset = new Vector3(-0.5f, 0.3f, -0.4f);
-    [SerializeField] private Vector3 rightShoulderOffset = new Vector3(0.5f, 0.3f, -0.4f);
+    //[SerializeField] private Vector3 leftShoulderOffset = new Vector3(-0.5f, 0.3f, -0.4f);
+    //[SerializeField] private Vector3 rightShoulderOffset = new Vector3(0.5f, 0.3f, -0.4f);
 
     //Stats
     [SerializeField] private float lookHeight = 1.5f;
@@ -22,27 +22,27 @@ public class CombatCamera : MonoBehaviour
     private float movementThreshold = 0.1f;
 
     //------------------Unity Functions------------------//
-    private void Awake()
-    {
-        currentShoulderOffset = rightShoulderOffset;
-        targetShoulderOffset = rightShoulderOffset;
-    }
+    //private void Awake()
+    //{
+    //    currentShoulderOffset = rightShoulderOffset;
+    //    targetShoulderOffset = rightShoulderOffset;
+    //}
 
 
     private void LateUpdate()
     {
         if (player == null || opponent == null) return;
 
-        Vector2 move = InputReader.Instance.Move;
-        Vector2 pull = InputReader.Instance.Pull;
-        UpdateTargetShoulder(move);
-        UpdateTargetShoulder(pull);
+        //Vector2 move = InputReader.Instance.Move;
+        //Vector2 pull = InputReader.Instance.Pull;
+        //UpdateTargetShoulder(move);
+        //UpdateTargetShoulder(pull);
 
-        currentShoulderOffset = Vector3.Lerp(currentShoulderOffset, targetShoulderOffset, Time.deltaTime * shoulderSwapSmoothing);
+        //currentShoulderOffset = Vector3.Lerp(currentShoulderOffset, targetShoulderOffset, Time.deltaTime * shoulderSwapSmoothing);
 
-        Vector3 targetPos = player.position + player.TransformDirection(currentShoulderOffset);
-        targetPos.y = currentShoulderOffset.y;
-        transform.position = Vector3.Lerp( transform.position, targetPos, Time.deltaTime * followSmoothing );
+        //Vector3 targetPos = player.position + player.TransformDirection(currentShoulderOffset);
+        //targetPos.y = currentShoulderOffset.y;
+        //transform.position = Vector3.Lerp( transform.position, targetPos, Time.deltaTime * followSmoothing );
 
         Vector3 lookTarget = opponent.position + Vector3.up * lookHeight;
         transform.LookAt(lookTarget);
@@ -50,29 +50,29 @@ public class CombatCamera : MonoBehaviour
 
     //------------------Custom Functions------------------//
 
-    // Updates the target shoulder offset based on input direction
-    private void UpdateTargetShoulder(Vector2 move)
-    {
-        if (Mathf.Abs(move.x) > movementThreshold)
-        {
-            if (move.x > 0)
-                targetShoulderOffset = rightShoulderOffset;
-            else
-                targetShoulderOffset = leftShoulderOffset;
-        }
-    }
+    //// Updates the target shoulder offset based on input direction
+    //private void UpdateTargetShoulder(Vector2 move)
+    //{
+    //    if (Mathf.Abs(move.x) > movementThreshold)
+    //    {
+    //        if (move.x > 0)
+    //            targetShoulderOffset = rightShoulderOffset;
+    //        else
+    //            targetShoulderOffset = leftShoulderOffset;
+    //    }
+    //}
 
     // Allows runtime adjustment of shoulder offsets for tuning
-    public void SetShoulderOffsets(Vector3 left, Vector3 right)
-    {
-        leftShoulderOffset = left;
-        rightShoulderOffset = right;
-    }
+    //public void SetShoulderOffsets(Vector3 left, Vector3 right)
+    //{
+    //    leftShoulderOffset = left;
+    //    rightShoulderOffset = right;
+    //}
 
     // Force camera to a specific shoulder immediately
-    public void SetShoulder(bool isRight)
-    {
-        targetShoulderOffset = isRight ? rightShoulderOffset : leftShoulderOffset;
-        currentShoulderOffset = targetShoulderOffset;
-    }
+    //public void SetShoulder(bool isRight)
+    //{
+    //    targetShoulderOffset = isRight ? rightShoulderOffset : leftShoulderOffset;
+    //    currentShoulderOffset = targetShoulderOffset;
+    //}
 }

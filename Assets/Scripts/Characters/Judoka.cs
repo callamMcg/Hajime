@@ -41,10 +41,12 @@ public abstract class Judoka : MonoBehaviour
 
     // Apply the balance limits
     protected virtual void Start() => balance.SetLimits(balanceLimits);
-    //Look at opponent
+
+    // Advance the movement clock, hand its height to the body, face the opponent
     protected virtual void Update()
     {
-        body.SetHeight(gait.Wave());
+        gait.Tick();
+        body.SetHeight(gait.Height());
         facing.LookAt(opponent);
     }
 

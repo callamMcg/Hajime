@@ -17,6 +17,7 @@ public class FootStepper : MonoBehaviour
     [SerializeField] private Transform legRoot;     // same transform the leg's solver uses as rootJoint
     [SerializeField] private Transform body;        // character root, gives facing and lateral direction
     [SerializeField] private FootStepper otherFoot; // opposite foot, so both are never airborne together
+    [SerializeField] private Transform opponentsLeg; // opponentsLeg
     [SerializeField] private LayerMask groundLayer;
 
     //Stance
@@ -49,6 +50,9 @@ public class FootStepper : MonoBehaviour
     private float lastBodyYaw;
     private bool bodyMoving;
 
+    private bool isSweeping;
+    private bool isBasing;
+
     //------------------Unity Functions------------------//
     /*Start
      * 1 - Find the first home point and plant there, or hold where we were placed
@@ -80,6 +84,12 @@ public class FootStepper : MonoBehaviour
             float angular = Mathf.Abs(Mathf.DeltaAngle(lastBodyYaw, body.eulerAngles.y)) / Time.deltaTime;
             bodyMoving = linear > moveThreshold || angular > turnThreshold;
         }
+        if (isSweeping)
+        {
+            transform.position = Vector3.Lerp(transform.position, opponentsLeg.position, Time.deltaTime * 10);
+            return;
+        }
+        else if (isBasing) return;
         //1
         bool hadHome = hasHome;
         FindHome();
@@ -169,31 +179,19 @@ public class FootStepper : MonoBehaviour
         }
     }
 
-    //------------------Gizmos------------------//
-    /*On Draw Gizmos Selected
-     * 1 - In edit mode, show the cast origin and ray for tuning the stance
-     * 2 - In play mode, show home (cyan), plant (green), and the reach limit (yellow)
-     */
-    //private void OnDrawGizmosSelected()
-    //{
-        //if (legRoot == null || body == null) return;
-
-        ////1
-        //Vector3 lateral = body.right;
-        //lateral.y = 0f;
-        //lateral.Normalize();
-        //Vector3 origin = legRoot.position + lateral * (stanceWidth * side);
-        //Gizmos.color = Color.white;
-        //Gizmos.DrawLine(origin, origin + Vector3.down * castDistance);
-
-        //if (!Application.isPlaying) return;
-
-        //2
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawWireSphere(home, 0.03f);
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawWireSphere(planted, 0.04f);
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(legRoot.position, maxReach);
-    //}
+    public void Sweep() 
+    {
+        isSweeping = true;
+        isBasing = false;
+    }
+    public void Plant()
+    {
+        isSweeping = false;
+        isBasing = true;
+    }
+    public void Free()
+    {
+        isSweeping = false;
+        isBasing = false;
+    }
 }

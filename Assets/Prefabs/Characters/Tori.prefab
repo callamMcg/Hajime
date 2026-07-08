@@ -816,7 +816,7 @@ Transform:
   m_GameObject: {fileID: 1573166647850241892}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -842,6 +842,8 @@ GameObject:
   - component: {fileID: 2081629579232886247}
   - component: {fileID: 2848623701514311760}
   - component: {fileID: 8401644107375139260}
+  - component: {fileID: 3904007468433521092}
+  - component: {fileID: 4184697372705908013}
   m_Layer: 0
   m_Name: Tori
   m_TagString: Untagged
@@ -865,7 +867,6 @@ Transform:
   - {fileID: 4437979591609834998}
   - {fileID: 3567117811069073398}
   - {fileID: 2958674424196473435}
-  - {fileID: 8469953617993536086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &8389490755162663296
@@ -922,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64566db6b5330a14eb7c01dc0b684d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PolarMovement
-  rotationSpeed: 80
+  rotationSpeed: 60
   radiusRecoveryRate: 5
 --- !u!114 &8401644107375139260
 MonoBehaviour:
@@ -950,6 +951,81 @@ MonoBehaviour:
     Target: {fileID: 0}
   opponent: {fileID: 0}
   balanceLimits: {x: 10, y: 0, z: 10}
+  feet: {fileID: 4184697372705908013}
+--- !u!114 &3904007468433521092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9a3279b86dea94eae0264667519c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gait
+  strideLength: 1
+  stanceRadius: 0.18
+  maxFrequency: 1.5
+  recoveryFrequency: 0.5
+  smoothing: 4
+  hopHeight: 0.6
+  crouchDepth: 0.6
+  speedForFullBob: 1.2
+--- !u!114 &4184697372705908013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0893c44c64d0f48897138b9d402b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootManager
+  left:
+    legRoot: {fileID: 5989815051863324492}
+    target: {fileID: 5589255805817723593}
+    sweepTarget: {fileID: 0}
+    side: 0
+    state: 0
+    planted: {x: 0, y: 0, z: 0}
+    home: {x: 0, y: 0, z: 0}
+    homeVelocity: {x: 0, y: 0, z: 0}
+    lastHome: {x: 0, y: 0, z: 0}
+    hasHome: 0
+    swingFrom: {x: 0, y: 0, z: 0}
+    liftPhase: 0
+    liftCycle: -1
+    progress: 0
+  right:
+    legRoot: {fileID: 2947878232550220901}
+    target: {fileID: 8788661929268714704}
+    sweepTarget: {fileID: 0}
+    side: 0
+    state: 0
+    planted: {x: 0, y: 0, z: 0}
+    home: {x: 0, y: 0, z: 0}
+    homeVelocity: {x: 0, y: 0, z: 0}
+    lastHome: {x: 0, y: 0, z: 0}
+    hasHome: 0
+    swingFrom: {x: 0, y: 0, z: 0}
+    liftPhase: 0
+    liftCycle: -1
+    progress: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  stanceWidth: 0.3
+  maxReach: 1.37
+  castDistance: 1.4
+  restlessDistance: 0.08
+  swingFraction: 0.35
+  stagger: 0.441
+  liftHeight: 0.4
+  stepLead: 0.1
+  turnSpeed: 480
 --- !u!1 &2269533135605912829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,25 +2427,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4095993452652791369}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootStepper
   legRoot: {fileID: 5989815051863324492}
-  foot: {fileID: 1608785920601801766}
-  characterRoot: {fileID: 4428796474810664855}
-  otherStepper: {fileID: 5163377144132342198}
-  floors:
+  body: {fileID: 4428796474810664855}
+  otherFoot: {fileID: 5163377144132342198}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 72
   side: -1
-  stanceWidth: 0.23
-  maxReach: 1.32
-  castDistance: 1.32
-  stepDuration: 0.2
-  stepHeight: 0.2
-  stepLead: 0.25
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &4100053551739757515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,12 +2790,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5185834074490916523}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268346, y: -0, z: -0, w: 0.9238796}
-  m_LocalPosition: {x: 0, y: 3.7, z: 0.3000001}
+  m_LocalRotation: {x: 0.31730464, y: -0, z: -0, w: 0.94832367}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4428796474810664855}
+  m_Father: {fileID: 5317657087914224503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7043791420683737343
 Camera:
@@ -2829,16 +2907,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5185834074490916523}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12f51b92320d8ca489e039768dbc9298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatCamera
   player: {fileID: 4428796474810664855}
   opponent: {fileID: 0}
-  leftShoulderOffset: {x: 0, y: 3.8, z: 0.3}
-  rightShoulderOffset: {x: 0, y: 3.8, z: 0.3}
-  lookHeight: 2
+  lookHeight: 1.9
   followSmoothing: 5
   shoulderSwapSmoothing: 8
 --- !u!1 &5247810072418244451
@@ -3301,25 +3377,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6340129100142177579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootStepper
   legRoot: {fileID: 2947878232550220901}
-  foot: {fileID: 8323514138300871098}
-  characterRoot: {fileID: 4428796474810664855}
-  otherStepper: {fileID: 6358873175055327521}
-  floors:
+  body: {fileID: 4428796474810664855}
+  otherFoot: {fileID: 6358873175055327521}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 72
   side: 1
-  stanceWidth: 0.23
-  maxReach: 1.32
-  castDistance: 1.32
-  stepDuration: 0.2
-  stepHeight: 0.2
-  stepLead: 0.25
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &6558593120372404081
 GameObject:
   m_ObjectHideFlags: 0
@@ -3496,7 +3574,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.583, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8469953617993536086}
   m_Father: {fileID: 704901738235495751}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4532414307697889405
