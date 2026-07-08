@@ -11,10 +11,12 @@ public class InputReader : MonoBehaviour
     //Actions other scripts subscribe to
     public event Action Pause;   // from gameplay
     public event Action Cancel;  // from ui
-    public event Action Play;  // from ui
-    public event Action FastForward;  // from ui
-    public event Action SlowMotion;  // from ui
-    public event Action Rewind;  // from ui
+    
+    // from replay
+    public event Action Play;  
+    public event Action FastForward;  
+    public event Action SlowMotion;
+    public event Action Rewind;  
 
     //Input trackers
     private Vector2 move;
@@ -31,6 +33,9 @@ public class InputReader : MonoBehaviour
 
     private bool replayDown;
     public bool ReplayDown => replayDown;
+
+    private AttackSM attackState;
+    public AttackSM AttackState => attackState;
 
     //Control maps
     private GameControls controls;
@@ -61,6 +66,10 @@ public class InputReader : MonoBehaviour
         controls.Gameplay.Move.canceled += HandleMove;
         controls.Gameplay.Pull.performed += HandlePull;
         controls.Gameplay.Pull.canceled += HandlePull;
+        controls.Gameplay.LeftSweep.performed += HandleLeftSweep;
+        controls.Gameplay.LeftSweep.canceled += HandleLeftSweep;
+        controls.Gameplay.RightSweep.performed += HandleRightSweep;
+        controls.Gameplay.RightSweep.canceled += HandleRightSweep;
 
         controls.Replay.Move.performed += HandleReplayMove;
         controls.Replay.Move.canceled += HandleReplayMove;
@@ -148,7 +157,8 @@ public class InputReader : MonoBehaviour
     private void HandlePull(InputAction.CallbackContext ctx) => pull = ctx.ReadValue<Vector2>();
 
     private void HandleReplayMove(InputAction.CallbackContext ctx) => replayMove = ctx.ReadValue<Vector2>();
-
+    private void HandleLeftSweep(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.leftSweep : AttackSM.standard;
+    private void HandleRightSweep(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.rightSweep : AttackSM.standard;
     private void HandleReplayUp(InputAction.CallbackContext ctx) => replayUp = ctx.performed ;
     private void HandleReplayDown(InputAction.CallbackContext ctx) => replayDown = ctx.performed;
 

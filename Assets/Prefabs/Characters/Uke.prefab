@@ -409,25 +409,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587073410207280937}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootStepper
   legRoot: {fileID: 2875344406575508805}
-  foot: {fileID: 259908016405883509}
-  characterRoot: {fileID: 6120255632238723653}
-  otherStepper: {fileID: 7534741764161278531}
-  floors:
+  body: {fileID: 6120255632238723653}
+  otherFoot: {fileID: 7534741764161278531}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 72
   side: -1
-  stanceWidth: 0.23
-  maxReach: 1.32
-  castDistance: 1.32
-  stepDuration: 0.2
-  stepHeight: 0.2
-  stepLead: 0.15
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &800810562825043894
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,25 +758,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259645155095975150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootStepper
   legRoot: {fileID: 4131112585117946174}
-  foot: {fileID: 1453694604324821656}
-  characterRoot: {fileID: 6120255632238723653}
-  otherStepper: {fileID: 8754669743513193925}
-  floors:
+  body: {fileID: 6120255632238723653}
+  otherFoot: {fileID: 8754669743513193925}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 72
-  side: -1
-  stanceWidth: 0.23
-  maxReach: 1.32
-  castDistance: 1.32
-  stepDuration: 0.2
-  stepHeight: 0.2
-  stepLead: 0.15
+  side: 1
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &1376404869905870285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1832,8 @@ GameObject:
   - component: {fileID: 289875156051609186}
   - component: {fileID: 9108556358838570847}
   - component: {fileID: 4529660150471671152}
+  - component: {fileID: 8787871224515764470}
+  - component: {fileID: 1269307910870927168}
   m_Layer: 0
   m_Name: Uke
   m_TagString: Untagged
@@ -1877,11 +1883,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a49d110c8b63c4ca4a5981678f9fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balance
-  pullStrength: 400
+  pullStrength: 200
   recoveryStiffness: 40
-  recoveryDamping: 5
-  movementResistance: 1
-  stepThreshold: 0.1
+  recoveryDamping: 2
+  movementResistance: 0
+  stepThreshold: 0.03
   stepRecovery: 1
 --- !u!114 &1718133880839307799
 MonoBehaviour:
@@ -1947,7 +1953,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04c0a084f9008b469d4516ce8c6d944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StepReflex
-  stepSpeed: 8
+  stepSpeed: 14
+--- !u!114 &8787871224515764470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547554135280211586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9a3279b86dea94eae0264667519c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gait
+  strideLength: 1
+  stanceRadius: 0.18
+  maxFrequency: 1.5
+  recoveryFrequency: 0.5
+  smoothing: 4
+  hopHeight: 0.6
+  crouchDepth: 0.6
+  speedForFullBob: 1.2
+--- !u!114 &1269307910870927168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547554135280211586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0893c44c64d0f48897138b9d402b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootManager
+  left:
+    legRoot: {fileID: 2875344406575508805}
+    target: {fileID: 5803571874429533312}
+    sweepTarget: {fileID: 0}
+    side: 0
+    state: 0
+    planted: {x: 0, y: 0, z: 0}
+    home: {x: 0, y: 0, z: 0}
+    homeVelocity: {x: 0, y: 0, z: 0}
+    lastHome: {x: 0, y: 0, z: 0}
+    hasHome: 0
+    swingFrom: {x: 0, y: 0, z: 0}
+    liftPhase: 0
+    liftCycle: -1
+    progress: 0
+  right:
+    legRoot: {fileID: 4131112585117946174}
+    target: {fileID: 7617887411289353037}
+    sweepTarget: {fileID: 0}
+    side: 0
+    state: 0
+    planted: {x: 0, y: 0, z: 0}
+    home: {x: 0, y: 0, z: 0}
+    homeVelocity: {x: 0, y: 0, z: 0}
+    lastHome: {x: 0, y: 0, z: 0}
+    hasHome: 0
+    swingFrom: {x: 0, y: 0, z: 0}
+    liftPhase: 0
+    liftCycle: -1
+    progress: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  stanceWidth: 0.3
+  maxReach: 1.37
+  castDistance: 1.4
+  restlessDistance: 0.08
+  swingFraction: 0.35
+  stagger: 0.441
+  liftHeight: 0.4
+  stepLead: 0.1
+  turnSpeed: 480
 --- !u!1 &4744877244645048270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,7 +3453,7 @@ Transform:
   m_GameObject: {fileID: 8119164310302343229}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -835,6 +835,11 @@ Transform:
   - {fileID: 1313425556}
   m_Father: {fileID: 482400299}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &321242939 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5990410808321739396, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+  m_PrefabInstance: {fileID: 2954488172783910241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &325496260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4431774621796576, guid: 5ae8c26f2ac313c4e9f1c861d898480b, type: 3}
@@ -2552,7 +2557,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6276813193211055551}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
@@ -2881,6 +2886,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9b90099fc570b4fb5dd637c5ef3247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TechniquesScreen
+--- !u!4 &1302619565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6445492347147198621, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+  m_PrefabInstance: {fileID: 6276813193211055551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313425555
 GameObject:
   m_ObjectHideFlags: 0
@@ -3356,6 +3366,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4428796474810664855, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
   m_PrefabInstance: {fileID: 2954488172783910241}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1599534042 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+  m_PrefabInstance: {fileID: 2954488172783910241}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599534040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0893c44c64d0f48897138b9d402b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootManager
 --- !u!1 &1622995569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,6 +4028,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4561366974444364, guid: 7e3ddfbc3e901f449ad4950da4cf3981, type: 3}
   m_PrefabInstance: {fileID: 1215167929}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1942013017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6974310625634327782, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+  m_PrefabInstance: {fileID: 6276813193211055551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1956602379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4187,6 +4213,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!4 &1993600326 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1619658766032720696, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+  m_PrefabInstance: {fileID: 2954488172783910241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2010980221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4168320301523790, guid: c0c7d18a4c4899c42963d94c28e6ff3e, type: 3}
@@ -4214,7 +4245,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6276813193211055551}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
@@ -4385,14 +4416,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tori
       objectReference: {fileID: 0}
-    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
-      propertyPath: a
-      value: 0.1
+    - target: {fileID: 2848623701514311760, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: rotationSpeed
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
-      propertyPath: f
-      value: 10
+      propertyPath: hopHeight
+      value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: smoothing
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: crouchDepth
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: maxFrequency
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: strideLength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: recoveryFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: left.sweepTarget
+      value: 
+      objectReference: {fileID: 1302619565}
+    - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: right.sweepTarget
+      value: 
+      objectReference: {fileID: 1942013017}
     - target: {fileID: 4428796474810664855, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.9
@@ -4433,6 +4492,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4437979591609834998, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: body
       value: 
@@ -4443,19 +4506,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: stepLead
-      value: 0.15
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: otherFoot
       value: 
       objectReference: {fileID: 2954488172783910247}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stepHeight
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: stanceWidth
-      value: 0.3
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: castDistance
-      value: 1.5
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: opponentsLeg
+      value: 
+      objectReference: {fileID: 1942013017}
+    - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stepDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: moveThreshold
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: groundLayer.m_Bits
@@ -4465,6 +4548,14 @@ PrefabInstance:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 211112545}
+    - target: {fileID: 5677801430816745485, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677801430816745485, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: lookHeight
+      value: 1.9
+      objectReference: {fileID: 0}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: body
       value: 
@@ -4475,24 +4566,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: stepLead
-      value: 0.15
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: otherFoot
       value: 
       objectReference: {fileID: 2954488172783910246}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stepHeight
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: stanceWidth
-      value: 0.3
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: castDistance
-      value: 1.5
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: opponentsLeg
+      value: 
+      objectReference: {fileID: 1302619565}
+    - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stepDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: moveThreshold
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6358873175055327521, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 8401644107375139260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: feet
+      value: 
+      objectReference: {fileID: 1599534042}
     - target: {fileID: 8401644107375139260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: opponent
       value: 
@@ -4505,6 +4620,14 @@ PrefabInstance:
       propertyPath: rightArm.Target
       value: 
       objectReference: {fileID: 1210858716}
+    - target: {fileID: 8469953617993536086, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8469953617993536086, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8747283421913168854, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: endTarget
       value: 
@@ -4520,7 +4643,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2954488172783910241}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
@@ -4531,7 +4654,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2954488172783910241}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
   m_Name: 
@@ -4550,31 +4673,23 @@ PrefabInstance:
       objectReference: {fileID: 1440923615}
     - target: {fileID: 4529660150471671152, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepSpeed
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: pullStrength
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
-      propertyPath: stepRecovery
-      value: 1
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepThreshold
-      value: 0.1
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: recoveryDamping
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
-      propertyPath: recoveryStiffness
-      value: 40
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: movementResistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4547554135280211586, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: m_Name
@@ -4620,6 +4735,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7241245764294035976, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9
+      objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: body
       value: 
@@ -4630,23 +4749,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: maxReach
-      value: 1.31
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepLead
-      value: 0.15
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: otherFoot
       value: 
       objectReference: {fileID: 1147824502}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepHeight
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stanceWidth
-      value: 0.3
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: castDistance
-      value: 1.5
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: opponentsLeg
+      value: 
+      objectReference: {fileID: 1993600326}
+    - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: moveThreshold
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7534741764161278531, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: groundLayer.m_Bits
@@ -4666,31 +4805,67 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepLead
-      value: 0.15
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: otherFoot
       value: 
       objectReference: {fileID: 2054197553}
     - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepHeight
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stanceWidth
-      value: 0.3
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: castDistance
-      value: 1.5
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: opponentsLeg
+      value: 
+      objectReference: {fileID: 321242939}
+    - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: moveThreshold
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8754669743513193925, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
-      propertyPath: a
-      value: 0.1
+      propertyPath: hopHeight
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
-      propertyPath: f
-      value: 10
+      propertyPath: smoothing
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: crouchDepth
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: maxFrequency
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: strideLength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: recoveryFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9108556358838570847, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: opponent

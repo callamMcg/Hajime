@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// Solve after JudokaBody (0) and FootManager (50) have finished the frame, so
+// the bones pose against this frame's final targets rather than last frame's
+[DefaultExecutionOrder(60)]
 public class TwoBoneIK : MonoBehaviour
 {
 
@@ -14,7 +17,7 @@ public class TwoBoneIK : MonoBehaviour
     [SerializeField] private Transform planePole;
 
     //------------------Unity Functions------------------//
-    private void Update()
+    private void LateUpdate()
     {
         Solve(rootJoint, middleJoint, endEffector, endTarget.position, planePole.position, endTarget.rotation);
     }
@@ -41,7 +44,7 @@ public class TwoBoneIK : MonoBehaviour
         Vector3 rootPos = upper.position;
         Vector3 midPos = mid.position;
         Vector3 endPos = end.position;
-        
+
         //b
         float upperLen = Vector3.Distance(rootPos, midPos);
         float lowerLen = Vector3.Distance(midPos, endPos);
@@ -76,11 +79,11 @@ public class TwoBoneIK : MonoBehaviour
         //a
         Vector3 currentUpperDir = mid.position - upper.position;
         upper.rotation = Quaternion.FromToRotation(currentUpperDir, knee - rootPos) * upper.rotation;
-        
+
         //b
         Vector3 currentLowerDir = end.position - mid.position;
         mid.rotation = Quaternion.FromToRotation(currentLowerDir, effectiveTarget - mid.position) * mid.rotation;
-        
+
         //c
         end.rotation = endRotation;
     }

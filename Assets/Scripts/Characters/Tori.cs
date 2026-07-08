@@ -5,9 +5,12 @@ public class Tori : Judoka
     //------------------Variables------------------//
     //References to uke on opponent
     private Uke uke;
+    [SerializeField] private FootManager feet;
 
     private Vector2 move;
     private Vector2 pull;
+    private AttackSM attackState;
+
 
     //------------------Unity Event Functions------------------//
     protected override void Start()
@@ -19,10 +22,28 @@ public class Tori : Judoka
     protected override void Update()
     {
         base.Update();
-        
-        move = InputReader.Instance.Move;
-        pull = InputReader.Instance.Pull;
 
+
+        attackState = InputReader.Instance.AttackState;
+
+        switch (attackState)
+        {
+            case AttackSM.rightSweep:
+                move = Vector2.zero;
+                pull = InputReader.Instance.Pull;
+                feet.Sweep(FootId.Right);
+                break;
+            case AttackSM.leftSweep:
+                move = Vector2.zero;
+                pull = InputReader.Instance.Pull;
+                feet.Sweep(FootId.Left);
+                break;
+            default:
+                move = InputReader.Instance.Move;
+                pull = InputReader.Instance.Pull;
+                feet.Free();
+                break;
+        }
         Move();
         Pull();
     }
@@ -31,7 +52,6 @@ public class Tori : Judoka
     private void Move()
     {
         float x = move.x;
-        float y = move.y;
 
         movement.SetTarget(opponent, x);
         movement.Move();
