@@ -1,26 +1,29 @@
-using System;
 using UnityEngine;
 
 public class ReplayScreen : MenuScreen
 {
     [SerializeField] Camera combatCam;
     [SerializeField] Camera replayCam;
+    [SerializeField] ReplayController controller;
+
     protected override void Awake()
     {
         base.Awake();
         combatCam.enabled = true;
         replayCam.enabled = false;
     }
+
     protected override void OnEnter()
     {
-        Debug.Log("Enter");
+        controller.BeginReplay();
         InputReader.Instance.EnableReplay();
         replayCam.enabled = true;
         combatCam.enabled = false;
-
     }
+
     protected override void OnExit()
     {
+        controller.EndReplay();
         InputReader.Instance.EnableUI();
         combatCam.enabled = true;
         replayCam.enabled = false;

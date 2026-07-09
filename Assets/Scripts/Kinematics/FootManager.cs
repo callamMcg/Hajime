@@ -74,6 +74,14 @@ public class FootManager : MonoBehaviour
     private Foot[] feet;
     private int seenCycle = -1;
 
+    //------------------Bounds Access------------------//
+    // The bounds watcher reads foot positions and grounded state to decide
+    // whether a planted foot has stepped off the mat
+    public Transform LeftFoot => left.target;
+    public Transform RightFoot => right.target;
+    public bool LeftGrounded => left.IsGrounded;
+    public bool RightGrounded => right.IsGrounded;
+
     //------------------Unity Functions------------------//
     private void Awake()
     {

@@ -61,14 +61,28 @@ public abstract class Judoka : MonoBehaviour
         rightArm = Grab(rightArm.Target),
     };
 
+    // Apply everything: the body first, then the limbs against the moved body
     public void Apply(JudokaSnapshot s)
     {
-        body.ApplyPose(s.body);
+        ApplyBody(s);
+        ApplyLimbs(s);
+    }
+
+    // The two halves, separable so a controller replaying two judokas can
+    // move both bodies before placing any limb - a target parented to either
+    // judoka must not be placed until both roots are standing in the frame
+    public void ApplyBody(JudokaSnapshot s) => body.ApplyPose(s.body);
+
+    public void ApplyLimbs(JudokaSnapshot s)
+    {
         Place(leftLeg.Target, s.leftLeg);
         Place(rightLeg.Target, s.rightLeg);
         Place(leftArm.Target, s.leftArm);
         Place(rightArm.Target, s.rightArm);
     }
-    private static LimbPose Grab(Transform t) => new LimbPose { pos = t.position, rot = t.rotation };
-    private static void Place(Transform t, LimbPose p) { t.position = p.pos; t.rotation = p.rot; }
+
+    // Null tolerant: limbs without a target yet (the arms) record as identity
+    // and are skipped on apply - they join the replay the day they are wired
+    private static LimbPose Grab(Transform t) => t == null ? default : new LimbPose { pos = t.position, rot = t.rotation };
+    private static void Place(Transform t, LimbPose p) { if (t == null) return; t.position = p.pos; t.rotation = p.rot; }
 }

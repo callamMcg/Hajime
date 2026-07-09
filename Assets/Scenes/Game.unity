@@ -199,7 +199,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27461402}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -251,7 +251,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -486,7 +486,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185660855}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -538,7 +538,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -667,7 +667,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213426654}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -719,7 +719,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1075,7 +1075,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596544633}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -1127,7 +1127,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1685,7 +1685,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801073394}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -1737,7 +1737,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -2269,7 +2269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087728230921887615, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: m_fontSize
-      value: 90.05
+      value: 43.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2632,7 +2632,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150890482}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 1
@@ -2684,7 +2684,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -2961,7 +2961,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313425555}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 0.8
@@ -3013,7 +3013,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -3130,7 +3130,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -3377,6 +3376,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0893c44c64d0f48897138b9d402b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootManager
+--- !u!114 &1599534044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8401644107375139260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+  m_PrefabInstance: {fileID: 2954488172783910241}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599534040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1797f864bea70a40ba11b06770f5d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tori
 --- !u!1 &1622995569
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,7 +3457,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622995569}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 1
@@ -3499,7 +3509,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -3628,7 +3638,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715505802}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 0.9632353, g: 0.7343758, b: 0.48161766, a: 1}
   m_Intensity: 1
@@ -3680,7 +3690,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -3755,7 +3765,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852411075}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 2
@@ -3807,7 +3817,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -4086,6 +4096,70 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f968c3af71559429c9b4b8d6f06878, type: 3}
+--- !u!1 &1958002295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958002297}
+  - component: {fileID: 1958002296}
+  - component: {fileID: 1958002298}
+  m_Layer: 0
+  m_Name: ReplaySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1958002296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958002295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179feb8bd710831499cae03ef4429c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplayController
+  recorder: {fileID: 1958002298}
+  tori: {fileID: 1599534044}
+  uke: {fileID: 2135011280}
+  loop: 1
+--- !u!4 &1958002297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958002295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.59276, y: -0, z: 0.41067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1958002298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958002295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9184c8b9320110641b2577ae0620321c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplayRecorder
+  tori: {fileID: 1599534044}
+  uke: {fileID: 2135011280}
+  recordSeconds: 8
 --- !u!1 &1963573538
 GameObject:
   m_ObjectHideFlags: 0
@@ -4156,7 +4230,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963573538}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.8852941, b: 0.71323526, a: 1}
   m_Intensity: 0.8
@@ -4208,7 +4282,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -4255,6 +4329,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4704004417861882, guid: e694cdbbb497b5848a137f74341da3c4, type: 3}
   m_PrefabInstance: {fileID: 1910338300}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2135011280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9108556358838570847, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+  m_PrefabInstance: {fileID: 6276813193211055551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6bf0339e94654f4da8a0b6e76e24369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Uke
 --- !u!1 &2135083663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4391,6 +4476,10 @@ PrefabInstance:
       propertyPath: replayCam
       value: 
       objectReference: {fileID: 1896561372}
+    - target: {fileID: 7009850755335889398, guid: b236ea1efdd5bca458221edd0cf2a14a, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 1958002296}
     - target: {fileID: 8476471198664582243, guid: b236ea1efdd5bca458221edd0cf2a14a, type: 3}
       propertyPath: m_fontSize
       value: 76
@@ -4418,11 +4507,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2848623701514311760, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: rotationSpeed
-      value: 60
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: hopHeight
-      value: 0.6
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: smoothing
@@ -4430,19 +4519,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: crouchDepth
-      value: 0.6
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: maxFrequency
-      value: 1.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stanceRadius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: strideLength
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: speedForFullBob
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: recoveryFrequency
-      value: 0.5
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: maxReach
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: stepLead
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: castDistance
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: left.sweepTarget
@@ -4667,25 +4776,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 887603039}
     m_Modifications:
+    - target: {fileID: 1269307910870927168, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: maxReach
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269307910870927168, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepLead
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269307910870927168, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: castDistance
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3213115061135875662, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: endTarget
       value: 
       objectReference: {fileID: 1440923615}
     - target: {fileID: 4529660150471671152, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepSpeed
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: pullStrength
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stepRecovery
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: stepThreshold
-      value: 0.03
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: recoveryDamping
-      value: 2
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: recoveryStiffness
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4534044532569686938, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: movementResistance
@@ -4845,7 +4974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: hopHeight
-      value: 0.6
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: smoothing
@@ -4853,19 +4982,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: crouchDepth
-      value: 0.6
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: maxFrequency
-      value: 1.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: stanceRadius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: strideLength
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+      propertyPath: speedForFullBob
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8787871224515764470, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: recoveryFrequency
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9108556358838570847, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
       propertyPath: opponent
@@ -4914,7 +5051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1683835941568649201, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_fontSize
-      value: 790.9
+      value: 425.95
       objectReference: {fileID: 0}
     - target: {fileID: 1942722845671341615, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4978,7 +5115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410829823291715344, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_fontSize
-      value: 526.15
+      value: 515.3
       objectReference: {fileID: 0}
     - target: {fileID: 3600360827372704881, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_fontSize
@@ -5199,3 +5336,4 @@ SceneRoots:
   - {fileID: 887603039}
   - {fileID: 928771516}
   - {fileID: 1896561373}
+  - {fileID: 1958002297}
