@@ -4,15 +4,11 @@ using UnityEngine;
 public class IKContext
 {
     public Transform Root;
-    //public Transform Middle;
-    //public Transform End;
-    //public Transform Pole;
     public Transform Target;
-    //public Vector3 LiftPos;
-    //public float Length;
 }
+
 [System.Serializable]
-public struct Technique
+public struct TechniqueInfo
 {
     public string name;
     public string jap;
@@ -22,11 +18,10 @@ public struct Technique
 
 public class TechniqueContext
 {
-    public Transform opponent;
-    public JudokaBody body;
-    public PolarMovement movement;
-    public Balance balance;
-    //public Gait gait;
+    public Tori tori;
+    public FootManager toriFeet;
+    public Uke uke;
+    public FootManager ukeFeet;
 }
 
 public struct BodyPose

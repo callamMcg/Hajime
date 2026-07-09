@@ -1,15 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Plays the recorder's buffer back through the judokas, then puts the fight
-/// back exactly as it was.
-/// While replaying, the Tori and Uke scripts are disabled so nothing pushes
-/// live state into the bodies - JudokaBody stays on, so the applied snapshots
-/// reach the transforms through the same single writer as gameplay.
-/// The design assumes the replay only ever runs under pause (timeScale 0):
-/// that is what freezes the recorder and every spring and clock, which is why
-/// the paused pose can be restored without saving any of their internal state.
-/// </summary>
 public class ReplayController : MonoBehaviour
 {
     //------------------Variables------------------//

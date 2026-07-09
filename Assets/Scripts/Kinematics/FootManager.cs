@@ -153,6 +153,10 @@ public class FootManager : MonoBehaviour
      *            then swing home
      * Swept    - chase the opponent's leg (technique control)
      * Based    - pinned by a technique, will not lift
+     * Held     - seized by the opponent's technique, pinned wherever
+     *            PlaceHeld last put it
+     * Limp     - not driven at all: the target rides its parent, so the leg
+     *            follows the body through a fall
      */
     private void Drive(Foot foot, float liftAt, float dt)
     {
@@ -167,6 +171,17 @@ public class FootManager : MonoBehaviour
                 {
                     foot.target.position = foot.planted;
                     Turn(foot, turnSpeed, dt);
+                    return;
+                }
+            case FootState.Held:
+                {
+                    // re-asserted after the body writes, so this frame's root
+                    // motion cannot drag the seized foot off its commanded point
+                    foot.target.position = foot.planted;
+                    return;
+                }
+            case FootState.Limp:
+                {
                     return;
                 }
             case FootState.Planted:
@@ -349,14 +364,57 @@ public class FootManager : MonoBehaviour
         }
     }
 
-    // Release technique control: the base is simply planted again, a swept
-    // foot hovers and then swings itself home once it can reach the floor
+    /* HOLD - the opponent's technique seizes this foot
+     * It is pinned where it stands until PlaceHeld moves it. A held foot is
+     * not grounded: it is being dragged, not load bearing, so it can neither
+     * lift itself nor trip the bounds watcher.
+     */
+    public void Hold(FootId id)
+    {
+        Foot foot = Get(id);
+        foot.planted = foot.target.position;
+        foot.state = FootState.Held;
+    }
+
+    // Command a held foot's world position; Drive re-asserts it after the
+    // body has written, so the single-writer order still holds for feet
+    public void PlaceHeld(FootId id, Vector3 position)
+    {
+        Foot foot = Get(id);
+        if (foot.state != FootState.Held) return;
+        foot.planted = position;
+    }
+
+    // Pin a foot where it stands: load bearing, will not lift (the support
+    // leg of a judoka being swept)
+    public void Pin(FootId id)
+    {
+        Foot foot = Get(id);
+        if (foot.state == FootState.Based) return;
+        if (!foot.IsGrounded) foot.planted = foot.hasHome ? foot.home : foot.target.position;
+        foot.state = FootState.Based;
+    }
+
+    // Give both feet to a fall: nothing drives them, so the targets ride the
+    // body they are parented to and the legs follow it down
+    public void Limp()
+    {
+        left.state = FootState.Limp;
+        right.state = FootState.Limp;
+    }
+
+    /* FREE - release all technique control
+     * The base is simply planted again; a swept, held or limp foot hovers
+     * and then swings itself home once it can reach the floor
+     */
     public void Free()
     {
         foreach (Foot foot in feet)
         {
-            if (foot.state == FootState.Swept) foot.state = FootState.Hovering;
-            else if (foot.state == FootState.Based) foot.state = FootState.Planted;
+            if (foot.state == FootState.Swept || foot.state == FootState.Held || foot.state == FootState.Limp)
+                foot.state = FootState.Hovering;
+            else if (foot.state == FootState.Based)
+                foot.state = FootState.Planted;
         }
     }
 
