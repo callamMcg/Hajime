@@ -964,14 +964,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9a3279b86dea94eae0264667519c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gait
-  strideLength: 1
-  stanceRadius: 0.18
-  maxFrequency: 1.5
-  recoveryFrequency: 0.5
+  strideLength: 2
+  stanceRadius: 0.5
+  maxFrequency: 1
+  recoveryFrequency: 0.2
   smoothing: 4
-  hopHeight: 0.6
-  crouchDepth: 0.6
-  speedForFullBob: 1.2
+  hopHeight: 0.15
+  crouchDepth: 0.1
+  speedForFullBob: 1
 --- !u!114 &4184697372705908013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,13 +1018,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   stanceWidth: 0.3
-  maxReach: 1.37
-  castDistance: 1.4
+  maxReach: 1.35
+  castDistance: 1.5
   restlessDistance: 0.08
   swingFraction: 0.35
   stagger: 0.441
   liftHeight: 0.4
-  stepLead: 0.1
+  stepLead: 0.3
   turnSpeed: 480
 --- !u!1 &2269533135605912829
 GameObject:

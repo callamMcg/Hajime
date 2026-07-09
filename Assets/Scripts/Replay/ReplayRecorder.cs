@@ -80,6 +80,5 @@ public class ReplayRecorder : MonoBehaviour
         return low;
     }
 
-    // Forget everything, e.g. on a rematch
     public void Clear() => frames.Clear();
 }

@@ -734,6 +734,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4711504485179264, guid: c267bf27249420c4ba7a63927d717646, type: 3}
   m_PrefabInstance: {fileID: 334525398}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &263700471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263700473}
+  - component: {fileID: 263700472}
+  m_Layer: 0
+  m_Name: MatBounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &263700472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263700471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e855db2638b4c948bb2ed89769352de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatBounds
+  fighters:
+  - {fileID: 1599534042}
+  - {fileID: 2135011277}
+  outOfBounds:
+    serializedVersion: 2
+    m_Bits: 64
+  castHeight: 0.3
+  castDepth: 0.6
+--- !u!4 &263700473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263700471}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.59276, y: -0, z: 0.41067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &272249295 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4431774621796576, guid: 5ae8c26f2ac313c4e9f1c861d898480b, type: 3}
@@ -4329,6 +4381,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4704004417861882, guid: e694cdbbb497b5848a137f74341da3c4, type: 3}
   m_PrefabInstance: {fileID: 1910338300}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2135011277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1269307910870927168, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
+  m_PrefabInstance: {fileID: 6276813193211055551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0893c44c64d0f48897138b9d402b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootManager
 --- !u!114 &2135011280 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9108556358838570847, guid: 83bf6f9e858a1ec49bdfc6125118da24, type: 3}
@@ -4507,7 +4570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2848623701514311760, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: rotationSpeed
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3904007468433521092, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: hopHeight
@@ -5337,3 +5400,4 @@ SceneRoots:
   - {fileID: 928771516}
   - {fileID: 1896561373}
   - {fileID: 1958002297}
+  - {fileID: 263700473}
