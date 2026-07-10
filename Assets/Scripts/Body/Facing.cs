@@ -13,6 +13,8 @@ public class Facing : MonoBehaviour
     private JudokaBody body;
     //Trackers
     private float yaw;
+    public float Yaw => yaw;
+
     //------------------Unity Functions------------------//
     private void Awake() { body = GetComponent<JudokaBody>(); }
 
@@ -26,7 +28,4 @@ public class Facing : MonoBehaviour
         yaw = Mathf.Atan2(offset.x, offset.z) * Mathf.Rad2Deg;
         body.SetYaw(yaw);
     }
-
-    //Getter
-    public float Yaw => yaw;
 }

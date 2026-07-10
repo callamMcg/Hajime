@@ -14,7 +14,8 @@ public class ReplayController : MonoBehaviour
     // Trackers
     public bool IsReplaying { get; private set; }
     private ReplayFrame liveFrame; // the paused moment, restored on exit
-    private float playhead;        // seconds from the start of the buffer
+    private float playhead; // seconds from the start of the buffer
+    private float speed = 1; 
 
     //------------------Unity Functions------------------//
     /* UPDATE - the playback
@@ -27,7 +28,7 @@ public class ReplayController : MonoBehaviour
         if (!IsReplaying) return;
 
         // 1
-        playhead += Time.unscaledDeltaTime;
+        playhead += Time.unscaledDeltaTime * speed;
 
         // 2
         float duration = recorder.Duration;
@@ -78,6 +79,23 @@ public class ReplayController : MonoBehaviour
         // 3
         Apply(liveFrame);
     }
+
+    public void TogglePlay()
+    {
+        IsReplaying = !IsReplaying;
+    }
+
+    public void FastForward()
+    {
+        if (speed < 1) speed = 1;
+        else if (speed == 1) speed = 2;
+    }
+    public void SlowDown()
+    {
+        if (speed > 1) speed = 1;
+        else if (speed == 1) speed = 0.5f;
+    }
+    public string SpeedDisplay => "x"+ speed.ToString();
 
     //------------------Private Functions------------------//
     /* APPLY

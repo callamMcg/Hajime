@@ -1070,7 +1070,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""71f81a2b-62d6-43e1-9829-ee49d4ca80f0"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1093,7 +1093,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""40f3f423-273f-4aaf-9b5a-4e2f11adaa33"",
                     ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
+                    ""interactions"": ""MultiTap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Rewind"",

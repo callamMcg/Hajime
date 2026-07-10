@@ -13,7 +13,7 @@ public class InputReader : MonoBehaviour
     public event Action Cancel;  // from ui
     
     // from replay
-    public event Action Play;  
+    public event Action VideoPlay;  
     public event Action FastForward;  
     public event Action SlowMotion;
     public event Action Rewind;  
@@ -147,7 +147,7 @@ public class InputReader : MonoBehaviour
     //One Time
     private void OnPause(InputAction.CallbackContext ctx) => Pause?.Invoke();
     private void OnCancel(InputAction.CallbackContext ctx) => Cancel?.Invoke();
-    private void OnPlay(InputAction.CallbackContext ctx) => Play?.Invoke();
+    private void OnPlay(InputAction.CallbackContext ctx) => VideoPlay?.Invoke();
     private void OnFastForward(InputAction.CallbackContext ctx) => FastForward?.Invoke();
     private void OnSlowMotion(InputAction.CallbackContext ctx) => SlowMotion?.Invoke();
     private void OnRewind(InputAction.CallbackContext ctx) => Rewind?.Invoke();

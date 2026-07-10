@@ -1941,6 +1941,11 @@ MonoBehaviour:
     Target: {fileID: 0}
   opponent: {fileID: 0}
   balanceLimits: {x: 30, y: 0, z: 30}
+  fallDuration: 0.7
+  fallPitch: -10
+  fallRoll: 90
+  fallenHeight: 0.3
+  fallDrift: 0.5
 --- !u!114 &4529660150471671152
 MonoBehaviour:
   m_ObjectHideFlags: 0
