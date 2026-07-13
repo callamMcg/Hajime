@@ -62,6 +62,7 @@ public class Uke : Judoka
         {
             case UkeState.Fighting: Fight(); break;
             case UkeState.Swept: base.Update(); body.SetLean(sweptLean); break;
+            case UkeState.Pressed: PressStep(); break;
             case UkeState.Falling: FallStep(); break;
             case UkeState.Fallen: break;
         }
@@ -71,6 +72,7 @@ public class Uke : Judoka
     // Tori's pull lands as a lean input (only integrated while Fighting)
     public void Pull(Vector2 pull)
     {
+        if (state != UkeState.Fighting) return; // once a technique owns uke, its pull is not the player's raw input
         Vector2 p = Vector2.right * pull.x;
         p += Vector2.up * Mathf.Abs(pull.x) / 4;
         balance.SetBalance(p);
@@ -94,9 +96,28 @@ public class Uke : Judoka
      */
     public void Recover()
     {
-        if (state != UkeState.Swept) return;
-        balance.AdoptLean(sweptLean);
-        state = UkeState.Fighting;
+        if (state == UkeState.Swept)
+        {
+            balance.AdoptLean(sweptLean);
+            state = UkeState.Fighting;
+        }
+        else if (state == UkeState.Pressed)
+        {
+            // the spring already holds uke's real lean - just hand control back
+            state = UkeState.Fighting;
+        }
+    }
+
+    /* PRESS - technique control
+     * The technique pulls on uke while his feet are pinned. Unlike Tip, the
+     * balance spring is left running, so uke resists and his own lean builds
+     * against the pull; the technique watches for it to pass the limit.
+     */
+    public void Press(Vector2 pull)
+    {
+        if (state == UkeState.Falling || state == UkeState.Fallen) return;
+        state = UkeState.Pressed;
+        balance.SetBalance(pull);
     }
 
     /* FALL - the point of no return
@@ -138,6 +159,18 @@ public class Uke : Judoka
         body.SetPlanar(pivot + dir * startingRadius);
     }
 
+    /* PRESS STEP - the pulled judoka, resisting on pinned feet
+     * The spring integrates the technique's pull, but the step reflex and
+     * the radius hold are dropped: uke cannot step out from under the pull,
+     * he can only resist it with the spring until it breaks him or spends
+     * itself and he is let go.
+     */
+    private void PressStep()
+    {
+        base.Update();   // clock, height, keep facing tori
+        balance.Step();  // integrate the pull against the spring
+    }
+
     /* FALL STEP
      * 1 - Advance and ease the fall timer
      * 2 - Rotate onto the back and toward the swept side, sinking to the mat
@@ -170,4 +203,26 @@ public class Uke : Judoka
 
     //------------------Getters------------------//
     public UkeState State => state;
+
+    // Current balance lean (pitch x, roll z) - the accumulated result of
+    // tori's pull, read by a technique to weigh the pull's direction
+    public Vector3 Lean => balance.GetLean();
+
+    // True once the lateral lean has been driven to (near) its limit - the
+    // point a pulling technique considers uke broken
+    public bool PastLateralLimit(float fraction = 1f) => Mathf.Abs(balance.NormalisedLean().z) >= fraction;
+
+    /* PULL OPPOSES SWEEP
+ * The sweep topples uke toward a roll of sign -sweptSign (see the Tip
+ * call, -sweptSign * tipRoll). A de ashi barai wants the pull leaning
+ * uke that same way; a pull leaning him the other way makes it a hiza
+ * guruma. A pull weaker than the tolerance has no clear side, so it is
+ * not counted as opposition and the foot sweep goes ahead.
+ */
+    public bool PullOpposesSweep(float sweep, float pull)
+    {
+        if (sweep * pull < 0)
+            return true;
+        return false;
+    }
 }

@@ -395,6 +395,18 @@ public class FootManager : MonoBehaviour
         foot.state = FootState.Based;
     }
 
+    /* KNOCK - a pinned foot is struck and slides to a new point
+     * Stays Based (still load bearing, still will not lift) but the point it
+     * is load bearing at moves - used when a technique's sweeping leg makes
+     * contact with this one and carries it along
+     */
+    public void Knock(FootId id, Vector3 position)
+    {
+        Foot foot = Get(id);
+        if (foot.state != FootState.Based) return;
+        foot.planted = position;
+    }
+
     // Give both feet to a fall: nothing drives them, so the targets ride the
     // body they are parented to and the legs follow it down
     public void Limp()

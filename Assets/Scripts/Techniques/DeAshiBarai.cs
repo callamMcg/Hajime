@@ -5,9 +5,12 @@ using UnityEngine;
 /// Reaching: the sweeping foot chases uke's leg (FootManager's Swept state).
 /// On contact the timing is judged: a grounded foot is load bearing, so the
 /// sweep bounces off and fails; a foot that cannot reach the floor is caught.
-/// Executing: the caught foot is seized and carried across to uke's support
-/// foot while his body tips over the closing gap. Arriving is the point of
-/// no return - uke falls onto his back and tori's feet are sent home.
+/// Executing: the caught foot is seized and carried across toward uke's
+/// support foot while his body tips over the closing gap. Partway across, the
+/// carried foot strikes the support foot: it is knocked onward in the
+/// direction of the sweep, so the throw reads as one leg genuinely taking the
+/// other out rather than the two feet simply meeting. Arriving is the point
+/// of no return - uke falls onto his back and tori's feet are sent home.
 /// </summary>
 public class DeAshiBarai : Technique
 {
@@ -20,6 +23,19 @@ public class DeAshiBarai : Technique
     [SerializeField] private float tipPitch = -20f;      // backward pitch fed to uke at full sweep (negative is onto the back)
     [SerializeField] private float tipRoll = 25f;        // roll toward the swept side at full sweep
 
+    // Knock - the support foot's reaction when the carried foot reaches it
+    [SerializeField] private float knockRadius = 0.15f;   // carried-to-support distance that counts as a strike
+    [SerializeField] private float knockDistance = 0.35f; // how far the support foot is knocked
+    [SerializeField] private float knockDuration = 0.15f; // seconds the knock takes to land
+
+    // Direction - the pull judged against the sweep at the moment of contact
+    [SerializeField] private float directionTolerance = 3f;      // roll (degrees) below which the pull is too weak to read a side from
+    [SerializeField] private bool invertDirectionCheck = false;  // flip if a matching pull reads as opposing in play
+
+    // Fired when the pull fights the sweep: this reach is a hiza guruma, not
+    // a de ashi barai. Tori listens and hands the side to that technique.
+    public event System.Action<FootId> Redirect;
+
     // Trackers
     private FootId side;       // tori's sweeping foot
     private FootId caught;     // uke's swept foot - the mirror of side, as wired in the scene
@@ -27,6 +43,11 @@ public class DeAshiBarai : Technique
     private float sweptSign;   // -1 uke's left foot is caught, +1 his right
     private float sweepT;      // 0-1 through the carry
     private Vector3 sweepFrom; // where the caught foot was seized
+    private Vector3 sweepTo;   // where the support foot stood when the carry began - a fixed anchor, so knocking the support foot later doesn't drag the carry off course
+    private bool knocked;      // the carried foot has already struck the support foot this sweep
+    private float knockT;      // 0-1 through the knock
+    private Vector3 knockFrom; // support foot's position the instant it was struck
+    private Vector3 knockTo;   // where the strike sends it
 
     //------------------Public Functions------------------//
     /* BEGIN
@@ -93,18 +114,36 @@ public class DeAshiBarai : Technique
             return;
         }
 
+        // 2.5 - the pull must agree with the sweep. A pull that fights it
+        //       means the weight is committed the wrong way to foot-sweep:
+        //       the leg rides up to the shin and hiza guruma wheels instead
+        if (PullOpposesSweep())
+        {
+            Fail();
+            return;
+        }
+
         // 3
         ctx.ukeFeet.Hold(caught);
         ctx.ukeFeet.Pin(support);
         sweepFrom = ctx.ukeFeet.Get(caught).target.position;
+        sweepTo = ctx.ukeFeet.Get(support).target.position;
         sweepT = 0f;
+        knocked = false;
         CurrentPhase = Phase.Executing;
     }
 
     /* SWEEP
-     * 1 - Carry the caught foot across to the live support foot
-     * 2 - Tip uke over the closing gap, in proportion to the carry
-     * 3 - Arrival is the point of no return: uke falls onto his back (his
+     * 1 - Carry the caught foot across toward the anchored support point
+     * 2 - Contact: once the carry closes to knockRadius of the support foot,
+     *     it is struck for the first time - knocked onward along the sweep's
+     *     own direction of travel, so the impact looks like it came from the
+     *     collision rather than an arbitrary shove
+     * 3 - Play the knock out over its own short duration, independent of the
+     *     carry, so it reads as a distinct impact rather than the two feet
+     *     drifting together
+     * 4 - Tip uke over the closing gap, in proportion to the carry
+     * 5 - Arrival is the point of no return: uke falls onto his back (his
      *     feet ride the fall from inside Fall), tori's feet are sent home,
      *     and the technique scores
      */
@@ -113,13 +152,32 @@ public class DeAshiBarai : Technique
         // 1
         sweepT = Mathf.Min(sweepT + dt / sweepDuration, 1f);
         float ease = sweepT * sweepT * (3f - 2f * sweepT);
-        Vector3 to = ctx.ukeFeet.Get(support).target.position;
-        ctx.ukeFeet.PlaceHeld(caught, Vector3.Lerp(sweepFrom, to, ease));
+        Vector3 carried = Vector3.Lerp(sweepFrom, sweepTo, ease);
+        ctx.ukeFeet.PlaceHeld(caught, carried);
 
         // 2
-        ctx.uke.Tip(new Vector3(tipPitch, 0f, -sweptSign * tipRoll) * ease);
+        if (!knocked && Vector3.Distance(carried, sweepTo) <= knockRadius)
+        {
+            knocked = true;
+            Vector3 travel = sweepTo - sweepFrom; travel.y = 0f;
+            Vector3 dir = travel.sqrMagnitude > 0.0001f ? travel.normalized : ctx.tori.transform.forward;
+            knockFrom = sweepTo;
+            knockTo = sweepTo + dir * knockDistance;
+            knockT = 0f;
+        }
 
         // 3
+        if (knocked)
+        {
+            knockT = Mathf.Min(knockT + dt / knockDuration, 1f);
+            float knockEase = knockT * knockT * (3f - 2f * knockT);
+            ctx.ukeFeet.Knock(support, Vector3.Lerp(knockFrom, knockTo, knockEase));
+        }
+
+        // 4
+        ctx.uke.Tip(new Vector3(tipPitch, 0f, -sweptSign * tipRoll) * ease);
+
+        // 5
         if (sweepT >= 1f)
         {
             ctx.uke.Fall(sweptSign);
@@ -127,4 +185,21 @@ public class DeAshiBarai : Technique
             Score();
         }
     }
+
+    /* PULL OPPOSES SWEEP
+     * The sweep topples uke toward a roll of sign -sweptSign (see the Tip
+     * call, -sweptSign * tipRoll). A de ashi barai wants the pull leaning
+     * uke that same way; a pull leaning him the other way makes it a hiza
+     * guruma. A pull weaker than the tolerance has no clear side, so it is
+     * not counted as opposition and the foot sweep goes ahead.
+     */
+    private bool PullOpposesSweep()
+    {
+        float sweepRoll = -sweptSign;     
+        float pullRoll = ctx.uke.Lean.z;  
+        if((pullRoll < 0 && sweepRoll < 0) || (pullRoll > 0 && sweepRoll > 0))
+            return true;
+        return false;
+    }
+
 }

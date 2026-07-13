@@ -10,6 +10,7 @@ public class Tori : Judoka
 
     // Techniques
     [SerializeField] private DeAshiBarai deAshiBarai;
+    [SerializeField] private Technique hizaGuruma; // typed as the base so it can be wired before the concrete class exists
     private Technique active;      // the technique currently running, if any
     private bool sweepArmed = true; // the button must be released between attempts
 
@@ -37,6 +38,10 @@ public class Tori : Judoka
             ukeFeet = opponent.GetComponent<FootManager>(),
         };
         deAshiBarai.Initialise(ctx);
+        if (hizaGuruma != null) hizaGuruma.Initialise(ctx);
+
+        // 3 - a de ashi barai whose pull fights the sweep becomes a hiza guruma
+        deAshiBarai.Redirect += OnRedirect;
     }
 
     /* UPDATE
@@ -97,6 +102,26 @@ public class Tori : Judoka
         sweepArmed = false;
         technique.Begin(side);
         active = technique;
+    }
+
+    /* ON REDIRECT
+     * De ashi barai bowed out because the pull fought the sweep. Hand the
+     * same side to hiza guruma, which finds the shin and wheels uke over it.
+     * Until that technique is wired, free the still-swept foot so the reach
+     * simply misses.
+     */
+    private void OnRedirect(FootId side)
+    {
+        if (hizaGuruma != null)
+        {
+            hizaGuruma.Begin(side);
+            active = hizaGuruma;
+        }
+        else
+        {
+            feet.Free();
+            active = null;
+        }
     }
 
     private void Move()

@@ -22,7 +22,8 @@ public enum FootState
 public enum UkeState
 {
     Fighting, // live: balance spring, step reflex, radius hold
-    Swept,    // a technique owns the lean; the spring is bypassed
+    Swept,    // a technique owns the lean directly; the spring is bypassed
+    Pressed,  // a technique pulls while the spring still runs; feet pinned, no stepping
     Falling,  // the scripted fall is in flight
     Fallen    // flat on the mat, holding the final pose
 }
