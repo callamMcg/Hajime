@@ -24,6 +24,7 @@ public class FootManager : MonoBehaviour
         public Transform legRoot;     // hip joint, the same transform the leg's solver uses as its root
         public Transform target;      // the IK end target this manager drives
         public Transform sweepTarget; // the opponent's leg, chased while sweeping
+        public Transform throwTarget; // the opponent's leg, chased while sweeping
 
         // Trackers
         [HideInInspector] public float side;         // -1 left, +1 right
@@ -229,6 +230,11 @@ public class FootManager : MonoBehaviour
                     }
                     return;
                 }
+            case FootState.Reaping:
+                {
+                    foot.target.position = Vector3.Lerp(foot.target.position, foot.throwTarget.position, 10f * dt);
+                    return;
+                }
             case FootState.Hovering:
                 {
                     // dangle beneath the hip
@@ -363,7 +369,20 @@ public class FootManager : MonoBehaviour
             basing.state = FootState.Based;
         }
     }
+    // Reap with one foot toward its throwTarget while the other bases - a hip
+    // throw's entry, kept separate from Sweep so the sweeps' sweepTarget is untouched
+    public void Reap(FootId id)
+    {
+        Foot reaping = Get(id);
+        Foot basing = Get(id == FootId.Left ? FootId.Right : FootId.Left);
 
+        reaping.state = FootState.Reaping;
+        if (basing.state != FootState.Based)
+        {
+            if (!basing.IsGrounded) basing.planted = basing.hasHome ? basing.home : basing.target.position;
+            basing.state = FootState.Based;
+        }
+    }
     /* HOLD - the opponent's technique seizes this foot
      * It is pinned where it stands until PlaceHeld moves it. A held foot is
      * not grounded: it is being dragged, not load bearing, so it can neither
@@ -423,7 +442,7 @@ public class FootManager : MonoBehaviour
     {
         foreach (Foot foot in feet)
         {
-            if (foot.state == FootState.Swept || foot.state == FootState.Held || foot.state == FootState.Limp)
+            if (foot.state == FootState.Swept || foot.state == FootState.Held || foot.state == FootState.Limp || foot.state == FootState.Reaping)
                 foot.state = FootState.Hovering;
             else if (foot.state == FootState.Based)
                 foot.state = FootState.Planted;

@@ -12,7 +12,7 @@ public abstract class Judoka : MonoBehaviour
     protected Facing facing;
     protected PolarMovement movement;
     protected Gait gait;
-
+   
     //Limbs
     [SerializeField] protected IKContext leftLeg;
     [SerializeField] protected IKContext rightLeg;
@@ -26,6 +26,11 @@ public abstract class Judoka : MonoBehaviour
     // Stats
     [SerializeField] protected Vector3 balanceLimits;
 
+    //Tracker
+    private float lookAngle;
+    private float lookAngleTarget;
+    public float LookAngle => lookAngle;
+    public void SetLookAngle(float deg) { lookAngleTarget = deg; }
 
     //------------------Unity Functions------------------//
 
@@ -47,7 +52,8 @@ public abstract class Judoka : MonoBehaviour
     {
         gait.Tick();
         body.SetHeight(gait.Height());
-        facing.LookAt(opponent);
+        lookAngle = Mathf.Lerp(lookAngle, lookAngleTarget, Time.deltaTime * 3);
+        facing.LookAt(opponent, lookAngle);
     }
 
     //------------------Replay Functions------------------//

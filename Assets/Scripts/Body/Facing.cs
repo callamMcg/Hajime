@@ -20,12 +20,12 @@ public class Facing : MonoBehaviour
 
     //------------------Public Functions------------------//
     // turn to face a target around y only, then push the yaw 
-    public void LookAt(Transform target)
+    public void LookAt(Transform target, float lookAngle = 0)
     {
         Vector3 offset = target.position - transform.position;
         offset.y = 0f;
         offset = offset.normalized;
         yaw = Mathf.Atan2(offset.x, offset.z) * Mathf.Rad2Deg;
-        body.SetYaw(yaw);
+        body.SetYaw(yaw + lookAngle);
     }
 }

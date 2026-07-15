@@ -3,26 +3,16 @@ using UnityEngine;
 
 public abstract class Technique : MonoBehaviour
 {
-    //------------------Phase------------------//
-    // The spine every technique shares; what happens inside each phase is the
-    // technique's own business
-    public enum Phase
-    {
-        Inactive, // idle, ready to Begin
-        Reaching, // moving into position - can still be cancelled
-        Executing // committed - plays out to a Score or a Fail
-    }
-
     //------------------Variables------------------//
     // Trackers
-    public Phase CurrentPhase { get; protected set; } = Phase.Inactive;
-    public bool IsRunning => CurrentPhase != Phase.Inactive;
+    public TechniquePhase CurrentPhase { get; protected set; } = TechniquePhase.Inactive;
+    public bool IsRunning => CurrentPhase != TechniquePhase.Inactive;
 
-    // Outcomes - Tori and the match flow listen to these
-    public event Action Scored; // the throw landed: uke is falling
-    public event Action Failed; // the attempt broke off
+    // Outcomes - Tori and uke listen to these
+    public event Action Scored; 
+    public event Action Failed; 
 
-    // The seams this technique is allowed to act through
+    //Contains the tori, uke and their foot mangers
     protected TechniqueContext ctx;
 
     //------------------Public Functions------------------//
@@ -35,11 +25,14 @@ public abstract class Technique : MonoBehaviour
     // Driven from Tori's Update while running
     public abstract void Tick(float dt);
 
-    // Input released: only honoured while Reaching - Executing is a commitment
+    // Return to normal
     public abstract void Cancel();
+
+    //Checks if the uke can be tripped by this technique
+    public abstract bool Check();
 
     //------------------Protected Functions------------------//
     // The two exits - concrete techniques call these, and nothing else ends a run
-    protected void Score() { CurrentPhase = Phase.Inactive; Scored?.Invoke(); }
-    protected void Fail() { CurrentPhase = Phase.Inactive; Failed?.Invoke(); }
+    protected void Score() { CurrentPhase = TechniquePhase.Inactive; Scored?.Invoke(); }
+    protected void Fail() { CurrentPhase = TechniquePhase.Inactive; Failed?.Invoke(); }
 }

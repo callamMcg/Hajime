@@ -136,6 +136,24 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""204626b5-2c68-4ae8-9e40-cd23139cb9a0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c35461c-6019-4c2b-97ac-ff27ee9e4d2d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -345,6 +363,50 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RightSweep"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c67b6bb-226f-44bc-80d7-8186f51cde33"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37bb72c3-637f-4d46-847f-ea01638858ef"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""110aa744-8049-4f48-a28e-fb2455fd038e"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd0a9cf2-2ddd-46a4-a656-6f62ce63451f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftThrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1228,6 +1290,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_LeftSweep = m_Gameplay.FindAction("LeftSweep", throwIfNotFound: true);
         m_Gameplay_RightSweep = m_Gameplay.FindAction("RightSweep", throwIfNotFound: true);
+        m_Gameplay_RightThrow = m_Gameplay.FindAction("RightThrow", throwIfNotFound: true);
+        m_Gameplay_LeftThrow = m_Gameplay.FindAction("LeftThrow", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1336,6 +1400,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_LeftSweep;
     private readonly InputAction m_Gameplay_RightSweep;
+    private readonly InputAction m_Gameplay_RightThrow;
+    private readonly InputAction m_Gameplay_LeftThrow;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -1367,6 +1433,14 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/RightSweep".
         /// </summary>
         public InputAction @RightSweep => m_Wrapper.m_Gameplay_RightSweep;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/RightThrow".
+        /// </summary>
+        public InputAction @RightThrow => m_Wrapper.m_Gameplay_RightThrow;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/LeftThrow".
+        /// </summary>
+        public InputAction @LeftThrow => m_Wrapper.m_Gameplay_LeftThrow;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1408,6 +1482,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @RightSweep.started += instance.OnRightSweep;
             @RightSweep.performed += instance.OnRightSweep;
             @RightSweep.canceled += instance.OnRightSweep;
+            @RightThrow.started += instance.OnRightThrow;
+            @RightThrow.performed += instance.OnRightThrow;
+            @RightThrow.canceled += instance.OnRightThrow;
+            @LeftThrow.started += instance.OnLeftThrow;
+            @LeftThrow.performed += instance.OnLeftThrow;
+            @LeftThrow.canceled += instance.OnLeftThrow;
         }
 
         /// <summary>
@@ -1434,6 +1514,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @RightSweep.started -= instance.OnRightSweep;
             @RightSweep.performed -= instance.OnRightSweep;
             @RightSweep.canceled -= instance.OnRightSweep;
+            @RightThrow.started -= instance.OnRightThrow;
+            @RightThrow.performed -= instance.OnRightThrow;
+            @RightThrow.canceled -= instance.OnRightThrow;
+            @LeftThrow.started -= instance.OnLeftThrow;
+            @LeftThrow.performed -= instance.OnLeftThrow;
+            @LeftThrow.canceled -= instance.OnLeftThrow;
         }
 
         /// <summary>
@@ -1931,6 +2017,20 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightSweep(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightThrow(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftThrow(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

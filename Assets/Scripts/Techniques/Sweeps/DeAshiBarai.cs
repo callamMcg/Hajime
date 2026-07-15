@@ -48,6 +48,7 @@ public class DeAshiBarai : Technique
     private float knockT;      // 0-1 through the knock
     private Vector3 knockFrom; // support foot's position the instant it was struck
     private Vector3 knockTo;   // where the strike sends it
+    [SerializeField] private float threshold;
 
     //------------------Public Functions------------------//
     /* BEGIN
@@ -68,7 +69,7 @@ public class DeAshiBarai : Technique
 
         // 2
         ctx.toriFeet.Sweep(side);
-        CurrentPhase = Phase.Reaching;
+        CurrentPhase = TechniquePhase.Reaching;
     }
 
     // One branch per phase, driven from Tori's Update
@@ -76,18 +77,22 @@ public class DeAshiBarai : Technique
     {
         switch (CurrentPhase)
         {
-            case Phase.Reaching: Reach(); break;
-            case Phase.Executing: Sweep(dt); break;
+            case TechniquePhase.Reaching: Reach(); break;
+            case TechniquePhase.Executing: Sweep(dt); break;
         }
     }
+    public override bool Check()
+    {
+        return ctx.uke.GetHeight > threshold;
 
+    }
     /* CANCEL
      * Only Reaching can be broken off - once the foot is caught the
      * technique is a commitment and plays out
      */
     public override void Cancel()
     {
-        if (CurrentPhase != Phase.Reaching) return;
+        if (CurrentPhase != TechniquePhase.Reaching) return;
         ctx.toriFeet.Free();
         Fail();
     }
@@ -107,18 +112,10 @@ public class DeAshiBarai : Technique
         if (Vector3.Distance(sweeper.target.position, sweeper.sweepTarget.position) > contactRadius) return;
 
         // 2
-        if (ctx.ukeFeet.Get(caught).IsGrounded)
+        if (ctx.uke.GetHeight > threshold)
         {
+            Debug.Log(ctx.uke.GetHeight);
             ctx.toriFeet.Free();
-            Fail();
-            return;
-        }
-
-        // 2.5 - the pull must agree with the sweep. A pull that fights it
-        //       means the weight is committed the wrong way to foot-sweep:
-        //       the leg rides up to the shin and hiza guruma wheels instead
-        if (PullOpposesSweep())
-        {
             Fail();
             return;
         }
@@ -130,7 +127,7 @@ public class DeAshiBarai : Technique
         sweepTo = ctx.ukeFeet.Get(support).target.position;
         sweepT = 0f;
         knocked = false;
-        CurrentPhase = Phase.Executing;
+        CurrentPhase = TechniquePhase.Executing;
     }
 
     /* SWEEP
@@ -184,22 +181,6 @@ public class DeAshiBarai : Technique
             ctx.toriFeet.Free();
             Score();
         }
-    }
-
-    /* PULL OPPOSES SWEEP
-     * The sweep topples uke toward a roll of sign -sweptSign (see the Tip
-     * call, -sweptSign * tipRoll). A de ashi barai wants the pull leaning
-     * uke that same way; a pull leaning him the other way makes it a hiza
-     * guruma. A pull weaker than the tolerance has no clear side, so it is
-     * not counted as opposition and the foot sweep goes ahead.
-     */
-    private bool PullOpposesSweep()
-    {
-        float sweepRoll = -sweptSign;     
-        float pullRoll = ctx.uke.Lean.z;  
-        if((pullRoll < 0 && sweepRoll < 0) || (pullRoll > 0 && sweepRoll > 0))
-            return true;
-        return false;
     }
 
 }

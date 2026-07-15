@@ -30,6 +30,8 @@ public struct BodyPose
     public float height;
     public Vector3 lean;
     public float yaw;
+    public bool useWorldRotation;   
+    public Quaternion worldRotation;
 }
 
 public struct LimbPose

@@ -11,6 +11,7 @@ public class Tori : Judoka
     // Techniques
     [SerializeField] private DeAshiBarai deAshiBarai;
     [SerializeField] private Technique hizaGuruma; // typed as the base so it can be wired before the concrete class exists
+    [SerializeField] private HaraiGoshi haraiGoshi;
     private Technique active;      // the technique currently running, if any
     private bool sweepArmed = true; // the button must be released between attempts
 
@@ -38,8 +39,8 @@ public class Tori : Judoka
             ukeFeet = opponent.GetComponent<FootManager>(),
         };
         deAshiBarai.Initialise(ctx);
-        if (hizaGuruma != null) hizaGuruma.Initialise(ctx);
-
+        hizaGuruma.Initialise(ctx);
+        haraiGoshi.Initialise(ctx);
         // 3 - a de ashi barai whose pull fights the sweep becomes a hiza guruma
         deAshiBarai.Redirect += OnRedirect;
     }
@@ -63,12 +64,22 @@ public class Tori : Judoka
             case AttackSM.rightSweep:
                 move = Vector2.zero;
                 pull = InputReader.Instance.Pull;
-                TryBegin(deAshiBarai, FootId.Right);
+                TryBegin(ChooseSweep(1), FootId.Right);
                 break;
             case AttackSM.leftSweep:
                 move = Vector2.zero;
                 pull = InputReader.Instance.Pull;
-                TryBegin(deAshiBarai, FootId.Left);
+                TryBegin(ChooseSweep(-1), FootId.Left);
+                break;
+            case AttackSM.rightThrow:
+                move = Vector2.zero;
+                pull = InputReader.Instance.Pull;
+                TryBegin(haraiGoshi, FootId.Right);
+                break;
+            case AttackSM.leftThrow:
+                move = Vector2.zero;
+                pull = InputReader.Instance.Pull;
+                TryBegin(haraiGoshi, FootId.Left);
                 break;
             default:
                 move = InputReader.Instance.Move;
@@ -90,6 +101,15 @@ public class Tori : Judoka
     }
 
     //------------------Private Functions------------------//
+
+    private Technique ChooseSweep(float sweepSide)
+    {
+        if (pull.x * sweepSide < 0)
+            return deAshiBarai;
+        else
+            return hizaGuruma;
+    }
+
     /* TRY BEGIN
      * One technique at a time, one attempt per press, and none once uke is
      * already beaten
@@ -123,7 +143,12 @@ public class Tori : Judoka
             active = null;
         }
     }
-
+    
+    public void SetDistance(float newDistance)
+    {
+        movement.SetDistance(newDistance);
+    }
+    public void SetLean(Vector3 lean) => body.SetLean(lean);
     private void Move()
     {
         float x = move.x;
@@ -135,5 +160,10 @@ public class Tori : Judoka
     private void Pull()
     {
         uke.Pull(pull);
+    }
+
+    public void SetLook(float deg)
+    {
+        SetLookAngle(deg);
     }
 }

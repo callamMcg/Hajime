@@ -22,17 +22,27 @@ public class Uke : Judoka
     [SerializeField] private float fallRoll = 90f;       // final roll toward the swept side - 90 lays him flat on his side
     [SerializeField] private float fallenHeight = 0.3f; // root height once flat - match the rig
     [SerializeField] private float fallDrift = 0.5f;    // metres the body slides backward through the fall
-
+    
+    // Vault - the rigid turn over tori's hip (harai goshi and friends)
+    [SerializeField] private float vaultDuration = 0.9f;                  // seconds from load to flat
+    [SerializeField, Range(0f, 1f)] private float vaultLandBlend = 0.85f; // fraction after which height eases to the mat
+    
     // Trackers
     private UkeState state = UkeState.Fighting;
     private float startingRadius;
+    private bool holdGround = true; // radius hold: maintain the starting distance from tori
     private Vector3 sweptLean;      // the lean a technique is commanding this frame
     private float fallSide;         // -1 the left foot was swept, +1 the right
     private float fallT;            // 0-1 through the fall
     private Vector3 fallFromLean;   // the pose the fall starts from
     private float fallFromHeight;
     private Vector2 fallFromPlanar;
-
+    private Vector3 vaultPivot;
+    private Vector3 vaultAxis;
+    private float vaultAngle;
+    private Vector3 vaultStartOffset;
+    private Quaternion vaultStartRot;
+    private float vaultT;
     // The moment the fall completes - the win flow listens for this
     public event System.Action Thrown;
 
@@ -64,6 +74,7 @@ public class Uke : Judoka
             case UkeState.Swept: base.Update(); body.SetLean(sweptLean); break;
             case UkeState.Pressed: PressStep(); break;
             case UkeState.Falling: FallStep(); break;
+            case UkeState.Vaulting: VaultStep(); break;
             case UkeState.Fallen: break;
         }
     }
@@ -84,7 +95,7 @@ public class Uke : Judoka
      */
     public void Tip(Vector3 lean)
     {
-        if (state == UkeState.Falling || state == UkeState.Fallen) return;
+        if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
         state = UkeState.Swept;
         sweptLean = lean;
     }
@@ -115,7 +126,7 @@ public class Uke : Judoka
      */
     public void Press(Vector2 pull)
     {
-        if (state == UkeState.Falling || state == UkeState.Fallen) return;
+        if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
         state = UkeState.Pressed;
         balance.SetBalance(pull);
     }
@@ -127,7 +138,7 @@ public class Uke : Judoka
      */
     public void Fall(float side)
     {
-        if (state == UkeState.Falling || state == UkeState.Fallen) return;
+        if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
 
         BodyPose pose = body.GetPose();
         fallFromLean = pose.lean;
@@ -139,6 +150,9 @@ public class Uke : Judoka
         feet.Limp();
         state = UkeState.Falling;
     }
+    // A closing technique turns off the range hold so tori can load the hip;
+    // it is handed back when the attempt ends
+    public void HoldGround(bool on) => holdGround = on;
 
     //------------------Private Functions------------------//
     /* FIGHT - the live judoka, exactly as before the technique layer
@@ -146,13 +160,14 @@ public class Uke : Judoka
      * 2 - Integrate the balance spring
      * 3 - Step toward safety, held at the starting distance from tori
      */
-    private void Fight()
+private void Fight()
     {
         // 1
         base.Update();
         // 2
         balance.Step();
-        // 3
+        // 3 - hold the starting distance from tori, unless a technique has released it
+        if (!holdGround) return;
         Vector2 pivot = new Vector2(opponent.transform.position.x, opponent.transform.position.z);
         Vector2 stepped = body.Planar() + stepReflex.GetStep() * Time.deltaTime;
         Vector2 dir = (stepped - pivot).normalized;
@@ -200,7 +215,65 @@ public class Uke : Judoka
             Thrown?.Invoke();
         }
     }
+    /* HIP THROW - the point of no return for a hip throw
+     * Capture where uke stands relative to the pivot (tori's loading hip) and
+     * his current orientation, hand his feet to the fall so the legs ride the
+     * body over, and let Update turn him a full arc about tori's right axis.
+     */
+    public void HipThrow(Vector3 pivot, Vector3 axis, float angle)
+    {
+        if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
 
+        vaultPivot = pivot;
+        vaultAxis = axis.sqrMagnitude > 0.0001f ? axis.normalized : Vector3.right;
+        vaultAngle = angle;
+        vaultStartOffset = body.WorldPosition() - pivot;
+        vaultStartRot = transform.rotation;
+        vaultT = 0f;
+
+        feet.Limp();
+        state = UkeState.Vaulting;
+    }
+
+    /* VAULT STEP
+     * 1 - Advance and ease the vault timer
+     * 2 - Rotate uke rigidly about the pivot: his position orbits the hip and
+     *     his whole orientation turns by the same angle
+     * 3 - Over the last stretch, ease his height onto the mat so he lands flat
+     *     regardless of the arc's radius
+     * 4 - Write the pose, and on landing hold it and announce the throw
+     */
+    private void VaultStep()
+    {
+        // 1
+        float dt = Time.deltaTime;
+        vaultT = Mathf.Min(vaultT + dt / vaultDuration, 1f);
+        float ease = vaultT * vaultT * (3f - 2f * vaultT);
+
+        // 2
+        Quaternion turn = Quaternion.AngleAxis(vaultAngle * ease, vaultAxis);
+        Vector3 pos = vaultPivot + turn * vaultStartOffset;
+        Quaternion orient = turn * vaultStartRot;
+
+        // 3
+        if (vaultT > vaultLandBlend)
+        {
+            float b = Mathf.InverseLerp(vaultLandBlend, 1f, vaultT);
+            b = b * b * (3f - 2f * b);
+            pos.y = Mathf.Lerp(pos.y, fallenHeight, b);
+        }
+
+        // 4
+        body.SetPlanar(new Vector2(pos.x, pos.z));
+        body.SetHeight(pos.y);
+        body.SetWorldRotation(orient);
+
+        if (vaultT >= 1f)
+        {
+            state = UkeState.Fallen;
+            Thrown?.Invoke();
+        }
+    }
     //------------------Getters------------------//
     public UkeState State => state;
 
@@ -225,4 +298,6 @@ public class Uke : Judoka
             return true;
         return false;
     }
+
+    public float GetHeight => gait.Height();
 }
