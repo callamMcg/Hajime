@@ -921,15 +921,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Rewind",
-                    "type": "Button",
-                    "id": "14614858-f40a-4998-a0bb-75861008df75",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1057,33 +1048,11 @@
                 {
                     "name": "",
                     "id": "b1ebb149-0a87-43df-b849-f2576ee3c854",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SlowMotion",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "40f3f423-273f-4aaf-9b5a-4e2f11adaa33",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rewind",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "396b4438-dcb7-4fd4-b206-6af3c602792c",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rewind",
+                    "action": "SlowMotion",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

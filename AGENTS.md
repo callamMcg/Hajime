@@ -2,7 +2,7 @@
 - Project name: Hajime
 - Unity version: Unity 6000.4.5f1
 - Active game object:
-  - Name: Techniques
+  - Name: InputReader
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
