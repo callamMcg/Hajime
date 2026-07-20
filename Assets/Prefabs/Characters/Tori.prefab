@@ -849,7 +849,6 @@ GameObject:
   - component: {fileID: 2155043538886507260}
   - component: {fileID: 4794848548060346112}
   - component: {fileID: 8457196888569526478}
-  - component: {fileID: 391403811411524395}
   m_Layer: 0
   m_Name: Tori
   m_TagString: Untagged
@@ -870,6 +869,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8469953617993536086}
   - {fileID: 4437979591609834998}
   - {fileID: 3567117811069073398}
   - {fileID: 2958674424196473435}
@@ -958,7 +958,6 @@ MonoBehaviour:
   opponent: {fileID: 0}
   balanceLimits: {x: 10, y: 0, z: 10}
   feet: {fileID: 4184697372705908013}
-  arms: {fileID: 391403811411524395}
   deAshiBarai: {fileID: 2155043538886507260}
   hizaGuruma: {fileID: 2155043538886507260}
   haraiGoshi: {fileID: 8457196888569526478}
@@ -1113,40 +1112,7 @@ MonoBehaviour:
   standYawRate: 4
   throwAngle: 270
   invertRotation: 0
---- !u!114 &391403811411524395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637787722469242256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43bdccc6c9cfea84db81f3b87c21ca06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArmManager
-  left:
-    pole: {fileID: 8936767460775325404}
-    handTarget: {fileID: 858352662704014614}
-    holdAnchor: {fileID: 0}
-    restOffset: {x: 0, y: 0, z: 0}
-    restEuler: {x: 0, y: 0, z: 0}
-    side: 0
-  right:
-    pole: {fileID: 1300894402307001841}
-    handTarget: {fileID: 9139847736503883596}
-    holdAnchor: {fileID: 0}
-    restOffset: {x: 0, y: 0, z: 0}
-    restEuler: {x: 0, y: 0, z: 0}
-    side: 0
-  chest: {fileID: 5653987056406166511}
-  restReference: {fileID: 1123157052678948321}
-  poleForward: 0.35
-  poleRise: -0.05
-  poleOut: 0.18
-  holdRate: 12
-  settleRate: 8
-  poleRate: 10
+  landForward: 1
 --- !u!1 &2269533135605912829
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,13 +2997,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5185834074490916523}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31730464, y: -0, z: -0, w: 0.94832367}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0.1}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 4, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5317657087914224503}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 4428796474810664855}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!20 &7043791420683737343
 Camera:
   m_ObjectHideFlags: 0
@@ -3155,6 +3121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CombatCamera
   player: {fileID: 4428796474810664855}
   opponent: {fileID: 0}
+  leftShoulderOffset: {x: -0.5, y: 0.3, z: -0.4}
+  rightShoulderOffset: {x: 0.5, y: 0.3, z: -0.4}
   lookHeight: 1.9
   followSmoothing: 5
   shoulderSwapSmoothing: 8
@@ -3815,8 +3783,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.583, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8469953617993536086}
+  m_Children: []
   m_Father: {fileID: 704901738235495751}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4532414307697889405
