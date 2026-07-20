@@ -1834,7 +1834,6 @@ GameObject:
   - component: {fileID: 4529660150471671152}
   - component: {fileID: 8787871224515764470}
   - component: {fileID: 1269307910870927168}
-  - component: {fileID: 6367404578939684543}
   m_Layer: 0
   m_Name: Uke
   m_TagString: Untagged
@@ -2044,40 +2043,6 @@ MonoBehaviour:
   turnSpeed: 480
   placeDuration: 0.3
   placeLift: 0.14
---- !u!114 &6367404578939684543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4547554135280211586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43bdccc6c9cfea84db81f3b87c21ca06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArmManager
-  left:
-    pole: {fileID: 54045750571478269}
-    handTarget: {fileID: 3973668480124135714}
-    holdAnchor: {fileID: 0}
-    restOffset: {x: 0, y: 0, z: 0}
-    restEuler: {x: 0, y: 0, z: 0}
-    side: 0
-  right:
-    pole: {fileID: 633392608209042515}
-    handTarget: {fileID: 6244815078086884955}
-    holdAnchor: {fileID: 0}
-    restOffset: {x: 0, y: 0, z: 0}
-    restEuler: {x: 0, y: 0, z: 0}
-    side: 0
-  chest: {fileID: 5199459062239920643}
-  restReference: {fileID: 8922906527400781598}
-  poleForward: 0.35
-  poleRise: -0.05
-  poleOut: 0.18
-  holdRate: 12
-  settleRate: 8
-  poleRate: 10
 --- !u!1 &4744877244645048270
 GameObject:
   m_ObjectHideFlags: 0
