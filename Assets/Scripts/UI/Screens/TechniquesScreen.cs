@@ -6,6 +6,7 @@ public class TechniquesScreen : MenuScreen
     //----------Variables----------\\
     //List of techniques
     [SerializeField] private TechniqueInfo[] techniques;
+    int currentIndex = 0;
 
     //Text References
     [SerializeField] private TMP_Text nameLabel;
@@ -16,7 +17,35 @@ public class TechniquesScreen : MenuScreen
     //----------Override Functions----------\\
     protected override void OnEnter()
     {
-        if (techniques.Length > 0) Show(0);
+        currentIndex = 0;
+        if (techniques.Length > 0) Show(currentIndex);
+    }
+    float t = 0;
+    private void Update()
+    {
+        if(t > 0)
+        {
+            t -= Time.deltaTime;
+            return;
+        }
+        int newIndex = currentIndex;
+        float movement = InputReader.Instance.Navigate.x;
+        if (movement > 0)
+            newIndex++;
+        else if(movement  < 0)
+            newIndex--;
+
+        if (newIndex > techniques.Length - 1)
+            newIndex = 0;
+        else if(newIndex < 0)
+            newIndex = techniques.Length -1;
+
+        if(newIndex != currentIndex)
+        {
+            currentIndex = newIndex;
+            Show(currentIndex);
+            t = 1;
+        }
     }
 
     //----------Public Functions----------\\

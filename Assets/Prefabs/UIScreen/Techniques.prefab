@@ -105,7 +105,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.8
+  m_fontSize: 38.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -813,11 +813,26 @@ MonoBehaviour:
     description: forward foot sweep
     steps:
     - Pull the uke to cause them to step and bounce.
-    - As they step press kuzushi to lift the uke higher and off balance them.
-    - Soon after kuzushi, press sweep using the opposite side to the direction you
-      are pulling the uke.
-    - Hold the sweep until they tip past their balance and fall.
-    - IPPON!
+    - As they lift their foot trailing foot press and hold sweep the direction you
+      are pulling.
+    - Push their foot from under them until they fall.
+  - name: Hiza Guruma
+    jap: "\u819D\u8ECA"
+    description: Knee Wheel
+    steps:
+    - Pull the uke to cause them to step and bounce.
+    - As they plant their lead foot press and hold sweep against the direciton you
+      are pulling.
+    - Stop their foot from moving and pull them past their foot.
+  - name: Harai Goshi
+    jap: "\u6255\u8170"
+    description: Sweeping Hip Throw
+    steps:
+    - Pull the uke to cause them to step and bounce.
+    - As they lift their foot trailing foot press and throw the direction you are
+      pulling.
+    - Turn your back to your opponent and throw them over your hip as you sweep their
+      leg.
   nameLabel: {fileID: 6020586838892270284}
   japLabel: {fileID: 5273727797136827210}
   descriptionLabel: {fileID: 8724571625389906270}

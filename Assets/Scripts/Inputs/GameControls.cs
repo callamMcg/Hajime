@@ -1007,15 +1007,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Rewind"",
-                    ""type"": ""Button"",
-                    ""id"": ""14614858-f40a-4998-a0bb-75861008df75"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1143,33 +1134,11 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b1ebb149-0a87-43df-b849-f2576ee3c854"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SlowMotion"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""40f3f423-273f-4aaf-9b5a-4e2f11adaa33"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rewind"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""396b4438-dcb7-4fd4-b206-6af3c602792c"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Rewind"",
+                    ""action"": ""SlowMotion"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1312,7 +1281,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Replay_Play = m_Replay.FindAction("Play", throwIfNotFound: true);
         m_Replay_FastForward = m_Replay.FindAction("FastForward", throwIfNotFound: true);
         m_Replay_SlowMotion = m_Replay.FindAction("SlowMotion", throwIfNotFound: true);
-        m_Replay_Rewind = m_Replay.FindAction("Rewind", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -1758,7 +1726,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Replay_Play;
     private readonly InputAction m_Replay_FastForward;
     private readonly InputAction m_Replay_SlowMotion;
-    private readonly InputAction m_Replay_Rewind;
     /// <summary>
     /// Provides access to input actions defined in input action map "Replay".
     /// </summary>
@@ -1794,10 +1761,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Replay/SlowMotion".
         /// </summary>
         public InputAction @SlowMotion => m_Wrapper.m_Replay_SlowMotion;
-        /// <summary>
-        /// Provides access to the underlying input action "Replay/Rewind".
-        /// </summary>
-        public InputAction @Rewind => m_Wrapper.m_Replay_Rewind;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1842,9 +1805,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @SlowMotion.started += instance.OnSlowMotion;
             @SlowMotion.performed += instance.OnSlowMotion;
             @SlowMotion.canceled += instance.OnSlowMotion;
-            @Rewind.started += instance.OnRewind;
-            @Rewind.performed += instance.OnRewind;
-            @Rewind.canceled += instance.OnRewind;
         }
 
         /// <summary>
@@ -1874,9 +1834,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @SlowMotion.started -= instance.OnSlowMotion;
             @SlowMotion.performed -= instance.OnSlowMotion;
             @SlowMotion.canceled -= instance.OnSlowMotion;
-            @Rewind.started -= instance.OnRewind;
-            @Rewind.performed -= instance.OnRewind;
-            @Rewind.canceled -= instance.OnRewind;
         }
 
         /// <summary>
@@ -2159,12 +2116,5 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSlowMotion(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Rewind" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRewind(InputAction.CallbackContext context);
     }
 }

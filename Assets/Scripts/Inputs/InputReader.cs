@@ -24,6 +24,8 @@ public class InputReader : MonoBehaviour
 
     private Vector2 pull;
     public Vector2 Pull => pull;
+    private Vector2 navigate;
+    public Vector2 Navigate => navigate;
 
     private Vector2 replayMove;
     public Vector2 ReplayMove => replayMove;
@@ -62,6 +64,10 @@ public class InputReader : MonoBehaviour
         controls.Gameplay.Pause.performed += OnPause;
         controls.UI.Cancel.performed += OnCancel;
 
+        controls.UI.Navigate.performed += HandleNavigate;
+        controls.UI.Navigate.canceled += HandleNavigate;
+
+
         controls.Gameplay.Move.performed += HandleMove;
         controls.Gameplay.Move.canceled += HandleMove;
         controls.Gameplay.Pull.performed += HandlePull;
@@ -84,7 +90,6 @@ public class InputReader : MonoBehaviour
         controls.Replay.Play.performed += OnPlay;
         controls.Replay.FastForward.performed += OnFastForward;
         controls.Replay.SlowMotion.performed += OnSlowMotion;
-        controls.Replay.Rewind.performed += OnRewind;
 
         //3
         EnableUI(); 
@@ -101,6 +106,10 @@ public class InputReader : MonoBehaviour
         //2
         controls.Gameplay.Pause.performed -= OnPause;
         controls.UI.Cancel.performed -= OnCancel;
+
+
+        controls.UI.Navigate.performed -= HandleNavigate;
+        controls.UI.Navigate.canceled -= HandleNavigate;
 
         controls.Gameplay.Move.performed -= HandleMove;
         controls.Gameplay.Move.canceled -= HandleMove;
@@ -159,6 +168,7 @@ public class InputReader : MonoBehaviour
     //Constant
     private void HandleMove(InputAction.CallbackContext ctx) => move = ctx.ReadValue<Vector2>();
     private void HandlePull(InputAction.CallbackContext ctx) => pull = ctx.ReadValue<Vector2>();
+    private void HandleNavigate(InputAction.CallbackContext ctx) => navigate = ctx.ReadValue<Vector2>();
 
     private void HandleReplayMove(InputAction.CallbackContext ctx) => replayMove = ctx.ReadValue<Vector2>();
     private void HandleLeftSweep(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.leftSweep : AttackSM.standard;
