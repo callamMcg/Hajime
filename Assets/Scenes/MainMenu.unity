@@ -872,6 +872,106 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1859777190}
     m_Modifications:
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[1].jap
+      value: "\u819D\u8ECA"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[2].jap
+      value: "\u6255\u8170"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[1].name
+      value: Hiza Guruma
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[2].name
+      value: Harai Goshi
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[1].description
+      value: Knee Wheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[2].description
+      value: Sweeping Hip Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[0].steps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[1].steps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[2].steps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[0].steps.Array.data[1]'
+      value: As they lift their foot trailing foot press and hold sweep the direction
+        you are pulling.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[0].steps.Array.data[2]'
+      value: Push their foot from under them until they fall.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[0].steps.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[0].steps.Array.data[4]'
+      value: As they step press kuzushi to lift the uke higher and off balance them.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[1].steps.Array.data[0]'
+      value: Pull the uke to cause them to step and bounce.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[1].steps.Array.data[1]'
+      value: As they plant their lead foot press and hold sweep against the direciton
+        you are pulling.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[1].steps.Array.data[2]'
+      value: Stop their foot from moving and pull them past their foot.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[1].steps.Array.data[3]'
+      value: Ippon!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[1].steps.Array.data[4]'
+      value: As they step plant kuzushi to lift the uke higher and off balance them.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[2].steps.Array.data[0]'
+      value: Pull the uke to cause them to step and bounce.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[2].steps.Array.data[1]'
+      value: As they lift their foot trailing foot press and throw the direction
+        you are pulling.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[2].steps.Array.data[2]'
+      value: Turn your back to your opponent and throw them over your hip as you
+        sweep their leg.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[2].steps.Array.data[3]'
+      value: Hold the sweep until they tip past their balance and fall.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[2].steps.Array.data[4]'
+      value: IPPON!
+      objectReference: {fileID: 0}
     - target: {fileID: 7850408324154810294, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -956,6 +1056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Techniques
       objectReference: {fileID: 0}
+    - target: {fileID: 9087728230921887615, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_fontSize
+      value: 34.95
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -972,6 +1076,10 @@ PrefabInstance:
     - target: {fileID: 1411631508554428389, guid: 3296619d634a29541a6376d6a9c96b3c, type: 3}
       propertyPath: m_Name
       value: Controls
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411631508554428389, guid: 3296619d634a29541a6376d6a9c96b3c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8737359838089148517, guid: 3296619d634a29541a6376d6a9c96b3c, type: 3}
       propertyPath: m_Pivot.x
@@ -1069,6 +1177,10 @@ PrefabInstance:
     - target: {fileID: 5060922821950678206, guid: 7558df5c9b005624e9bef040cc3d6bd5, type: 3}
       propertyPath: m_Name
       value: PressStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060922821950678206, guid: 7558df5c9b005624e9bef040cc3d6bd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6878112346722915211, guid: 7558df5c9b005624e9bef040cc3d6bd5, type: 3}
       propertyPath: m_Pivot.x
@@ -1170,6 +1282,10 @@ PrefabInstance:
     - target: {fileID: 4177445669076040541, guid: 6bd1baad8d56ef647a9717ac95f37b75, type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4177445669076040541, guid: 6bd1baad8d56ef647a9717ac95f37b75, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4703732397526642710, guid: 6bd1baad8d56ef647a9717ac95f37b75, type: 3}
       propertyPath: optionsScreen
@@ -1278,47 +1394,51 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 141358974061665769, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 141358974061665769, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 574347250859038177, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 574347250859038177, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3173056548342552447, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 3173056548342552447, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3173056548342552447, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 3738827147984743305, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_Name
       value: Options
       objectReference: {fileID: 0}
+    - target: {fileID: 3738827147984743305, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5679127119662525058, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 5679127119662525058, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5679127119662525058, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.395
       objectReference: {fileID: 0}
     - target: {fileID: 5721371685982384033, guid: 0e597097879033d49a1f31d3ae103951, type: 3}
       propertyPath: m_Pivot.x
