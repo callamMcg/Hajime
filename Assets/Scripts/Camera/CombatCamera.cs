@@ -50,6 +50,8 @@ public class CombatCamera : MonoBehaviour
         }
         else
         {
+            if (InputReader.Instance.AttackState == AttackSM.standard)
+                ChangeTarget(opponent);
             UpdateTargetShoulder(move);
             UpdateTargetShoulder(pull);
         }

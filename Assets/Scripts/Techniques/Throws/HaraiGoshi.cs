@@ -69,6 +69,7 @@ public class HaraiGoshi : Technique
         // 2
         ctx.tori.SetLook(sign * turnAngle);
         ctx.tori.SetDistance(closeRadius);
+        ctx.tori.SetRadiusRecovery(true); // ease the distance in for the hip to load
         ctx.uke.HoldGround(false);
 
         // 3
@@ -203,6 +204,7 @@ public class HaraiGoshi : Technique
         ctx.tori.HoldPosition(false);
         ctx.tori.SetLook(0f);
         ctx.tori.SetDistance(standRadius);
+        ctx.tori.SetRadiusRecovery(false); // hold the radius while the gap re-settles, so tori doesn't zoom out chasing it
         ctx.uke.HoldGround(true);
         ctx.tori.SetLean(Vector3.zero);
     }

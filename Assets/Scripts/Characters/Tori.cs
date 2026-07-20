@@ -149,6 +149,9 @@ public class Tori : Judoka
     {
         movement.SetDistance(newDistance);
     }
+    // Suspend the polar radius easing (a cancelled throw resets the distance and
+    // must not drag tori around while the gap re-settles); re-enabled on the next throw
+    public void SetRadiusRecovery(bool on) => movement.SetRecovery(on);
     // Plant tori: while held, the polar movement is suspended so his hip stays
     // put as the pivot a throw turns over (handed back when the throw ends)
     public void HoldPosition(bool on) => holdPosition = on;
