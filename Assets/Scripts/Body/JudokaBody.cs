@@ -16,7 +16,8 @@ public class JudokaBody : MonoBehaviour
                           // (this could be put into one vector3 but I made the functionality at different times and its not needed)
     private Vector3 lean; // balance lean: pitch in x, roll in z
     private float yaw; // facing rotation around y
-
+    private bool useWorldRotation; // a technique has taken uke's whole orientation (e.g. a vault over the hip)
+    private Quaternion worldRotation;
     //------------------Unity Functions------------------//
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class JudokaBody : MonoBehaviour
         // 1
         transform.position = new Vector3(planar.x, height, planar.y);
         // 2
-        transform.rotation = Quaternion.Euler(lean.x, yaw, lean.z);
+        transform.rotation = useWorldRotation ? worldRotation : Quaternion.Euler(lean.x, yaw, lean.z);
     }
 
     //------------------Public Functions------------------//
@@ -47,7 +48,8 @@ public class JudokaBody : MonoBehaviour
     public void SetHeight(float y) { height = y; }
     public void SetLean(Vector3 amount) { lean = amount; }
     public void SetYaw(float degrees) { yaw = degrees; }
-
+    public void SetWorldRotation(Quaternion r) { useWorldRotation = true; worldRotation = r; }
+    public void ClearWorldRotation() { useWorldRotation = false; }
     /* APPLY POSE - the replay's entry point
      * Adopt the pose and write it through immediately, without waiting for
      * LateUpdate: the replay places limb targets in world space straight
@@ -61,12 +63,21 @@ public class JudokaBody : MonoBehaviour
         height = p.height;
         lean = p.lean;
         yaw = p.yaw;
+        useWorldRotation = p.useWorldRotation;
+        worldRotation = p.worldRotation;
         Write();
     }
 
     //Getters
-    public BodyPose GetPose() => new BodyPose { planar = planar, height = height, lean = lean, yaw = yaw };
-
+    public BodyPose GetPose() => new BodyPose
+    {
+        planar = planar,
+        height = height,
+        lean = lean,
+        yaw = yaw,
+        useWorldRotation = useWorldRotation,
+        worldRotation = worldRotation,
+    };
     public Vector2 Planar() { return planar; }
     public Vector3 WorldPosition() { return new Vector3(planar.x, height, planar.y); }
 }

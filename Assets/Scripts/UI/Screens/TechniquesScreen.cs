@@ -5,7 +5,7 @@ public class TechniquesScreen : MenuScreen
 {
     //----------Variables----------\\
     //List of techniques
-    [SerializeField] private Technique[] techniques;
+    [SerializeField] private TechniqueInfo[] techniques;
 
     //Text References
     [SerializeField] private TMP_Text nameLabel;

@@ -1,15 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Plays the recorder's buffer back through the judokas, then puts the fight
-/// back exactly as it was.
-/// While replaying, the Tori and Uke scripts are disabled so nothing pushes
-/// live state into the bodies - JudokaBody stays on, so the applied snapshots
-/// reach the transforms through the same single writer as gameplay.
-/// The design assumes the replay only ever runs under pause (timeScale 0):
-/// that is what freezes the recorder and every spring and clock, which is why
-/// the paused pose can be restored without saving any of their internal state.
-/// </summary>
 public class ReplayController : MonoBehaviour
 {
     //------------------Variables------------------//
@@ -24,7 +14,8 @@ public class ReplayController : MonoBehaviour
     // Trackers
     public bool IsReplaying { get; private set; }
     private ReplayFrame liveFrame; // the paused moment, restored on exit
-    private float playhead;        // seconds from the start of the buffer
+    private float playhead; // seconds from the start of the buffer
+    private float speed = 1; 
 
     //------------------Unity Functions------------------//
     /* UPDATE - the playback
@@ -37,7 +28,7 @@ public class ReplayController : MonoBehaviour
         if (!IsReplaying) return;
 
         // 1
-        playhead += Time.unscaledDeltaTime;
+        playhead += Time.unscaledDeltaTime * speed;
 
         // 2
         float duration = recorder.Duration;
@@ -88,6 +79,23 @@ public class ReplayController : MonoBehaviour
         // 3
         Apply(liveFrame);
     }
+
+    public void TogglePlay()
+    {
+        IsReplaying = !IsReplaying;
+    }
+
+    public void FastForward()
+    {
+        if (speed < 1) speed = 1;
+        else if (speed == 1) speed = 2;
+    }
+    public void SlowDown()
+    {
+        if (speed > 1) speed = 1;
+        else if (speed == 1) speed = 0.5f;
+    }
+    public string SpeedDisplay => "x"+ speed.ToString();
 
     //------------------Private Functions------------------//
     /* APPLY

@@ -57,7 +57,7 @@ public class ReplayRecorder : MonoBehaviour
     public ReplayFrame Latest => frames[^1];
 
     // Seconds of footage held
-    public float Duration => frames.Count < 2 ? 0f : frames[^1].time - frames[0].time;
+    public float Duration => frames.Count < 2 ? 0 : frames[^1].time - frames[0].time;
 
     /* INDEX AT TIME
      * Map seconds-from-the-start-of-the-buffer to a frame index.

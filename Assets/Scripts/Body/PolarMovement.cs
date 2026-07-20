@@ -62,4 +62,6 @@ public class PolarMovement : MonoBehaviour
         ground.y = pivot.position.z + radius * Mathf.Sin(rad);
         body.SetPlanar(ground);
     }
+
+    public void SetDistance(float distance) { restRadius = distance; }
 }

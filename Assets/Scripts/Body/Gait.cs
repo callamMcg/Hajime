@@ -1,13 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// The judoka's movement clock.
-/// Measures how fast the body is travelling and turning, turns that into a
-/// stride frequency, and integrates one 0-1 phase that the whole gait shares:
-/// the bob is a pure function of the phase, and the FootManager times both
-/// feet from the same value, so the feet and the bob can never fall out of time.
-/// </summary>
-
 [RequireComponent(typeof(JudokaBody))]
 public class Gait : MonoBehaviour
 {
@@ -16,25 +8,25 @@ public class Gait : MonoBehaviour
     private JudokaBody body;
 
     // Stride - speed into cadence
-    [SerializeField] private float strideLength = 0.45f;     // metres of travel per full cycle
-    [SerializeField] private float stanceRadius = 0.18f;     // converts turning speed into equivalent travel
-    [SerializeField] private float maxFrequency = 2.6f;      // cycles per second cap
-    [SerializeField] private float recoveryFrequency = 1.1f; // minimum cadence once a cycle has started
-    [SerializeField] private float smoothing = 6f;           // how quickly cadence and bob follow speed
+    [SerializeField] private float strideLength = 0.45f;
+    [SerializeField] private float stanceRadius = 0.18f;
+    [SerializeField] private float maxFrequency = 2.6f;
+    [SerializeField] private float recoveryFrequency = 1.1f;
+    [SerializeField] private float smoothing = 6f;
 
     // Bob - phase into height
-    [SerializeField] private float hopHeight = 0.05f;      // rise at mid flight, at full speed
-    [SerializeField] private float crouchDepth = 0.03f;    // dip at double support, at full speed
-    [SerializeField] private float speedForFullBob = 1.2f; // stride speed that reaches the full bob
+    [SerializeField] private float hopHeight = 0.05f;
+    [SerializeField] private float crouchDepth = 0.03f;
+    [SerializeField] private float speedForFullBob = 1.2f;
 
     // Trackers
-    private float restHeight;     // standing height captured on wake
-    private float phase;          // 0-1 through the current cycle, parked at 0 when idle
-    private int cycle;          // completed cycle count, the feet stamp against this
-    private float frequency;      // current cycles per second
-    private float speedFactor;    // 0-1, how "in motion" the judoka is
+    private float restHeight; 
+    private float phase; // 0-1 through the current cycle
+    private int cycle; // completed cycle count
+    private float frequency;
+    private float speedFactor; // 0-1, how "in motion" the judoka is
     private Vector2 planarVelocity;
-    private float yawVelocity;    // signed degrees per second
+    private float yawVelocity; // signed degrees per second
     private Vector2 lastPlanar;
     private float lastYaw;
     private bool hasLast;
@@ -98,9 +90,9 @@ public class Gait : MonoBehaviour
 
     // Absolute Y for the body: standing height, dipped through double support
     // and lifted over the flight, both fading away as the judoka comes to rest
-    public float Height() => restHeight + speedFactor * (hopHeight * 4f * phase * (1f - phase) - crouchDepth);
+    public float Height() => restHeight + speedFactor * (hopHeight * 4 * phase * (1 - phase) - crouchDepth);
 
-    // Ask for one full cycle even while the body is still, e.g. feet re-homing
+    // Ask for one full cycle even while the body is still (feet re-homing)
     public void RequestCycle() => cycleRequested = true;
 
     //------------------Getters------------------//

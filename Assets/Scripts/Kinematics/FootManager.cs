@@ -24,6 +24,7 @@ public class FootManager : MonoBehaviour
         public Transform legRoot;     // hip joint, the same transform the leg's solver uses as its root
         public Transform target;      // the IK end target this manager drives
         public Transform sweepTarget; // the opponent's leg, chased while sweeping
+        public Transform throwTarget; // the opponent's leg, chased while sweeping
 
         // Trackers
         [HideInInspector] public float side;         // -1 left, +1 right
@@ -37,6 +38,8 @@ public class FootManager : MonoBehaviour
         [HideInInspector] public float liftPhase;    // phase at which the swing began
         [HideInInspector] public int liftCycle = -1; // stamp so a foot lifts once per cycle
         [HideInInspector] public float progress;     // 0-1 through the current swing
+        [HideInInspector] public Vector3 placeTo;    // commanded landing for a Placing step
+        [HideInInspector] public float placeT;       // 0-1 through a Placing step
 
         // Getters
         public bool IsGrounded => state == FootState.Planted || state == FootState.Based;
@@ -67,6 +70,10 @@ public class FootManager : MonoBehaviour
     [SerializeField] private float liftHeight = 0.08f; // peak of the swing arc at full speed
     [SerializeField] private float stepLead = 0.15f;   // seconds of home velocity added to the landing
     [SerializeField] private float turnSpeed = 480f;   // degrees per second a foot turns to match the body
+
+    // Placing - a technique-commanded step to a chosen point (a throw's pivot foot)
+    [SerializeField] private float placeDuration = 0.3f; // seconds a commanded step takes to land
+    [SerializeField] private float placeLift = 0.14f;    // peak of a commanded step's arc
 
     // Trackers
     private Foot lead;  // steps first this cycle
@@ -153,6 +160,12 @@ public class FootManager : MonoBehaviour
      *            then swing home
      * Swept    - chase the opponent's leg (technique control)
      * Based    - pinned by a technique, will not lift
+     * Held     - seized by the opponent's technique, pinned wherever
+     *            PlaceHeld last put it
+     * Limp     - not driven at all: the target rides its parent, so the leg
+     *            follows the body through a fall
+     * Placing  - stepping through the air to a commanded point, then bases there
+     * Settling - easing back to the standing home under the body, then plants
      */
     private void Drive(Foot foot, float liftAt, float dt)
     {
@@ -167,6 +180,17 @@ public class FootManager : MonoBehaviour
                 {
                     foot.target.position = foot.planted;
                     Turn(foot, turnSpeed, dt);
+                    return;
+                }
+            case FootState.Held:
+                {
+                    // re-asserted after the body writes, so this frame's root
+                    // motion cannot drag the seized foot off its commanded point
+                    foot.target.position = foot.planted;
+                    return;
+                }
+            case FootState.Limp:
+                {
                     return;
                 }
             case FootState.Planted:
@@ -210,6 +234,46 @@ public class FootManager : MonoBehaviour
                     {
                         foot.planted = landing;
                         foot.target.position = landing;
+                        foot.state = FootState.Planted;
+                    }
+                    return;
+                }
+            case FootState.Reaping:
+                {
+                    foot.target.position = Vector3.Lerp(foot.target.position, foot.throwTarget.position, 10f * dt);
+                    return;
+                }
+            case FootState.Placing:
+                {
+                    // self-timed step: arc from where the foot was to the commanded
+                    // point (kept live by the technique), then base there as the pivot
+                    foot.placeT = Mathf.Min(foot.placeT + dt / placeDuration, 1f);
+                    float u = foot.placeT;
+                    float ease = u * u * (3f - 2f * u);
+                    Vector3 pos = Vector3.Lerp(foot.swingFrom, foot.placeTo, ease);
+                    pos.y += placeLift * 4f * u * (1f - u);
+                    foot.target.position = pos;
+                    Turn(foot, turnSpeed * 2f, dt);
+
+                    if (u >= 1f)
+                    {
+                        foot.planted = foot.placeTo;
+                        foot.target.position = foot.placeTo;
+                        foot.state = FootState.Based; // landed - now the load-bearing pivot
+                    }
+                    return;
+                }
+            case FootState.Settling:
+                {
+                    // ease the target back to the standing home under the body, then
+                    // hand it to the normal planted logic
+                    Vector3 goal = foot.hasHome ? foot.home : foot.target.position;
+                    foot.target.position = Vector3.Lerp(foot.target.position, goal, 10f * dt);
+                    Turn(foot, turnSpeed, dt);
+
+                    if (foot.hasHome && Vector3.Distance(foot.target.position, goal) <= 0.02f)
+                    {
+                        foot.planted = goal;
                         foot.state = FootState.Planted;
                     }
                     return;
@@ -348,15 +412,106 @@ public class FootManager : MonoBehaviour
             basing.state = FootState.Based;
         }
     }
+    // Reap with one foot toward its throwTarget while the other bases - a hip
+    // throw's entry, kept separate from Sweep so the sweeps' sweepTarget is untouched
+    public void Reap(FootId id)
+    {
+        Foot reaping = Get(id);
+        Foot basing = Get(id == FootId.Left ? FootId.Right : FootId.Left);
 
-    // Release technique control: the base is simply planted again, a swept
-    // foot hovers and then swings itself home once it can reach the floor
+        reaping.state = FootState.Reaping;
+        if (basing.state != FootState.Based)
+        {
+            if (!basing.IsGrounded) basing.planted = basing.hasHome ? basing.home : basing.target.position;
+            basing.state = FootState.Based;
+        }
+    }
+    /* STEP TO - a technique commands this foot to step through the air to a
+     * world point and base there (a throw's pivot foot planting beside the
+     * opponent). SetPlaceTarget keeps the landing live while the step is in
+     * flight, so it can chase a moving spot before it commits.
+     */
+    public void StepTo(FootId id, Vector3 point)
+    {
+        Foot foot = Get(id);
+        foot.swingFrom = foot.target.position;
+        foot.placeTo = point;
+        foot.placeT = 0f;
+        foot.state = FootState.Placing;
+    }
+    public void SetPlaceTarget(FootId id, Vector3 point)
+    {
+        Foot foot = Get(id);
+        if (foot.state == FootState.Placing) foot.placeTo = point;
+    }
+
+    // Ease a foot back to its standing home under the body and plant it - a
+    // technique's controlled return to a standing stance after a throw
+    public void Settle(FootId id) => Get(id).state = FootState.Settling;
+
+    /* HOLD - the opponent's technique seizes this foot
+     * It is pinned where it stands until PlaceHeld moves it. A held foot is
+     * not grounded: it is being dragged, not load bearing, so it can neither
+     * lift itself nor trip the bounds watcher.
+     */
+    public void Hold(FootId id)
+    {
+        Foot foot = Get(id);
+        foot.planted = foot.target.position;
+        foot.state = FootState.Held;
+    }
+
+    // Command a held foot's world position; Drive re-asserts it after the
+    // body has written, so the single-writer order still holds for feet
+    public void PlaceHeld(FootId id, Vector3 position)
+    {
+        Foot foot = Get(id);
+        if (foot.state != FootState.Held) return;
+        foot.planted = position;
+    }
+
+    // Pin a foot where it stands: load bearing, will not lift (the support
+    // leg of a judoka being swept)
+    public void Pin(FootId id)
+    {
+        Foot foot = Get(id);
+        if (foot.state == FootState.Based) return;
+        if (!foot.IsGrounded) foot.planted = foot.hasHome ? foot.home : foot.target.position;
+        foot.state = FootState.Based;
+    }
+
+    /* KNOCK - a pinned foot is struck and slides to a new point
+     * Stays Based (still load bearing, still will not lift) but the point it
+     * is load bearing at moves - used when a technique's sweeping leg makes
+     * contact with this one and carries it along
+     */
+    public void Knock(FootId id, Vector3 position)
+    {
+        Foot foot = Get(id);
+        if (foot.state != FootState.Based) return;
+        foot.planted = position;
+    }
+
+    // Give both feet to a fall: nothing drives them, so the targets ride the
+    // body they are parented to and the legs follow it down
+    public void Limp()
+    {
+        left.state = FootState.Limp;
+        right.state = FootState.Limp;
+    }
+
+    /* FREE - release all technique control
+     * The base is simply planted again; a swept, held, limp or part-placed foot
+     * hovers and then swings itself home once it can reach the floor
+     */
     public void Free()
     {
         foreach (Foot foot in feet)
         {
-            if (foot.state == FootState.Swept) foot.state = FootState.Hovering;
-            else if (foot.state == FootState.Based) foot.state = FootState.Planted;
+            if (foot.state == FootState.Swept || foot.state == FootState.Held || foot.state == FootState.Limp || foot.state == FootState.Reaping || foot.state == FootState.Placing)
+                foot.state = FootState.Hovering;
+            else if (foot.state == FootState.Based)
+                foot.state = FootState.Planted;
         }
     }
 

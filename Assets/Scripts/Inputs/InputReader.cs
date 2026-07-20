@@ -13,7 +13,7 @@ public class InputReader : MonoBehaviour
     public event Action Cancel;  // from ui
     
     // from replay
-    public event Action Play;  
+    public event Action VideoPlay;  
     public event Action FastForward;  
     public event Action SlowMotion;
     public event Action Rewind;  
@@ -70,6 +70,10 @@ public class InputReader : MonoBehaviour
         controls.Gameplay.LeftSweep.canceled += HandleLeftSweep;
         controls.Gameplay.RightSweep.performed += HandleRightSweep;
         controls.Gameplay.RightSweep.canceled += HandleRightSweep;
+        controls.Gameplay.LeftThrow.performed += HandleLeftThrow;
+        controls.Gameplay.LeftThrow.canceled += HandleLeftThrow;
+        controls.Gameplay.RightThrow.performed += HandleRightThrow;
+        controls.Gameplay.RightThrow.canceled += HandleRightThrow;
 
         controls.Replay.Move.performed += HandleReplayMove;
         controls.Replay.Move.canceled += HandleReplayMove;
@@ -147,7 +151,7 @@ public class InputReader : MonoBehaviour
     //One Time
     private void OnPause(InputAction.CallbackContext ctx) => Pause?.Invoke();
     private void OnCancel(InputAction.CallbackContext ctx) => Cancel?.Invoke();
-    private void OnPlay(InputAction.CallbackContext ctx) => Play?.Invoke();
+    private void OnPlay(InputAction.CallbackContext ctx) => VideoPlay?.Invoke();
     private void OnFastForward(InputAction.CallbackContext ctx) => FastForward?.Invoke();
     private void OnSlowMotion(InputAction.CallbackContext ctx) => SlowMotion?.Invoke();
     private void OnRewind(InputAction.CallbackContext ctx) => Rewind?.Invoke();
@@ -161,6 +165,8 @@ public class InputReader : MonoBehaviour
     private void HandleRightSweep(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.rightSweep : AttackSM.standard;
     private void HandleReplayUp(InputAction.CallbackContext ctx) => replayUp = ctx.performed ;
     private void HandleReplayDown(InputAction.CallbackContext ctx) => replayDown = ctx.performed;
+    private void HandleRightThrow(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.rightThrow : AttackSM.standard;
+    private void HandleLeftThrow(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.leftThrow : AttackSM.standard;
 
 
 }

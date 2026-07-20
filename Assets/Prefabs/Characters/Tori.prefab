@@ -447,7 +447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3567117811069073398}
   m_Layer: 0
-  m_Name: FootTargets
+  m_Name: IKTargets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -468,6 +468,8 @@ Transform:
   m_Children:
   - {fileID: 5589255805817723593}
   - {fileID: 8788661929268714704}
+  - {fileID: 858352662704014614}
+  - {fileID: 9139847736503883596}
   m_Father: {fileID: 4428796474810664855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832882119754141301
@@ -844,6 +846,10 @@ GameObject:
   - component: {fileID: 8401644107375139260}
   - component: {fileID: 3904007468433521092}
   - component: {fileID: 4184697372705908013}
+  - component: {fileID: 2155043538886507260}
+  - component: {fileID: 4794848548060346112}
+  - component: {fileID: 8457196888569526478}
+  - component: {fileID: 391403811411524395}
   m_Layer: 0
   m_Name: Tori
   m_TagString: Untagged
@@ -952,6 +958,10 @@ MonoBehaviour:
   opponent: {fileID: 0}
   balanceLimits: {x: 10, y: 0, z: 10}
   feet: {fileID: 4184697372705908013}
+  arms: {fileID: 391403811411524395}
+  deAshiBarai: {fileID: 2155043538886507260}
+  hizaGuruma: {fileID: 2155043538886507260}
+  haraiGoshi: {fileID: 8457196888569526478}
 --- !u!114 &3904007468433521092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +998,7 @@ MonoBehaviour:
     legRoot: {fileID: 5989815051863324492}
     target: {fileID: 5589255805817723593}
     sweepTarget: {fileID: 0}
+    throwTarget: {fileID: 0}
     side: 0
     state: 0
     planted: {x: 0, y: 0, z: 0}
@@ -999,10 +1010,13 @@ MonoBehaviour:
     liftPhase: 0
     liftCycle: -1
     progress: 0
+    placeTo: {x: 0, y: 0, z: 0}
+    placeT: 0
   right:
     legRoot: {fileID: 2947878232550220901}
     target: {fileID: 8788661929268714704}
     sweepTarget: {fileID: 0}
+    throwTarget: {fileID: 0}
     side: 0
     state: 0
     planted: {x: 0, y: 0, z: 0}
@@ -1014,6 +1028,8 @@ MonoBehaviour:
     liftPhase: 0
     liftCycle: -1
     progress: 0
+    placeTo: {x: 0, y: 0, z: 0}
+    placeT: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
@@ -1026,6 +1042,111 @@ MonoBehaviour:
   liftHeight: 0.4
   stepLead: 0.3
   turnSpeed: 480
+  placeDuration: 0.3
+  placeLift: 0.14
+--- !u!114 &2155043538886507260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be693a34302d75e4bbcda19c41c54f0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeAshiBarai
+  contactRadius: 0.3
+  sweepDuration: 0.3
+  tipPitch: -20
+  tipRoll: 25
+  knockRadius: 0.3
+  knockDistance: 9
+  knockDuration: 0.5
+  directionTolerance: 3
+  invertDirectionCheck: 0
+  threshold: 0.2
+--- !u!114 &4794848548060346112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ea3142275694240b6f068cc31f1c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HizaGuruma
+  contactRadius: 0.3
+  pullDuration: 0.8
+  rampTime: 0.15
+  pullStrength: 2.5
+  forwardBias: 0.4
+  breakFraction: 0.98
+  invertPullDirection: 0
+  threshold: 0.2
+--- !u!114 &8457196888569526478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde4b99bf15f624fae5a125c2cd9478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HaraiGoshi
+  turnAngle: 160
+  turnTolerance: 12
+  contactRadius: 0.3
+  closeRadius: 0.6
+  standRadius: 1.2
+  outsideOffset: 0.5
+  forwardOffset: 0.8
+  threshold: 0
+  throwLean: 15
+  leanInRate: 6
+  standUpRate: 4
+  releaseAngle: 130
+  standYawRate: 4
+  throwAngle: 270
+  invertRotation: 0
+--- !u!114 &391403811411524395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bdccc6c9cfea84db81f3b87c21ca06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmManager
+  left:
+    pole: {fileID: 8936767460775325404}
+    handTarget: {fileID: 858352662704014614}
+    holdAnchor: {fileID: 0}
+    restOffset: {x: 0, y: 0, z: 0}
+    restEuler: {x: 0, y: 0, z: 0}
+    side: 0
+  right:
+    pole: {fileID: 1300894402307001841}
+    handTarget: {fileID: 9139847736503883596}
+    holdAnchor: {fileID: 0}
+    restOffset: {x: 0, y: 0, z: 0}
+    restEuler: {x: 0, y: 0, z: 0}
+    side: 0
+  chest: {fileID: 5653987056406166511}
+  restReference: {fileID: 1123157052678948321}
+  poleForward: 0.35
+  poleRise: -0.05
+  poleOut: 0.18
+  holdRate: 12
+  settleRate: 8
+  poleRate: 10
 --- !u!1 &2269533135605912829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1436,66 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1 &2778631559756028956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9139847736503883596}
+  - component: {fileID: 4060557273755780664}
+  m_Layer: 0
+  m_Name: RightHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9139847736503883596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778631559756028956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.40000013, y: 2.46, z: 1.8000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3567117811069073398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4060557273755780664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778631559756028956}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootStepper
+  legRoot: {fileID: 2947878232550220901}
+  body: {fileID: 4428796474810664855}
+  otherFoot: {fileID: 3187243454111377832}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  side: 1
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &2857944426664146693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,7 +2306,7 @@ MonoBehaviour:
   rootJoint: {fileID: 6783441100048481456}
   middleJoint: {fileID: 2645433188394593717}
   endEffector: {fileID: 5440068850262831402}
-  endTarget: {fileID: 0}
+  endTarget: {fileID: 9139847736503883596}
   planePole: {fileID: 1300894402307001841}
 --- !u!1 &3757898143699587666
 GameObject:
@@ -2596,6 +2777,66 @@ Transform:
   - {fileID: 8323514138300871098}
   m_Father: {fileID: 6942407342609722875}
   m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
+--- !u!1 &4507049944216436504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858352662704014614}
+  - component: {fileID: 3187243454111377832}
+  m_Layer: 0
+  m_Name: LeftHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &858352662704014614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507049944216436504}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 2.46, z: 1.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3567117811069073398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3187243454111377832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507049944216436504}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootStepper
+  legRoot: {fileID: 5989815051863324492}
+  body: {fileID: 4428796474810664855}
+  otherFoot: {fileID: 4060557273755780664}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  side: -1
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &4735792238556798653
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,7 +3465,7 @@ MonoBehaviour:
   rootJoint: {fileID: 6199434630732405236}
   middleJoint: {fileID: 6635402207251095576}
   endEffector: {fileID: 2735615324647055613}
-  endTarget: {fileID: 0}
+  endTarget: {fileID: 858352662704014614}
   planePole: {fileID: 8936767460775325404}
 --- !u!1 &6317969309828251979
 GameObject:
