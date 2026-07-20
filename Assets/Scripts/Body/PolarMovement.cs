@@ -17,6 +17,7 @@ public class PolarMovement : MonoBehaviour
     private float targetAngle;
     private float radius;
     private float restRadius;
+    private bool recoverRadius = true; // while false the radius holds, so a reset rest distance cannot drag the body
 
     //------------------Unity Functions------------------//
     private void Awake() { body = GetComponent<JudokaBody>(); }
@@ -51,7 +52,7 @@ public class PolarMovement : MonoBehaviour
         currentAngle = Mathf.MoveTowards(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
 
         //2
-        if (restRadius > 0f)
+        if (restRadius > 0f && recoverRadius)
             radius = restRadius + (radius - restRadius) * Mathf.Exp(-radiusRecoveryRate * Time.deltaTime);
         
         float rad = currentAngle * Mathf.Deg2Rad;
@@ -64,4 +65,9 @@ public class PolarMovement : MonoBehaviour
     }
 
     public void SetDistance(float distance) { restRadius = distance; }
+
+    // Suspend or resume the radius easing. While suspended the ground position
+    // holds its current distance, so a technique that resets the rest distance
+    // as it cancels cannot drag the body across the mat while the gap re-settles.
+    public void SetRecovery(bool on) { recoverRadius = on; }
 }
