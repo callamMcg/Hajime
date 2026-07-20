@@ -203,7 +203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 133.55
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1009,9 +1009,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1859777190}
     m_Modifications:
+    - target: {fileID: 1511106751797044172, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_fontSize
+      value: 283.05
+      objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.data[1].jap
@@ -1022,6 +1026,10 @@ PrefabInstance:
       value: "\u6255\u8170"
       objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[3].jap
+      value: "\u5DF4\u6295"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.data[1].name
       value: Hiza Guruma
       objectReference: {fileID: 0}
@@ -1030,12 +1038,20 @@ PrefabInstance:
       value: Harai Goshi
       objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[3].name
+      value: Tomoe Nage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.data[1].description
       value: Knee Wheel
       objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.data[2].description
       value: Sweeping Hip Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: techniques.Array.data[3].description
+      value: Sacrafice Throw *Dev*
       objectReference: {fileID: 0}
     - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: techniques.Array.data[0].steps.Array.size
@@ -1084,6 +1100,27 @@ PrefabInstance:
       propertyPath: 'techniques.Array.data[2].steps.Array.data[2]'
       value: Turn your back to your opponent and throw them over your hip as you
         sweep their leg.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[3].steps.Array.data[0]'
+      value: Hold the uke still.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[3].steps.Array.data[1]'
+      value: Press both throw buttons.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057402733150524264, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: 'techniques.Array.data[3].steps.Array.data[2]'
+      value: Drop to your back, place your feet on their hips, and throw them over
+        your head.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224694164443502578, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_fontSize
+      value: 98.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020586838892270284, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_fontSize
+      value: 86.35
       objectReference: {fileID: 0}
     - target: {fileID: 7850408324154810294, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: m_Pivot.x
@@ -1173,9 +1210,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8600642343773786804, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1396.9619
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600642343773786804, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 409.8736
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600642343773786804, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -607
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600642343773786804, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -97
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724571625389906270, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
+      propertyPath: m_fontSize
+      value: 86.35
+      objectReference: {fileID: 0}
     - target: {fileID: 9087728230921887615, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: m_fontSize
-      value: 46.9
+      value: 38.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

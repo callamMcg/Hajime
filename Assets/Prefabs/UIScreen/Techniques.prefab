@@ -105,7 +105,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.4
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 137.15
+  m_fontSize: 83.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.35
+  m_fontSize: 52.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -568, y: -37}
-  m_SizeDelta: {x: -1194.896, y: 720.7}
+  m_AnchoredPosition: {x: -408.64008, y: -37}
+  m_SizeDelta: {x: -876.1761, y: 411.9401}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &236366493191602272
 CanvasRenderer:
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 497.7
+  m_fontSize: 284.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -824,6 +824,14 @@ MonoBehaviour:
     - As they plant their lead foot press and hold sweep against the direciton you
       are pulling.
     - Stop their foot from moving and pull them past their foot.
+  - name: Tomoe Nage
+    jap: "\u5DF4\u6295"
+    description: Sacrifice Throw (Dev)
+    steps:
+    - Hold the uke still.
+    - Press both throw buttons.
+    - Drop to your back, place your feet on their hips, and throw them over your
+      head.
   - name: Harai Goshi
     jap: "\u6255\u8170"
     description: Sweeping Hip Throw
@@ -929,7 +937,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 86.35
+  m_fontSize: 76.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

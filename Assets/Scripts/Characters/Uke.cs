@@ -268,6 +268,17 @@ private void Fight()
         state = UkeState.Vaulting;
     }
 
+    /* SET VAULT PIVOT - move the fulcrum while the vault is in flight
+     * A sacrifice throw turns uke over a point that is itself dropping to the
+     * mat (tori's shoulders), so uke is pulled down and round with it rather
+     * than orbiting a fixed spot.
+     */
+    public void SetVaultPivot(Vector3 pivot)
+    {
+        if (state != UkeState.Vaulting) return;
+        vaultPivot = pivot;
+    }
+
     /* VAULT STEP
      * 1 - Advance and ease the vault timer
      * 2 - Rotate uke rigidly about the pivot: his position orbits the hip and
@@ -321,6 +332,9 @@ private void Fight()
     // +1 while a flicked pull has him hauled up, -1 while it has him driven
     // down, 0 otherwise - the opening a technique is judged against
     public float Lift => gait.PulseDirection;
+
+    // How much he is in motion, 0-1 - a sacrifice throw judges his momentum by this
+    public float Speed => gait.SpeedFactor;
 
     // Degrees uke has turned through the vault so far (0 at load, |angle| at flat)
     // - a hip throw reads this to know when uke has gone far enough over to release

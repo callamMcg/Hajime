@@ -1,6 +1,6 @@
 public enum AttackSM
 {
-    standard, leftSweep, rightSweep, leftThrow, rightThrow, win
+    standard, leftSweep, rightSweep, leftThrow, rightThrow, doubleThrow, win
 }
 public enum TechniquePhase
 {

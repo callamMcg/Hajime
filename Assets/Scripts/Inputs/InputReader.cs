@@ -175,8 +175,23 @@ public class InputReader : MonoBehaviour
     private void HandleRightSweep(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.rightSweep : AttackSM.standard;
     private void HandleReplayUp(InputAction.CallbackContext ctx) => replayUp = ctx.performed ;
     private void HandleReplayDown(InputAction.CallbackContext ctx) => replayDown = ctx.performed;
-    private void HandleRightThrow(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.rightThrow : AttackSM.standard;
-    private void HandleLeftThrow(InputAction.CallbackContext ctx) => attackState = ctx.performed ? AttackSM.leftThrow : AttackSM.standard;
+    private void HandleRightThrow(InputAction.CallbackContext ctx) { rightThrowHeld = ctx.performed; ThrowState(); }
+    private void HandleLeftThrow(InputAction.CallbackContext ctx) { leftThrowHeld = ctx.performed; ThrowState(); }
+
+    /* THROW STATE
+     * Both throw buttons together is the sacrifice throw; either on its own is
+     * the hip throw on that side. Tracked as two held flags because the two
+     * presses never land on the same frame.
+     */
+    private bool leftThrowHeld;
+    private bool rightThrowHeld;
+    private void ThrowState()
+    {
+        if (leftThrowHeld && rightThrowHeld) attackState = AttackSM.doubleThrow;
+        else if (leftThrowHeld) attackState = AttackSM.leftThrow;
+        else if (rightThrowHeld) attackState = AttackSM.rightThrow;
+        else attackState = AttackSM.standard;
+    }
 
 
 }

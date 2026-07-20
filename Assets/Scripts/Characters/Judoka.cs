@@ -43,6 +43,32 @@ public abstract class Judoka : MonoBehaviour
     public float FacingYaw() => facing.YawTo(opponent);                    // the yaw that squares up to the opponent right now
     public void SnapLook(float deg) { lookAngle = deg; lookAngleTarget = deg; } // set the look offset without easing (no pop on release)
 
+    // Height hold: a technique can take the body's height off the gait (a
+    // sacrifice throw dropping tori onto his back)
+    private bool heightHeld;
+    private float heldHeight;
+    public void HoldHeight(float y) { heightHeld = true; heldHeight = y; }
+    public void ReleaseHeight() { heightHeld = false; }
+    public float StandingHeight => gait.Height(); // what the gait would be holding him at
+
+    /* SHOULDERS - the point between the arm roots
+     * The fulcrum a sacrifice throw turns the opponent over: it rides down with
+     * the body as it goes to the mat. Falls back to the body if the arms are
+     * not wired.
+     */
+    public Vector3 Shoulders
+    {
+        get
+        {
+            Transform l = leftArm != null ? leftArm.Root : null;
+            Transform r = rightArm != null ? rightArm.Root : null;
+            if (l != null && r != null) return (l.position + r.position) * 0.5f;
+            if (l != null) return l.position;
+            if (r != null) return r.position;
+            return transform.position;
+        }
+    }
+
     //------------------Unity Functions------------------//
 
     // Get the components
@@ -63,7 +89,7 @@ public abstract class Judoka : MonoBehaviour
     protected virtual void Update()
     {
         gait.Tick();
-        body.SetHeight(gait.Height());
+        body.SetHeight(heightHeld ? heldHeight : gait.Height());
         if (yawHeld) { body.SetYaw(heldYaw); return; }
         lookAngle = Mathf.Lerp(lookAngle, lookAngleTarget, Time.deltaTime * 3);
         facing.LookAt(opponent, lookAngle);

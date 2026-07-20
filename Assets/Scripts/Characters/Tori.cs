@@ -12,6 +12,7 @@ public class Tori : Judoka
     [SerializeField] private DeAshiBarai deAshiBarai;
     [SerializeField] private Technique hizaGuruma; // typed as the base so it can be wired before the concrete class exists
     [SerializeField] private HaraiGoshi haraiGoshi;
+    [SerializeField] private TomoeNage tomoeNage;
     private Technique active;      // the technique currently running, if any
     private bool sweepArmed = true; // the button must be released between attempts
 
@@ -42,6 +43,7 @@ public class Tori : Judoka
         deAshiBarai.Initialise(ctx);
         hizaGuruma.Initialise(ctx);
         haraiGoshi.Initialise(ctx);
+        tomoeNage?.Initialise(ctx); // guarded so an unwired field cannot abort the rest of Start
         // 3 - a de ashi barai whose pull fights the sweep becomes a hiza guruma
         deAshiBarai.Redirect += OnRedirect;
     }
@@ -81,6 +83,11 @@ public class Tori : Judoka
                 move = Vector2.zero;
                 pull = InputReader.Instance.Pull;
                 TryBegin(haraiGoshi, FootId.Left);
+                break;
+            case AttackSM.doubleThrow:
+                move = Vector2.zero;
+                pull = InputReader.Instance.Pull;
+                TryTomoe(tomoeNage);
                 break;
             default:
                 move = InputReader.Instance.Move;
@@ -122,6 +129,30 @@ public class Tori : Judoka
 
         sweepArmed = false;
         technique.Begin(side);
+        active = technique;
+    }
+
+    /* TRY TOMOE
+     * Both throw buttons. The two presses never land on the same frame, so the
+     * first one has usually started a hip throw already - break that off while
+     * it is still reaching and let the sacrifice take over. A hip throw that has
+     * already committed is left alone to play out.
+     */
+    private void TryTomoe(Technique technique)
+    {
+        if (active == technique) return;              // already going
+        if (uke.State != UkeState.Fighting) return;
+
+        if (active != null)
+        {
+            if (active.CurrentPhase != TechniquePhase.Reaching) return; // committed, leave it
+            active.Cancel();
+            active = null;
+        }
+        else if (!sweepArmed) return; // nothing running and the press has not been re-armed
+
+        sweepArmed = false;
+        technique.Begin(FootId.Right); // two footed - the side is irrelevant
         active = technique;
     }
 
