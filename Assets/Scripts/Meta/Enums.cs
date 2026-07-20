@@ -22,7 +22,9 @@ public enum FootState
     Reaping,  // technique control: chasing a hip throw's throwTarget
     Based,    // technique control: pinned, will not lift
     Held,     // technique control: seized by the opponent, placed where the technique says
-    Limp,      // technique control: not driven at all, the target rides its parent through a fall
+    Limp,     // technique control: not driven at all, the target rides its parent through a fall
+    Placing,  // technique control: stepping through the air to a commanded point, then bases there
+    Settling, // technique control: easing back to the standing home under the body, then plants
 }
 
 public enum UkeState

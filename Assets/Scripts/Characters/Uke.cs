@@ -40,6 +40,7 @@ public class Uke : Judoka
     private Vector3 vaultPivot;
     private Vector3 vaultAxis;
     private float vaultAngle;
+    private Vector3 vaultDrift;      // forward (tori-relative) translation blended in over the vault, so uke ends in front of tori
     private Vector3 vaultStartOffset;
     private Quaternion vaultStartRot;
     private float vaultT;
@@ -219,14 +220,16 @@ private void Fight()
      * Capture where uke stands relative to the pivot (tori's loading hip) and
      * his current orientation, hand his feet to the fall so the legs ride the
      * body over, and let Update turn him a full arc about tori's right axis.
+     * The drift carries him forward, out in front of tori, as he goes over.
      */
-    public void HipThrow(Vector3 pivot, Vector3 axis, float angle)
+    public void HipThrow(Vector3 pivot, Vector3 axis, float angle, Vector3 drift)
     {
         if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
 
         vaultPivot = pivot;
         vaultAxis = axis.sqrMagnitude > 0.0001f ? axis.normalized : Vector3.right;
         vaultAngle = angle;
+        vaultDrift = drift;
         vaultStartOffset = body.WorldPosition() - pivot;
         vaultStartRot = transform.rotation;
         vaultT = 0f;
@@ -238,7 +241,8 @@ private void Fight()
     /* VAULT STEP
      * 1 - Advance and ease the vault timer
      * 2 - Rotate uke rigidly about the pivot: his position orbits the hip and
-     *     his whole orientation turns by the same angle
+     *     his whole orientation turns by the same angle, drifting forward over
+     *     the throw so he ends in front of tori
      * 3 - Over the last stretch, ease his height onto the mat so he lands flat
      *     regardless of the arc's radius
      * 4 - Write the pose, and on landing hold it and announce the throw
@@ -253,6 +257,7 @@ private void Fight()
         // 2
         Quaternion turn = Quaternion.AngleAxis(vaultAngle * ease, vaultAxis);
         Vector3 pos = vaultPivot + turn * vaultStartOffset;
+        pos += vaultDrift * ease;   // carry him forward, out in front of tori
         Quaternion orient = turn * vaultStartRot;
 
         // 3
@@ -268,6 +273,8 @@ private void Fight()
         body.SetHeight(pos.y);
         body.SetWorldRotation(orient);
 
+        
+
         if (vaultT >= 1f)
         {
             state = UkeState.Fallen;
@@ -276,6 +283,17 @@ private void Fight()
     }
     //------------------Getters------------------//
     public UkeState State => state;
+
+    // Degrees uke has turned through the vault so far (0 at load, |angle| at flat)
+    // - a hip throw reads this to know when uke has gone far enough over to release
+    public float VaultTurned
+    {
+        get
+        {
+            float ease = vaultT * vaultT * (3f - 2f * vaultT);
+            return Mathf.Abs(vaultAngle) * ease;
+        }
+    }
 
     // Current balance lean (pitch x, roll z) - the accumulated result of
     // tori's pull, read by a technique to weigh the pull's direction

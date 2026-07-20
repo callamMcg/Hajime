@@ -32,6 +32,17 @@ public abstract class Judoka : MonoBehaviour
     public float LookAngle => lookAngle;
     public void SetLookAngle(float deg) { lookAngleTarget = deg; }
 
+    // Yaw hold: a technique can freeze the facing so the yaw stops tracking the
+    // opponent (e.g. tori through a hip throw, while uke is vaulted around him)
+    private bool yawHeld;
+    private float heldYaw;
+    public float HeldYaw => heldYaw;
+    public void HoldYaw() { yawHeld = true; heldYaw = body.GetPose().yaw; } // freeze where it stands
+    public void SetHeldYaw(float degrees) { heldYaw = degrees; }            // command the frozen yaw (ease back to square)
+    public void ReleaseYaw() { yawHeld = false; }                          // hand the yaw back to opponent tracking
+    public float FacingYaw() => facing.YawTo(opponent);                    // the yaw that squares up to the opponent right now
+    public void SnapLook(float deg) { lookAngle = deg; lookAngleTarget = deg; } // set the look offset without easing (no pop on release)
+
     //------------------Unity Functions------------------//
 
     // Get the components
@@ -48,10 +59,12 @@ public abstract class Judoka : MonoBehaviour
     protected virtual void Start() => balance.SetLimits(balanceLimits);
 
     // Advance the movement clock, hand its height to the body, face the opponent
+    // (unless a technique has frozen the yaw, in which case hold it)
     protected virtual void Update()
     {
         gait.Tick();
         body.SetHeight(gait.Height());
+        if (yawHeld) { body.SetYaw(heldYaw); return; }
         lookAngle = Mathf.Lerp(lookAngle, lookAngleTarget, Time.deltaTime * 3);
         facing.LookAt(opponent, lookAngle);
     }

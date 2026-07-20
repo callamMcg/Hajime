@@ -1086,7 +1086,7 @@ MonoBehaviour:
   rootJoint: {fileID: 2100647975240114807}
   middleJoint: {fileID: 208229982845388187}
   endEffector: {fileID: 8916893206766419032}
-  endTarget: {fileID: 0}
+  endTarget: {fileID: 3973668480124135714}
   planePole: {fileID: 54045750571478269}
 --- !u!1 &3032287187745889707
 GameObject:
@@ -1834,6 +1834,7 @@ GameObject:
   - component: {fileID: 4529660150471671152}
   - component: {fileID: 8787871224515764470}
   - component: {fileID: 1269307910870927168}
+  - component: {fileID: 6367404578939684543}
   m_Layer: 0
   m_Name: Uke
   m_TagString: Untagged
@@ -1942,10 +1943,12 @@ MonoBehaviour:
   opponent: {fileID: 0}
   balanceLimits: {x: 30, y: 0, z: 30}
   fallDuration: 0.7
-  fallPitch: -10
+  fallPitch: 20
   fallRoll: 90
   fallenHeight: 0.3
   fallDrift: 0.5
+  vaultDuration: 0.9
+  vaultLandBlend: 0.85
 --- !u!114 &4529660150471671152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1995,6 +1998,7 @@ MonoBehaviour:
     legRoot: {fileID: 2875344406575508805}
     target: {fileID: 5803571874429533312}
     sweepTarget: {fileID: 0}
+    throwTarget: {fileID: 0}
     side: 0
     state: 0
     planted: {x: 0, y: 0, z: 0}
@@ -2006,10 +2010,13 @@ MonoBehaviour:
     liftPhase: 0
     liftCycle: -1
     progress: 0
+    placeTo: {x: 0, y: 0, z: 0}
+    placeT: 0
   right:
     legRoot: {fileID: 4131112585117946174}
     target: {fileID: 7617887411289353037}
     sweepTarget: {fileID: 0}
+    throwTarget: {fileID: 0}
     side: 0
     state: 0
     planted: {x: 0, y: 0, z: 0}
@@ -2021,6 +2028,8 @@ MonoBehaviour:
     liftPhase: 0
     liftCycle: -1
     progress: 0
+    placeTo: {x: 0, y: 0, z: 0}
+    placeT: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
@@ -2033,6 +2042,42 @@ MonoBehaviour:
   liftHeight: 0.4
   stepLead: 0.3
   turnSpeed: 480
+  placeDuration: 0.3
+  placeLift: 0.14
+--- !u!114 &6367404578939684543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547554135280211586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bdccc6c9cfea84db81f3b87c21ca06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmManager
+  left:
+    pole: {fileID: 54045750571478269}
+    handTarget: {fileID: 3973668480124135714}
+    holdAnchor: {fileID: 0}
+    restOffset: {x: 0, y: 0, z: 0}
+    restEuler: {x: 0, y: 0, z: 0}
+    side: 0
+  right:
+    pole: {fileID: 633392608209042515}
+    handTarget: {fileID: 6244815078086884955}
+    holdAnchor: {fileID: 0}
+    restOffset: {x: 0, y: 0, z: 0}
+    restEuler: {x: 0, y: 0, z: 0}
+    side: 0
+  chest: {fileID: 5199459062239920643}
+  restReference: {fileID: 8922906527400781598}
+  poleForward: 0.35
+  poleRise: -0.05
+  poleOut: 0.18
+  holdRate: 12
+  settleRate: 8
+  poleRate: 10
 --- !u!1 &4744877244645048270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,6 +2256,66 @@ Transform:
   - {fileID: 7328015932785256422}
   m_Father: {fileID: 5259213442660684001}
   m_LocalEulerAnglesHint: {x: -40, y: -45, z: 0}
+--- !u!1 &5083164992810310066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6244815078086884955}
+  - component: {fileID: 4573268940062931147}
+  m_Layer: 0
+  m_Name: RightHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6244815078086884955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083164992810310066}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.50000006, y: 2.23, z: 1.8400005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8781984490171579300}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4573268940062931147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083164992810310066}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootStepper
+  legRoot: {fileID: 4131112585117946174}
+  body: {fileID: 6120255632238723653}
+  otherFoot: {fileID: 6400371893496540186}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  side: 1
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &5206724860910112150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2784,6 +2889,8 @@ Transform:
   m_Children:
   - {fileID: 7617887411289353037}
   - {fileID: 5803571874429533312}
+  - {fileID: 6244815078086884955}
+  - {fileID: 3973668480124135714}
   m_Father: {fileID: 6120255632238723653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5827987903825398192
@@ -3209,6 +3316,66 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7798550597590798921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3973668480124135714}
+  - component: {fileID: 6400371893496540186}
+  m_Layer: 0
+  m_Name: LeftHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3973668480124135714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7798550597590798921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4, y: 2.23, z: 1.49}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8781984490171579300}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6400371893496540186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7798550597590798921}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1329a96687f4884ba1cc54a146f9ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FootStepper
+  legRoot: {fileID: 2875344406575508805}
+  body: {fileID: 6120255632238723653}
+  otherFoot: {fileID: 4573268940062931147}
+  opponentsLeg: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  side: -1
+  stanceWidth: 0.18
+  maxReach: 1.3
+  castDistance: 1.4
+  stepDuration: 0.3
+  stepHeight: 0.24
+  stepLead: 0.18
+  moveThreshold: 0.1
+  turnThreshold: 15
 --- !u!1 &7939437713829392155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3874,7 +4041,7 @@ MonoBehaviour:
   rootJoint: {fileID: 5259213442660684001}
   middleJoint: {fileID: 5203791808333456133}
   endEffector: {fileID: 7328015932785256422}
-  endTarget: {fileID: 0}
+  endTarget: {fileID: 6244815078086884955}
   planePole: {fileID: 633392608209042515}
 --- !u!1 &8824597624721423295
 GameObject:

@@ -18,6 +18,7 @@ public class Tori : Judoka
     private Vector2 move;
     private Vector2 pull;
     private AttackSM attackState;
+    private bool holdPosition; // a committed technique has planted tori - the polar movement is suspended
 
     //------------------Unity Event Functions------------------//
     /* START
@@ -148,9 +149,14 @@ public class Tori : Judoka
     {
         movement.SetDistance(newDistance);
     }
+    // Plant tori: while held, the polar movement is suspended so his hip stays
+    // put as the pivot a throw turns over (handed back when the throw ends)
+    public void HoldPosition(bool on) => holdPosition = on;
     public void SetLean(Vector3 lean) => body.SetLean(lean);
     private void Move()
     {
+        if (holdPosition) return;
+
         float x = move.x;
 
         movement.SetTarget(opponent, x);

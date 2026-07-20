@@ -19,7 +19,7 @@ public class Facing : MonoBehaviour
     private void Awake() { body = GetComponent<JudokaBody>(); }
 
     //------------------Public Functions------------------//
-    // turn to face a target around y only, then push the yaw 
+    // turn to face a target around y only, then push the yaw
     public void LookAt(Transform target, float lookAngle = 0)
     {
         Vector3 offset = target.position - transform.position;
@@ -27,5 +27,16 @@ public class Facing : MonoBehaviour
         offset = offset.normalized;
         yaw = Mathf.Atan2(offset.x, offset.z) * Mathf.Rad2Deg;
         body.SetYaw(yaw + lookAngle);
+    }
+
+    // the yaw that would square up to a target around y only, without writing it
+    // - a frozen facing eases back to this as it is handed control again
+    public float YawTo(Transform target)
+    {
+        Vector3 offset = target.position - transform.position;
+        offset.y = 0f;
+        if (offset.sqrMagnitude < 1e-6f) return yaw;
+        offset = offset.normalized;
+        return Mathf.Atan2(offset.x, offset.z) * Mathf.Rad2Deg;
     }
 }
