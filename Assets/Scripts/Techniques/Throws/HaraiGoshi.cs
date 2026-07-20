@@ -7,9 +7,10 @@ using UnityEngine;
 /// foot steps in to plant just outside uke's attacked leg - the post the throw
 /// turns over.
 /// Contact: when the turn has come round, the reaping foot reaches the shin and
-/// the pivot foot is planted, the moment is judged. If uke is loaded the throw
-/// commits: the pivot foot pins, tori's facing freezes so his yaw no longer
-/// tracks uke, and uke is vaulted over the loading hip.
+/// the pivot foot is planted, the moment is judged - uke's attacked leg must be
+/// off the floor for the reap to lift it. If it is, the throw commits: the pivot
+/// foot pins, tori's facing freezes so his yaw no longer tracks uke, and uke is
+/// vaulted over the loading hip.
 /// Executing: tori bows forward over the frozen yaw, the reaping leg staying
 /// attached to uke as he goes over. Once uke has turned past the release angle,
 /// tori settles both feet to a standing stance under his root and eases the
@@ -26,9 +27,6 @@ public class HaraiGoshi : Technique
     [SerializeField] private float standRadius = 1.2f;    // distance restored when the throw ends or fails
     [SerializeField] private float outsideOffset = 0.15f; // how far outside uke's attacked leg the pivot foot plants
     [SerializeField] private float forwardOffset = 0.15f; // how far outside uke's attacked leg the pivot foot plants
-
-    // Contact - the success gate
-    [SerializeField] private float threshold = 0f;       // uke's height must exceed this to be thrown (loaded, not crouched)
 
     [SerializeField] private float throwLean = 15f;    // forward pitch tori drives down through the throw (negate if he bows backward)
     [SerializeField] private float leanInRate = 6f;    // how fast tori bows into the throw
@@ -49,6 +47,7 @@ public class HaraiGoshi : Technique
     private FootId plant; // tori's planted pivot foot (the throw side)
     private FootId reap;  // tori's reaping foot - chases uke's shin
     private float sign;   // +1 right throw, -1 left
+    private float liftAtPress; // the opening tori read when he committed - the turn-in outlasts the flick, so it is judged from here
 
     //------------------Public Functions------------------//
     /* BEGIN
@@ -78,6 +77,7 @@ public class HaraiGoshi : Technique
 
         leanNow = 0f;
         squaredUp = false;
+        liftAtPress = ctx.uke.Lift; // read the opening now; the turn-in is longer than the pulse
         CurrentPhase = TechniquePhase.Reaching;
     }
 
@@ -90,9 +90,12 @@ public class HaraiGoshi : Technique
         }
     }
 
-    // Uke can be thrown while he is tall and loaded, above the height threshold
-    public override bool Check() { Debug.Log(ctx.uke.GetHeight); return true; }
-            //ctx.uke.GetHeight > threshold;}
+    /* CHECK - the moment is judged on the flick
+     * A loaded leg is load bearing: the reap cannot lift it and the hip has
+     * nothing to throw. Only a leg tori has lifted - by flicking the pull up -
+     * goes over, so the throw fails unless it commits inside that window.
+     */
+    public override bool Check() => liftAtPress > 0f;
 
     /* CANCEL - only Reaching can be broken off; once uke is vaulting the
      * throw is committed and plays out */
@@ -108,8 +111,8 @@ public class HaraiGoshi : Technique
      * 1 - Keep the pivot foot's step aimed just outside uke's attacked leg, and
      *     wait for the turn to come round, the reaping foot to reach the shin,
      *     and the pivot foot to land
-     * 2 - Judge the moment: below the height threshold uke is crouched and
-     *     unloaded, the hip cannot lift him, and the attempt fails
+     * 2 - Judge the moment: a grounded leg is load bearing, the reap cannot
+     *     lift it, and the attempt fails
      * 3 - Commit: pin the pivot foot as the post, capture the pivot (tori's
      *     loading hip) and axis (tori's right), freeze tori's yaw so it no
      *     longer tracks uke, and vault uke over the hip. The reaping foot is

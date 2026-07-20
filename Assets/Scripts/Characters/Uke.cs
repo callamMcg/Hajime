@@ -26,12 +26,17 @@ public class Uke : Judoka
     // Vault - the rigid turn over tori's hip (harai goshi and friends)
     [SerializeField] private float vaultDuration = 0.9f;                  // seconds from load to flat
     [SerializeField, Range(0f, 1f)] private float vaultLandBlend = 0.85f; // fraction after which height eases to the mat
+
+    // Flick - a sharp pull up or down pulses uke's height
+    [SerializeField] private float flickThreshold = 0.7f; // pull.y magnitude that counts as a flick
     
     // Trackers
     private UkeState state = UkeState.Fighting;
     private float startingRadius;
     private bool holdGround = true; // radius hold: maintain the starting distance from tori
     private Vector3 sweptLean;      // the lean a technique is commanding this frame
+    private Vector2 currentPull;    // tori's live pull, recorded through every state - a throw in flight still reads it
+    private bool flickArmed = true; // the pull must fall back inside the threshold before another flick counts
     private float fallSide;         // -1 the left foot was swept, +1 the right
     private float fallT;            // 0-1 through the fall
     private Vector3 fallFromLean;   // the pose the fall starts from
@@ -81,10 +86,17 @@ public class Uke : Judoka
     }
 
     //------------------Public Functions------------------//
-    // Tori's pull lands as a lean input (only integrated while Fighting)
+    /* PULL - tori's pull
+     * The raw pull is always recorded, so it carries on through a technique -
+     * a throw turning uke over the hip can still read what tori is pulling.
+     * Only the live judoka's spring integrates it: once a technique owns uke
+     * its own pull drives the spring, not the player's raw input.
+     */
     public void Pull(Vector2 pull)
     {
-        if (state != UkeState.Fighting) return; // once a technique owns uke, its pull is not the player's raw input
+        currentPull = pull;
+        Flick(pull.y);
+        if (state != UkeState.Fighting) return;
         Vector2 p = Vector2.right * pull.x;
         p += Vector2.up * Mathf.Abs(pull.x) / 4;
         balance.SetBalance(p);
@@ -156,6 +168,24 @@ public class Uke : Judoka
     public void HoldGround(bool on) => holdGround = on;
 
     //------------------Private Functions------------------//
+    /* FLICK - a sharp pull up or down
+     * The first frame the pull crosses the threshold fires a one shot pulse
+     * that hauls uke up or drives him down. It cannot fire again until the pull
+     * has fallen back inside the threshold, so holding the stick over does
+     * nothing - only the flick itself counts.
+     */
+    private void Flick(float y)
+    {
+        if (Mathf.Abs(y) < flickThreshold)
+        {
+            flickArmed = true;
+            return;
+        }
+        if (!flickArmed) return;
+        flickArmed = false;
+        gait.Pulse(Mathf.Sign(y));
+    }
+
     /* FIGHT - the live judoka, exactly as before the technique layer
      * 1 - Clock, height and facing from the base
      * 2 - Integrate the balance spring
@@ -283,6 +313,14 @@ private void Fight()
     }
     //------------------Getters------------------//
     public UkeState State => state;
+
+    // Tori's live pull, still updated while a technique owns uke - a throw in
+    // flight reads this to know what tori is still pulling through it
+    public Vector2 CurrentPull => currentPull;
+
+    // +1 while a flicked pull has him hauled up, -1 while it has him driven
+    // down, 0 otherwise - the opening a technique is judged against
+    public float Lift => gait.PulseDirection;
 
     // Degrees uke has turned through the vault so far (0 at load, |angle| at flat)
     // - a hip throw reads this to know when uke has gone far enough over to release

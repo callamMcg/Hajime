@@ -48,7 +48,6 @@ public class DeAshiBarai : Technique
     private float knockT;      // 0-1 through the knock
     private Vector3 knockFrom; // support foot's position the instant it was struck
     private Vector3 knockTo;   // where the strike sends it
-    [SerializeField] private float threshold;
 
     //------------------Public Functions------------------//
     /* BEGIN
@@ -81,11 +80,12 @@ public class DeAshiBarai : Technique
             case TechniquePhase.Executing: Sweep(dt); break;
         }
     }
-    public override bool Check()
-    {
-        return ctx.uke.GetHeight > threshold;
-
-    }
+    /* CHECK - the moment is judged on the flick
+     * A loaded foot is load bearing: the sweep bounces off it. Only a foot tori
+     * has lifted - by flicking the pull up - can be caught and carried, so the
+     * sweep fails unless it lands inside that window.
+     */
+    public override bool Check() => ctx.uke.Lift > 0f;
     /* CANCEL
      * Only Reaching can be broken off - once the foot is caught the
      * technique is a commitment and plays out
@@ -112,9 +112,8 @@ public class DeAshiBarai : Technique
         if (Vector3.Distance(sweeper.target.position, sweeper.sweepTarget.position) > contactRadius) return;
 
         // 2
-        if (ctx.uke.GetHeight > threshold)
+        if (!Check())
         {
-            Debug.Log(ctx.uke.GetHeight);
             ctx.toriFeet.Free();
             Fail();
             return;

@@ -19,6 +19,12 @@ public class Gait : MonoBehaviour
     [SerializeField] private float crouchDepth = 0.03f;
     [SerializeField] private float speedForFullBob = 1.2f;
 
+    // Pulse - a flicked pull hauls the body up or drives it down for a moment.
+    // Both of these are the values at full speed: they scale down with how fast
+    // the judoka is actually moving, and a still one gives nothing at all
+    [SerializeField] private float pulseHeight = 0.12f;  // metres the pulse lifts (up) or drops (down) the body at full speed
+    [SerializeField] private float pulseDuration = 0.6f; // seconds the pulse swells and fades back over at full speed
+
     // Trackers
     private float restHeight; 
     private float phase; // 0-1 through the current cycle
@@ -31,6 +37,10 @@ public class Gait : MonoBehaviour
     private float lastYaw;
     private bool hasLast;
     private bool cycleRequested; // the FootManager wants a cycle to run
+    private float pulseSign;     // +1 hauled up, -1 driven down
+    private float pulseT;        // seconds left in the pulse
+    private float pulseSpan;     // this pulse's duration, scaled by the speed it was thrown at
+    private float pulseRise;     // this pulse's height, scaled the same way
 
     //------------------Unity Functions------------------//
     private void Awake()
@@ -49,6 +59,7 @@ public class Gait : MonoBehaviour
      * 4 - Integrate the phase. Never evaluate a wave against raw time - adding
      *     frequency * dt lets the frequency change without the height jumping
      * 5 - On the wrap, count the cycle, and fall idle if the body has stopped
+     * 6 - Run down any pulse a flicked pull has kicked off
      */
     public void Tick()
     {
@@ -86,16 +97,55 @@ public class Gait : MonoBehaviour
             cycle++;
             if (raw < 0.05f && !wanted) { phase = 0f; frequency = 0f; }
         }
+
+        // 6
+        if (pulseT > 0f) pulseT = Mathf.Max(pulseT - dt, 0f);
     }
 
     // Absolute Y for the body: standing height, dipped through double support
-    // and lifted over the flight, both fading away as the judoka comes to rest
-    public float Height() => restHeight + speedFactor * (hopHeight * 4 * phase * (1 - phase) - crouchDepth);
+    // and lifted over the flight, both fading away as the judoka comes to rest,
+    // plus whatever a flicked pull is doing to him
+    public float Height() => restHeight
+                           + speedFactor * (hopHeight * 4 * phase * (1 - phase) - crouchDepth)
+                           + PulseOffset();
 
     // Ask for one full cycle even while the body is still (feet re-homing)
     public void RequestCycle() => cycleRequested = true;
 
+    /* PULSE - a flicked pull hauls the body up (+1) or drives it down (-1)
+     * One shot: each call restarts the swell. Both the height and the length
+     * scale with how fast the judoka is already travelling when the flick lands
+     * - there is nothing to haul on a body that is standing still, so at rest
+     * the flick is ignored outright.
+     */
+    public void Pulse(float sign)
+    {
+        float scale = Mathf.Clamp01(speedFactor);
+        if (scale <= 0f) return;
+
+        pulseSign = Mathf.Sign(sign);
+        pulseRise = pulseHeight * scale;
+        pulseSpan = pulseDuration * scale;
+        pulseT = pulseSpan;
+    }
+
+    //------------------Private Functions------------------//
+    /* PULSE OFFSET
+     * The pulse swells in and fades back out across its duration, so a flick
+     * lifts (or drops) the body and returns it without popping at either end
+     */
+    private float PulseOffset()
+    {
+        if (pulseT <= 0f || pulseSpan <= 0f) return 0f;
+        float u = pulseT / pulseSpan; // 1 at the start, 0 at the end
+        return pulseSign * pulseRise * Mathf.Sin(Mathf.PI * u);
+    }
+
     //------------------Getters------------------//
+    // +1 while a flick is hauling the body up, -1 while it is driving it down,
+    // 0 when no pulse is running - the window a technique looks for
+    public float PulseDirection => pulseT > 0f ? pulseSign : 0f;
+
     public float Phase => phase;
     public int Cycle => cycle;
     public float Frequency => frequency;

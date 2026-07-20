@@ -12,7 +12,7 @@ public class HizaGuruma : Technique
     [SerializeField] private float forwardBias = 0.4f;         // a little forward pitch so uke wheels over rather than toppling flat sideways
     [SerializeField] private float breakFraction = 0.98f;      // fraction of uke's lateral limit that counts as broken
     [SerializeField] private bool invertPullDirection = false; // flip if uke is pulled the wrong way in play
-    [SerializeField] private float threshold;
+    [SerializeField] private float pullThreshold = 0.3f;       // lateral pull tori must be holding for the wheel to have anything to turn uke over
     // Trackers
     private FootId side;      // tori's acting (blocking) foot
     private float sweptSign;  // -1 uke's left foot is the axle, +1 his right (mirrors De Ashi Barai)
@@ -59,11 +59,13 @@ public class HizaGuruma : Technique
             case TechniquePhase.Executing: Wheel(dt); break;
         }
     }
-    public override bool Check()
-    {
-        return ctx.uke.GetHeight > threshold;
-
-    }
+    /* CHECK - the moment is judged on the flick and tori's pull
+     * The wheel turns uke over a planted leg, and only while tori is actually
+     * pulling him over it: the leg has to be loaded - driven down by flicking
+     * the pull down - and there has to be a pull turning him, or nothing wheels.
+     */
+    public override bool Check() => ctx.uke.Lift < 0f
+                                 && Mathf.Abs(ctx.uke.CurrentPull.x) >= pullThreshold;
     /* CANCEL
      * Only Reaching can be broken off - once the foot is caught the
      * technique is a commitment and plays out
@@ -78,10 +80,10 @@ public class HizaGuruma : Technique
     //------------------Private Functions------------------//
     /* REACH
      * 1 - Wait for the sweeping foot to arrive at uke's leg
-     * 2 - Judge the moment: a grounded foot is load bearing - the sweep
-     *     bounces off and the attempt fails
-     * 3 - A foot that cannot reach the floor is caught: seize it, pin uke's
-     *     support so he cannot step out of the technique, and commit
+     * 2 - Judge the moment: the wheel needs a planted leg to turn over, so a
+     *     foot off the floor fails the attempt
+     * 3 - Seize the blocked foot, pin uke's support so he cannot step out of
+     *     the technique, and commit
      */
     private void Reach()
     {
@@ -90,7 +92,7 @@ public class HizaGuruma : Technique
         if (Vector3.Distance(sweeper.target.position, sweeper.sweepTarget.position) > contactRadius) return;
 
         // 2
-        if (ctx.uke.GetHeight > threshold)
+        if (!Check())
         {
             ctx.toriFeet.Free();
             Fail();
@@ -104,6 +106,8 @@ public class HizaGuruma : Technique
         sweepTo = ctx.ukeFeet.Get(support).target.position;
         sweepT = 0f;
         knocked = false;
+        elapsed = 0f;   // restart the window - without this a second attempt is already past pullDuration
+        breakSign = Mathf.Sign(ctx.uke.CurrentPull.x) * (invertPullDirection ? -1f : 1f); // the pull tori is holding drives the wheel
         CurrentPhase = TechniquePhase.Executing;
     }
     //------------------Private Functions------------------//
