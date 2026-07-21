@@ -52,6 +52,9 @@ public class Uke : Judoka
     private Vector3 vaultStartOffset;
     private Quaternion vaultStartRot;
     private float vaultT;
+    private bool sweepDown;        // this turn brings him down to the mat across the whole arc
+    private float sweepDuration;   // seconds that arc takes
+    private float sweepFromHeight; // the height he was hanging at when it started
     // The moment the fall completes - the win flow listens for this
     public event System.Action Thrown;
 
@@ -290,6 +293,32 @@ private void Fight()
         vaultStartOffset = body.WorldPosition() - pivot;
         vaultStartRot = transform.rotation;
         vaultT = 0f;
+        sweepDown = false;
+
+        feet.Limp();
+        state = UkeState.Vaulting;
+    }
+
+    /* SWEPT THROW - turned about a grip and brought down to the mat
+     * Like the hip throw, but his feet are gone, so he comes down through the
+     * whole turn rather than riding an arc that only drops him at the end: the
+     * height is driven straight to the mat across the angle, so he is flat by
+     * the time the turn finishes however the arc itself runs.
+     */
+    public void SweptThrow(Vector3 pivot, Vector3 axis, float angle, float duration)
+    {
+        if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
+
+        vaultPivot = pivot;
+        vaultAxis = axis.sqrMagnitude > 0.0001f ? axis.normalized : Vector3.right;
+        vaultAngle = angle;
+        vaultDrift = Vector3.zero;
+        vaultStartOffset = body.WorldPosition() - pivot;
+        vaultStartRot = transform.rotation;
+        vaultT = 0f;
+        sweepDown = true;
+        sweepDuration = Mathf.Max(duration, 0.01f);
+        sweepFromHeight = body.WorldPosition().y;
 
         feet.Limp();
         state = UkeState.Vaulting;
@@ -317,6 +346,8 @@ private void Fight()
      */
     private void VaultStep()
     {
+        if (sweepDown) { SweptStep(); return; }
+
         // 1
         float dt = Time.deltaTime;
         vaultT = Mathf.Min(vaultT + dt / vaultDuration, 1f);
@@ -350,6 +381,40 @@ private void Fight()
             Thrown?.Invoke();
         }
     }
+    /* SWEPT STEP
+     * 1 - Advance and ease the turn
+     * 2 - Ride the arc about the grip, his whole orientation turning with it
+     * 3 - Come down across the whole turn, so the angle decides when he lands
+     *     rather than the arc happening to meet the floor
+     * 4 - Write the pose, and on landing hold it and announce the throw
+     */
+    private void SweptStep()
+    {
+        // 1
+        vaultT = Mathf.Min(vaultT + Time.deltaTime / sweepDuration, 1f);
+        float ease = vaultT * vaultT * (3f - 2f * vaultT);
+
+        // 2
+        Quaternion turn = Quaternion.AngleAxis(vaultAngle * ease, vaultAxis);
+        Vector3 pos = vaultPivot + turn * vaultStartOffset;
+        Quaternion orient = turn * vaultStartRot;
+
+        // 3
+        pos.y = Mathf.Lerp(sweepFromHeight, fallenHeight, ease);
+
+        // 4
+        body.SetPlanar(new Vector2(pos.x, pos.z));
+        body.SetHeight(pos.y);
+        body.SetWorldRotation(orient);
+
+        if (vaultT >= 1f)
+        {
+            sweepDown = false;
+            state = UkeState.Fallen;
+            Thrown?.Invoke();
+        }
+    }
+
     //------------------Getters------------------//
     public UkeState State => state;
 

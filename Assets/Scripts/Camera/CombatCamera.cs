@@ -38,13 +38,22 @@ public class CombatCamera : MonoBehaviour
         Vector2 move = InputReader.Instance.Move;
         Vector2 pull = InputReader.Instance.Pull;
 
-        if (InputReader.Instance.AttackState == AttackSM.rightThrow)
+        if (
+            InputReader.Instance.AttackState == AttackSM.rightThrow ||
+            InputReader.Instance.AttackState == AttackSM.leftSweep
+            )
         {
+            return;
+
             UpdateTargetShoulder(-Vector2.right);
             ChangeTarget(player);
         }
-        else if (InputReader.Instance.AttackState == AttackSM.leftThrow)
+        else if (
+            InputReader.Instance.AttackState == AttackSM.leftThrow ||
+            InputReader.Instance.AttackState == AttackSM.rightSweep
+            )
         {
+            return;
             UpdateTargetShoulder(Vector2.right);
             ChangeTarget(player);
         }

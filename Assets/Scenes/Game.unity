@@ -5690,6 +5690,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tori
       objectReference: {fileID: 0}
+    - target: {fileID: 2155043538886507260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: wheelRate
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155043538886507260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: invertWheel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155043538886507260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: fallDuration
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4184697372705908013, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: left.sweepTarget
       value: 
