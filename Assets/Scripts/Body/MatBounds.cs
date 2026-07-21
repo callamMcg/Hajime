@@ -2,44 +2,51 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Watches every judoka's grounded feet and resets the match the moment one
-/// plants off the mat. The mat and the surrounding floor sit on different
-/// layers; a short downward ray from each grounded foot reads which surface it
-/// is standing on, so leaving the area is detected by layer, not by position.
-/// Only grounded feet are tested - an airborne swing can arc over the edge and
-/// still land in bounds, and that must not trip a reset.
+/// Watches for a judoka stepping off the mat and ends the match when one does.
+/// The mat and the floor around it sit on different layers, so rather than
+/// measuring positions this simply looks down from each foot and asks which
+/// surface it is standing on. That way the mat can be any shape and nothing here
+/// has to know about it.
+/// Only feet actually carrying weight are judged. A foot in mid air is allowed
+/// to swing out over the edge as long as it comes back down inside, which is
+/// what stops an ordinary step near the edge from ending the match.
 /// </summary>
-
-// After FootManager (order 50) has planted this frame's feet, so the ray reads
-// their settled positions
 [DefaultExecutionOrder(100)]
 public class MatBounds : MonoBehaviour
 {
-    //------------------Variables------------------//
-    // References
-    [SerializeField] private FootManager[] fighters;    // one per judoka
+    //----------Variables----------\\
 
-    // Layers
-    [SerializeField] private LayerMask outOfBounds;     // the floor surrounding the mat
+    // The feet of everyone in the match, one entry per judoka
+    [SerializeField] private FootManager[] fighters;
 
-    // Cast
-    [SerializeField] private float castHeight = 0.3f;   // start the ray a little above the foot
-    [SerializeField] private float castDepth = 0.6f;    // how far below the foot to look
+    // The layer the surrounding floor sits on - anything standing here is out
+    [SerializeField] private LayerMask outOfBounds;
 
-    // Latch, so the reset fires once and the dying frames are ignored
+    // How far above the foot to start looking down from
+    [SerializeField] private float castHeight = 0.3f;
+
+    // How far below the foot to keep looking
+    [SerializeField] private float castDepth = 0.6f;
+
+    // Set once someone has gone out, so the dying frames cannot fire it again
     private bool tripped;
 
-    //------------------Unity Functions------------------//
+    //----------Unity Functions----------\\
+
     /* LATE UPDATE
-     * 1 - Only judge live play. deltaTime is zero while paused, which is also
-     *     when the replay runs, so this never fires on a replayed frame
-     * 2 - Already tripped, the scene is on its way out - do nothing
-     * 3 - Any grounded foot off the mat ends the match
+     * Runs after the feet have been placed for the frame, so it reads where they
+     * actually settled.
+     * 1 - Only judge live play. Time is frozen while paused, which is also when
+     *     the replay runs, so this can never fire on a replayed frame
+     * 2 - If someone has already gone out the match is on its way out, so leave
+     *     it alone
+     * 3 - Otherwise, if anyone has a foot down off the mat, the match is over
      */
     private void LateUpdate()
     {
         // 1
         if (Time.deltaTime <= 0f) return;
+
         // 2
         if (tripped) return;
 
@@ -56,21 +63,27 @@ public class MatBounds : MonoBehaviour
         }
     }
 
-    //------------------Private Functions------------------//
+    //----------Private Functions----------\\
+
     /* OFF
-     * A grounded foot is out when the surface beneath it is on the
-     * out-of-bounds layer. Airborne feet are never out.
+     * 1 - A foot in mid air is never out, however far past the edge it is
+     * 2 - Otherwise look down from just above it and see whether the surface
+     *     underneath belongs to the floor rather than the mat
      */
     private bool Off(Transform foot, bool grounded)
     {
+        // 1
         if (!grounded) return false;
+
+        // 2
         Vector3 origin = foot.position + Vector3.up * castHeight;
         return Physics.Raycast(origin, Vector3.down, castHeight + castDepth, outOfBounds);
     }
 
     /* ON OUT OF BOUNDS
-     * The single exit point. Reload the active scene for now; later this is
-     * where the "out of bounds" screen goes, and the reload happens after it.
+     * The single place going out is dealt with.
+     * 1 - Reload the match for now. When there is an "out of bounds" screen this
+     *     is where it goes, with the reload happening after it
      */
     private void OnOutOfBounds()
     {

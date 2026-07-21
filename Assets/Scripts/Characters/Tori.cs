@@ -105,6 +105,10 @@ public class Tori : Judoka
             if (!active.IsRunning) active = null;
         }
 
+        // 4 - the grip only swaps in ordinary play, so a running technique keeps
+        // whatever hold it started with
+        if (arms != null) arms.SetGripLocked(active != null);
+
         Move();
         Pull();
     }

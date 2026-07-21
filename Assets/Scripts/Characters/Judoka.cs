@@ -12,6 +12,7 @@ public abstract class Judoka : MonoBehaviour
     protected Facing facing;
     protected PolarMovement movement;
     protected Gait gait;
+    protected ArmManager arms;
    
     //Limbs
     [SerializeField] protected IKContext leftLeg;
@@ -92,6 +93,20 @@ public abstract class Judoka : MonoBehaviour
         facing = GetComponent<Facing>();
         movement = GetComponent<PolarMovement>();
         gait = GetComponent<Gait>();
+
+        // The arms are driven by an ArmManager to its own hand targets, so those
+        // are what this judoka's arm targets have to be: they are the point
+        // HandPoint reports, and the transform the replay records and restores.
+        // This takes them over outright rather than only filling in blanks.
+        // Anything else wired here would be one of the grips the hands travel
+        // to - a transform on the opponent - and the replay would then be
+        // recording that instead of the hand, and writing back over it
+        arms = GetComponent<ArmManager>();
+        if (arms != null)
+        {
+            if (leftArm != null && arms.LeftHand != null) leftArm.Target = arms.LeftHand;
+            if (rightArm != null && arms.RightHand != null) rightArm.Target = arms.RightHand;
+        }
     }
 
     // Apply the balance limits

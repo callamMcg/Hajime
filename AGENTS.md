@@ -2,7 +2,7 @@
 - Project name: Hajime
 - Unity version: Unity 6000.4.5f1
 - Active game object:
-  - Name: CombatCamera
-  - Tag: MainCamera
+  - Name: Uke
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

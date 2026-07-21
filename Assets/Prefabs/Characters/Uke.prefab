@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 379930500664790214}
   m_Layer: 0
-  m_Name: LGrip
+  m_Name: RSleeve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1948,6 +1948,7 @@ MonoBehaviour:
   fallDrift: 0.5
   vaultDuration: 0.9
   vaultLandBlend: 0.85
+  flickThreshold: 0.7
 --- !u!114 &4529660150471671152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1981,6 +1982,8 @@ MonoBehaviour:
   hopHeight: 0.15
   crouchDepth: 0.1
   speedForFullBob: 1
+  pulseHeight: 0.12
+  pulseDuration: 0.6
 --- !u!114 &1269307910870927168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2221,6 +2224,37 @@ Transform:
   - {fileID: 7328015932785256422}
   m_Father: {fileID: 5259213442660684001}
   m_LocalEulerAnglesHint: {x: -40, y: -45, z: 0}
+--- !u!1 &5005502786349501555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7035359791417545848}
+  m_Layer: 0
+  m_Name: RLapel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7035359791417545848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005502786349501555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.46174863, z: 0.8870109, w: 0}
+  m_LocalPosition: {x: 0.232, y: 0.699, z: 0.423}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5199459062239920643}
+  m_LocalEulerAnglesHint: {x: -125, y: 180, z: 0}
 --- !u!1 &5083164992810310066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,6 +2923,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4377189602307730193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6161213107349602665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3041801969913390092}
+  m_Layer: 0
+  m_Name: LSleeve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3041801969913390092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6161213107349602665}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6963643, y: 0.122787856, z: 0.6963643, w: 0.122787856}
+  m_LocalPosition: {x: 0.2, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 717545530083959364}
+  m_LocalEulerAnglesHint: {x: -160, y: 90, z: 0}
 --- !u!1 &6461025995469564808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,6 +3264,7 @@ Transform:
   m_Children:
   - {fileID: 2707155543299199941}
   - {fileID: 1753384991821547566}
+  - {fileID: 7035359791417545848}
   m_Father: {fileID: 7241245764294035976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1027372284313312625
@@ -3788,7 +3854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1753384991821547566}
   m_Layer: 0
-  m_Name: RGrip
+  m_Name: LLapel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4265,7 +4331,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 0.25, y: 0.3, z: 0.25}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3041801969913390092}
   m_Father: {fileID: 208229982845388187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &397636398145979526

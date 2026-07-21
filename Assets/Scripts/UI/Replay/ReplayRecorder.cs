@@ -2,35 +2,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Keeps a rolling window of the last few seconds of the fight.
-/// Once per frame, after every other system has finished writing, it captures
-/// both judokas into a ReplayFrame and stamps it with the game clock.
-/// It only records while game time is moving, so pausing freezes the buffer
-/// automatically - the replay can never record itself.
+/// Keeps a rolling record of the last few seconds of the match.
+/// Once a frame it takes a snapshot of both judokas and stamps it with the time,
+/// throwing away anything that has fallen out of the back of the window. That way
+/// the replay always has the recent past to show without the recording growing
+/// forever.
+/// It only records while match time is actually moving, which means pausing
+/// freezes the recording automatically - and since the replay itself runs under
+/// that freeze, the replay can never end up recording itself.
+/// It runs last of everything, so each frame it captures is the finished article
+/// rather than one caught halfway through being assembled.
 /// </summary>
-
-// Run after JudokaBody and FootManager's LateUpdates, so a frame is only
-// captured once every writer has finished with it
 [DefaultExecutionOrder(1000)]
 public class ReplayRecorder : MonoBehaviour
 {
-    //------------------Variables------------------//
-    // References
+    //----------Variables----------\\
+
+    // The judoka doing the throwing
     [SerializeField] private Judoka tori;
+
+    // The judoka being thrown
     [SerializeField] private Judoka uke;
 
-    // Stats
-    [SerializeField] private float recordSeconds = 30f; // length of the rolling window
+    // How many seconds of the match to keep hold of
+    [SerializeField] private float recordSeconds = 30f;
 
-    // The buffer, oldest frame first
+    // Every frame currently held, oldest first
     private readonly List<ReplayFrame> frames = new();
 
-    //------------------Unity Functions------------------//
-    /* LATE UPDATE - the capture
-     * 1 - Only record while game time is moving, so pause (and therefore
-     *     the replay itself) leaves the buffer untouched
-     * 2 - Capture both judokas and stamp the frame with the game clock
-     * 3 - Drop frames that have fallen out of the rolling window
+    //----------Event Loop----------\\
+
+    /* LATE UPDATE
+     * 1 - Only record while match time is moving. This is what makes pausing
+     *     freeze the recording, and stops the replay recording itself
+     * 2 - Take a snapshot of both judokas and stamp it with the time
+     * 3 - Drop anything that has fallen out of the back of the window, so the
+     *     recording stays the same length rather than growing forever
      */
     private void LateUpdate()
     {
@@ -50,26 +57,26 @@ public class ReplayRecorder : MonoBehaviour
             frames.RemoveAt(0);
     }
 
-    //------------------Public Functions------------------//
-    // Frame access, index 0 is the oldest
-    public int FrameCount => frames.Count;
-    public ReplayFrame GetFrame(int index) => frames[index];
-    public ReplayFrame Latest => frames[^1];
-
-    // Seconds of footage held
-    public float Duration => frames.Count < 2 ? 0 : frames[^1].time - frames[0].time;
+    //----------Public Functions----------\\
 
     /* INDEX AT TIME
-     * Map seconds-from-the-start-of-the-buffer to a frame index.
-     * Binary search for the last frame at or before that moment,
-     * clamped to the ends of the buffer.
-     * (Callers guard the empty buffer before playing.)
+     * Turns a number of seconds into the frame that was showing at that moment.
+     * 1 - Give back the start if nothing has been recorded yet
+     * 2 - Work out the actual moment being asked for, counted from the beginning
+     *     of what is held
+     * 3 - Search for the last frame at or before it, halving the range each time
+     *     rather than walking the whole recording
+     * Callers check the recording is not empty before playing anything
      */
     public int IndexAtTime(float seconds)
     {
+        // 1
         if (frames.Count == 0) return 0;
+
+        // 2
         float target = frames[0].time + seconds;
 
+        // 3
         int low = 0, high = frames.Count - 1;
         while (low < high)
         {
@@ -80,5 +87,22 @@ public class ReplayRecorder : MonoBehaviour
         return low;
     }
 
+    /* CLEAR
+     * 1 - Throw the whole recording away
+     */
     public void Clear() => frames.Clear();
+
+    //----------Getters----------\\
+
+    // How many frames are currently held
+    public int FrameCount => frames.Count;
+
+    // A particular frame, counting from the oldest
+    public ReplayFrame GetFrame(int index) => frames[index];
+
+    // The most recent frame recorded
+    public ReplayFrame Latest => frames[^1];
+
+    // How many seconds of match are currently held
+    public float Duration => frames.Count < 2 ? 0 : frames[^1].time - frames[0].time;
 }

@@ -2,71 +2,118 @@ using UnityEngine;
 
 /// <summary>
 /// Hiza Guruma - the knee wheel.
-/// Reaching: tori's blocking foot chases uke's knee. The moment is judged on
-/// the block having something to work against: uke's leg loaded and driven down
-/// by a flicked pull, with tori pulling him across.
-/// Executing: the blocked leg is the axle and the pull is the rim - the wheel
-/// turns uke over it while his balance spring fights back. Broken, he goes over
-/// the block, and his free leg swings round the axle and up as he rotates down
-/// to the mat. Held out, he keeps his feet and the attempt fails.
+/// Tori's foot goes to uke's knee and blocks it. The moment it lands the timing
+/// is judged: the block only has something to work against if uke's leg is
+/// loaded - driven down by a flicked pull - and tori is actually hauling him
+/// across at the same time.
+/// From there the blocked leg is the axle and the pull is the rim. Tori keeps
+/// pulling while uke's own balance fights back, and if the pull wins he goes
+/// over the block: he turns about tori's near hand while his free leg swings
+/// round the axle and up. If uke holds out until the window closes, he keeps
+/// his feet and the attempt is wasted.
 /// </summary>
 public class HizaGuruma : Technique
 {
-    //------------------Variables------------------//
-    [SerializeField] private float contactRadius = 0.3f; // sweeping foot to uke's leg distance that counts as contact
+    //----------Variables----------\\
 
-    // Pull - breaking uke's balance over the block
-    [SerializeField] private float pullDuration = 0.8f;        // seconds tori has to break uke before he recovers
-    [SerializeField] private float rampTime = 0.15f;           // seconds for the pull to reach full strength
-    [SerializeField] private float pullStrength = 12f;         // lateral pull fed to uke's balance. It must out-pull his spring: he settles at pull * balancePullStrength / recoveryStiffness, and that has to clear breakFraction of his limit or he never goes over
-    [SerializeField] private float forwardBias = 0.4f;         // a little forward pitch so uke wheels over rather than toppling flat sideways
-    [SerializeField] private float breakFraction = 0.98f;      // fraction of uke's lateral limit that counts as broken
-    [SerializeField] private bool invertPullDirection = false; // flip if uke is pulled the wrong way in play
-    [SerializeField] private float pullThreshold = 0.3f;       // lateral pull tori must be holding for the wheel to have anything to turn uke over
+    // How close the blocking foot has to get to uke's knee to count as contact
+    [SerializeField] private float contactRadius = 0.3f;
 
-    // Wheel down - he turns about tori's hand on the sweeping side
-    [SerializeField] private float wheelAngle = 180f;    // degrees uke turns about the hand (180 brings him over onto his back)
-    [SerializeField] private bool invertWheel = false;   // flip if he wheels the wrong way round
+    // Seconds tori has to break uke before he recovers his balance
+    [SerializeField] private float pullDuration = 0.8f;
 
-    // Swing - the free leg comes round the axle as uke goes down
-    [SerializeField] private float swingArc = 140f;      // degrees the free foot travels round the blocked one
-    [SerializeField] private float swingLift = 0.35f;    // metres the free foot rises at the top of its arc
-    [SerializeField] private float swingDuration = 0.5f; // seconds the leg takes to come round
-    [SerializeField] private bool invertSwing = false;   // flip if the leg swings the wrong way
+    // Seconds the pull takes to build up to its full strength
+    [SerializeField] private float rampTime = 0.15f;
 
-    // Trackers
-    private FootId side;       // tori's acting (blocking) foot
-    private float breakSign;   // roll direction uke is driven toward
-    private float elapsed;     // seconds into the pull
-    private FootId caught;     // uke's blocked foot - the axle the wheel turns over
-    private FootId support;    // uke's free foot - the one that swings round as he goes down
-    private bool wheeling;     // he is broken and going down, the free leg coming round
-    private float swingT;        // 0-1 through the swing
-    private Vector3 swingOffset; // the free foot's start, held relative to the axle so the swing rides the body
+    // How hard tori hauls on uke. This has to out-pull uke's own balance spring:
+    // he settles at pull * his pullStrength / his recoveryStiffness, and that has
+    // to clear breakFraction of his limit or he simply never goes over
+    [SerializeField] private float pullStrength = 12f;
 
-    //------------------Public Functions------------------//
+    // A little forward lean fed in as well, so he wheels over rather than
+    // toppling flat out sideways
+    [SerializeField] private float forwardBias = 0.4f;
+
+    // How far uke has to be leaned, as a fraction of his limit, to count as broken
+    [SerializeField] private float breakFraction = 0.98f;
+
+    // Flip this if uke gets hauled the wrong way in play
+    [SerializeField] private bool invertPullDirection = false;
+
+    // How hard tori must be pulling sideways for the wheel to have anything to
+    // turn uke over with
+    [SerializeField] private float pullThreshold = 0.3f;
+
+    // Degrees uke turns about the hand as he comes over - 180 brings him onto his back
+    [SerializeField] private float wheelAngle = 180f;
+
+    // Flip this if he wheels round the wrong way
+    [SerializeField] private bool invertWheel = false;
+
+    // Degrees the free foot travels round the blocked one
+    [SerializeField] private float swingArc = 140f;
+
+    // How high the free foot rises at the top of its arc
+    [SerializeField] private float swingLift = 0.35f;
+
+    // Seconds the free leg takes to come round
+    [SerializeField] private float swingDuration = 0.5f;
+
+    // Flip this if the free leg swings the wrong way
+    [SerializeField] private bool invertSwing = false;
+
+    // Tori's blocking foot
+    private FootId side;
+
+    // Which way round uke is being driven
+    private float breakSign;
+
+    // Seconds spent pulling so far
+    private float elapsed;
+
+    // Uke's blocked foot, the axle the wheel turns over
+    private FootId caught;
+
+    // Uke's free foot, the one that swings round as he goes down
+    private FootId support;
+
+    // True once he is broken and going down, with the free leg coming round
+    private bool wheeling;
+
+    // How far through the leg swing we are, from 0 to 1
+    private float swingT;
+
+    // Where the free foot started, kept relative to the axle so the swing rides
+    // the body instead of being pinned to a spot on the mat
+    private Vector3 swingOffset;
+
+    //----------Public Functions----------\\
+
     /* BEGIN
-     * 1 - Work out the geometry: tori's left foot blocks uke's right leg and
-     *     mirrored (that is how the sweep targets are wired). The blocked leg is
-     *     the axle, the other one is free to swing
-     * 2 - Start the chase: the blocking foot goes Swept, the other one bases
+     * 1 - Work out the geometry. Tori's left foot blocks uke's right leg and
+     *     mirrored, which is how the targets are wired in the scene. The blocked
+     *     leg becomes the axle and the other one is free to swing
+     * 2 - Send the blocking foot chasing uke's knee, and let tori's other foot
+     *     take his weight while it does
      */
     public override void Begin(FootId footSide)
     {
         if (IsRunning) return;
 
-        // 1
         side = footSide;
         caught = side == FootId.Left ? FootId.Right : FootId.Left;
         support = caught == FootId.Left ? FootId.Right : FootId.Left;
         wheeling = false;
 
-        // 2
         ctx.toriFeet.Sweep(side);
         CurrentPhase = TechniquePhase.Reaching;
     }
 
-    // One branch per phase, driven from Tori's Update
+    /* TICK
+     * 1 - While reaching, watch for the block to land on the knee
+     * 2 - Once committed, either keep hauling on him or, if he is already going
+     *     over, keep driving his free leg round
+     */
     public override void Tick(float dt)
     {
         switch (CurrentPhase)
@@ -76,40 +123,42 @@ public class HizaGuruma : Technique
         }
     }
 
-    /* CHECK - the moment is judged on the flick and tori's pull
-     * The wheel turns uke over a planted leg, and only while tori is actually
-     * pulling him over it: the leg has to be loaded - driven down by flicking
-     * the pull down - and there has to be a pull turning him, or nothing wheels.
+    /* CHECK
+     * The wheel needs two things at once. The leg has to be loaded, driven down
+     * by a flicked pull, or the block has nothing to work against. And tori has
+     * to actually be hauling him sideways, or there is nothing turning him over.
      */
     public override bool Check() => ctx.uke.Lift < 0f
                                  && Mathf.Abs(ctx.uke.CurrentPull.x) >= pullThreshold;
 
     /* CANCEL
-     * Only Reaching can be broken off - once the block is set the technique is
-     * a commitment and plays out
+     * 1 - Ignore this once the block is set, as by then the technique is
+     *     committed and plays itself out
+     * 2 - Otherwise give tori his feet back and report the attempt as a miss
      */
     public override void Cancel()
     {
         if (CurrentPhase != TechniquePhase.Reaching) return;
+
         ctx.toriFeet.Free();
         Fail();
     }
 
-    //------------------Private Functions------------------//
+    //----------Private Functions----------\\
+
     /* REACH
-     * 1 - Wait for the blocking foot to arrive at uke's knee
-     * 2 - Judge the moment: the wheel needs a loaded leg to turn over, so a
-     *     foot off the floor fails the attempt
-     * 3 - Seize the blocked foot as the axle, pin uke's free foot so he cannot
-     *     step out of the technique, and commit
+     * 1 - Wait until the blocking foot has arrived at uke's knee
+     * 2 - Judge that moment, and give up if the opening is not there
+     * 3 - Seize the blocked foot as the axle and pin the free one, so uke
+     *     cannot simply step out of the technique
+     * 4 - Restart the pull window and take the direction to haul him from the
+     *     way tori is pulling right now
      */
     private void Reach()
     {
-        // 1
         FootManager.Foot sweeper = ctx.toriFeet.Get(side);
         if (Vector3.Distance(sweeper.target.position, sweeper.sweepTarget.position) > contactRadius) return;
 
-        // 2
         if (!Check())
         {
             ctx.toriFeet.Free();
@@ -117,36 +166,35 @@ public class HizaGuruma : Technique
             return;
         }
 
-        // 3
         ctx.ukeFeet.Hold(caught);
         ctx.ukeFeet.Pin(support);
-        elapsed = 0f;   // restart the window - without this a second attempt is already past pullDuration
-        breakSign = Mathf.Sign(ctx.uke.CurrentPull.x) * (invertPullDirection ? -1f : 1f); // the pull tori is holding drives the wheel
+
+        // Without resetting this a second attempt would already be out of time
+        elapsed = 0f;
+        breakSign = Mathf.Sign(ctx.uke.CurrentPull.x) * (invertPullDirection ? -1f : 1f);
         CurrentPhase = TechniquePhase.Executing;
     }
 
     /* WHEEL
-     * 1 - Ramp the pull in and feed it to uke. Press leaves his balance spring
-     *     running, so this fights his own resistance rather than overriding it
-     * 2 - Broken: his lean has been driven to the limit - he goes over the block
-     * 3 - Held out: the window closes with uke still on his feet - hand his
-     *     balance back, free both sets of feet, and fail
+     * 1 - Build the pull up and feed it to uke. His balance spring is left
+     *     running, so this is a tug of war against his own resistance rather
+     *     than simply overriding him
+     * 2 - If his lean gets driven far enough he is broken, and goes over the block
+     * 3 - If the window runs out first he keeps his feet, so hand his balance
+     *     back, release everyone's feet and report the miss
      */
     private void Wheel(float dt)
     {
-        // 1
         elapsed += dt;
         float ramp = Mathf.Clamp01(elapsed / rampTime);
         ctx.uke.Press(new Vector2(breakSign * pullStrength * ramp, forwardBias * ramp));
 
-        // 2
         if (ctx.uke.PastLateralLimit(breakFraction))
         {
             Topple();
             return;
         }
 
-        // 3
         if (elapsed >= pullDuration)
         {
             ctx.uke.Recover();
@@ -156,21 +204,24 @@ public class HizaGuruma : Technique
         }
     }
 
-    /* TOPPLE - he is over the block
-     * He turns about tori's hand on the sweeping side, wheeling round it the way
-     * the pull was driving him. Turning about a point up at the hand keeps the
-     * arc above the mat, and the vault's landing blend sets him down flat.
-     * The throw hands both of uke's feet to the body, so the free one is seized
-     * straight back off it: the blocked leg rides the body down as the axle
-     * while the free leg is driven round it.
+    /* TOPPLE
+     * 1 - Turn him about tori's hand on the blocking side, wheeling him the way
+     *     the pull was already driving him. Turning about a point up at the hand
+     *     keeps the arc above the mat, and the landing settles him flat
+     * 2 - The throw just handed both of uke's feet to his body, so take the free
+     *     one straight back off it. The blocked leg rides the body down as the
+     *     axle while the free leg gets driven round it
+     * 3 - Remember where the free foot sits relative to the axle, so the swing
+     *     follows the body rather than a fixed spot on the mat
+     * Tori deliberately keeps hold of his own feet here. The blocking foot stays
+     * on uke's knee the whole way down and only comes back to the floor once he
+     * has actually landed
      */
     private void Topple()
     {
-        Vector3 axis = ctx.tori.transform.forward; // he wheels sideways over the block
+        Vector3 axis = ctx.tori.transform.forward;
         float angle = wheelAngle * breakSign * (invertWheel ? -1f : 1f);
         ctx.uke.HipThrow(ctx.tori.HandPoint(side), axis, angle, Vector3.zero);
-
-        ctx.toriFeet.Free();
 
         ctx.ukeFeet.Hold(support);
         swingOffset = ctx.ukeFeet.Get(support).target.position - ctx.ukeFeet.Get(caught).target.position;
@@ -179,19 +230,20 @@ public class HizaGuruma : Technique
     }
 
     /* SWING
-     * 1 - Keep handing the fulcrum back: tori's hand is still moving, and uke
-     *     turns about wherever it is now
-     * 2 - Carry the free foot round the axle, rising through the middle of the
-     *     arc so the leg comes up and over rather than scuffing the mat. The
-     *     axle is read live, so the swing rides the body as it turns over
-     * 3 - Landed: hand both legs back to the fallen body and score
+     * 1 - Tori's hand is still moving, so keep telling uke to turn about
+     *     wherever it has got to
+     * 2 - Carry the free foot round the axle, lifting it through the middle of
+     *     the arc so the leg comes up and over rather than scuffing the mat.
+     *     The axle is read fresh each frame so the swing rides the body as it
+     *     turns over
+     * 3 - Once he has landed, hand both of his legs back to the fallen body,
+     *     give tori his feet back so the blocking one finally comes down, and
+     *     call the throw landed
      */
     private void Swing(float dt)
     {
-        // 1
         ctx.uke.SetVaultPivot(ctx.tori.HandPoint(side));
 
-        // 2
         swingT = Mathf.Min(swingT + dt / swingDuration, 1f);
         float ease = swingT * swingT * (3f - 2f * swingT);
 
@@ -202,10 +254,10 @@ public class HizaGuruma : Technique
         pos.y += swingLift * Mathf.Sin(Mathf.PI * ease);
         ctx.ukeFeet.PlaceHeld(support, pos);
 
-        // 3
         if (ctx.uke.State == UkeState.Fallen)
         {
-            ctx.ukeFeet.Limp(); // both legs ride the body again, as they do in any fall
+            ctx.ukeFeet.Limp();
+            ctx.toriFeet.Free();
             Score();
         }
     }
