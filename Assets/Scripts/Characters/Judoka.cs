@@ -51,6 +51,19 @@ public abstract class Judoka : MonoBehaviour
     public void ReleaseHeight() { heightHeld = false; }
     public float StandingHeight => gait.Height(); // what the gait would be holding him at
 
+    /* HAND POINT - the grip on one side
+     * The point a technique turns the opponent about. Uses the arm's IK target
+     * (the hand) and falls back to the arm root (the shoulder) if that target
+     * has not been wired.
+     */
+    public Vector3 HandPoint(FootId side)
+    {
+        IKContext arm = side == FootId.Left ? leftArm : rightArm;
+        if (arm == null) return transform.position;
+        Transform hand = arm.Target != null ? arm.Target : arm.Root;
+        return hand != null ? hand.position : transform.position;
+    }
+
     /* SHOULDERS - the point between the arm roots
      * The fulcrum a sacrifice throw turns the opponent over: it rides down with
      * the body as it goes to the mat. Falls back to the body if the arms are

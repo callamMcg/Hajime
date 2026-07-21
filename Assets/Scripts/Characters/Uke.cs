@@ -39,6 +39,9 @@ public class Uke : Judoka
     private bool flickArmed = true; // the pull must fall back inside the threshold before another flick counts
     private float fallSide;         // -1 the left foot was swept, +1 the right
     private float fallT;            // 0-1 through the fall
+    private float fallToPitch;      // the pitch he settles into
+    private float fallToRoll;       // the roll he settles into
+    private Vector2 fallDir;        // the way he goes over, taken from the lean he had when it started
     private Vector3 fallFromLean;   // the pose the fall starts from
     private float fallFromHeight;
     private Vector2 fallFromPlanar;
@@ -145,11 +148,19 @@ public class Uke : Judoka
     }
 
     /* FALL - the point of no return
-     * Capture where the body is, hand both feet to the fall so they ride the
-     * rotating root, and let Update play it out.
+     * The side fall, finishing in the pose the inspector is set to.
      * side: -1 the left foot was swept, +1 the right
      */
-    public void Fall(float side)
+    public void Fall(float side) => Fall(side, fallPitch, fallRoll);
+
+    /* FALL - with a commanded finishing pose
+     * Capture where the body is, work out which way he is already going over,
+     * hand both feet to the fall so they ride the rotating root, and let Update
+     * play it out.
+     * pitch/roll: the lean he settles into. A roll of 90 lays him on his side;
+     * a pitch of -90 with no roll lays him flat on his back, facing the sky.
+     */
+    public void Fall(float side, float pitch, float roll)
     {
         if (state == UkeState.Falling || state == UkeState.Fallen || state == UkeState.Vaulting) return;
 
@@ -159,6 +170,9 @@ public class Uke : Judoka
         fallFromPlanar = pose.planar;
 
         fallSide = side;
+        fallToPitch = pitch;
+        fallToRoll = roll;
+        fallDir = LeanDirection(pose);
         fallT = 0f;
         feet.Limp();
         state = UkeState.Falling;
@@ -168,6 +182,21 @@ public class Uke : Judoka
     public void HoldGround(bool on) => holdGround = on;
 
     //------------------Private Functions------------------//
+    /* LEAN DIRECTION - which way he is already going over
+     * Roll carries him out to the side, pitch takes him forward or back, so the
+     * lean he is carrying when the fall starts is the way he travels. Falls back
+     * to straight backward if he is barely leaning at all.
+     */
+    private Vector2 LeanDirection(BodyPose pose)
+    {
+        float rad = pose.yaw * Mathf.Deg2Rad;
+        Vector2 forward = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad));
+        Vector2 right = new Vector2(forward.y, -forward.x);
+
+        Vector2 dir = right * -pose.lean.z + forward * pose.lean.x;
+        return dir.sqrMagnitude > 1e-4f ? dir.normalized : -forward;
+    }
+
     /* FLICK - a sharp pull up or down
      * The first frame the pull crosses the threshold fires a one shot pulse
      * that hauls uke up or drives him down. It cannot fire again until the pull
@@ -230,14 +259,12 @@ private void Fight()
         float ease = fallT * fallT * (3f - 2f * fallT);
 
         // 2
-        Vector3 finalLean = new Vector3(fallPitch, 0f, -fallSide * fallRoll);
+        Vector3 finalLean = new Vector3(fallToPitch, 0f, -fallSide * fallToRoll);
         body.SetLean(Vector3.Lerp(fallFromLean, finalLean, ease));
         body.SetHeight(Mathf.Lerp(fallFromHeight, fallenHeight, ease));
 
-        // 3
-        float rad = body.GetPose().yaw * Mathf.Deg2Rad;
-        Vector2 back = -new Vector2(Mathf.Sin(rad), Mathf.Cos(rad));
-        body.SetPlanar(fallFromPlanar + back * (fallDrift * ease));
+        // 3 - he travels the way he was already going over
+        body.SetPlanar(fallFromPlanar + fallDir * (fallDrift * ease));
 
         // 4
         if (fallT >= 1f)
@@ -308,6 +335,7 @@ private void Fight()
             b = b * b * (3f - 2f * b);
             pos.y = Mathf.Lerp(pos.y, fallenHeight, b);
         }
+        pos.y = Mathf.Max(pos.y, fallenHeight); // the arc never carries him through the mat
 
         // 4
         body.SetPlanar(new Vector2(pos.x, pos.z));

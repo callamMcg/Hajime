@@ -2325,7 +2325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1683835941568649201, guid: 372a69e3ddbe8634abf7c81a2c7cf94a, type: 3}
       propertyPath: m_fontSize
-      value: 588.75
+      value: 711
       objectReference: {fileID: 0}
     - target: {fileID: 3040090088927644314, guid: 372a69e3ddbe8634abf7c81a2c7cf94a, type: 3}
       propertyPath: m_Name
@@ -2353,7 +2353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410829823291715344, guid: 372a69e3ddbe8634abf7c81a2c7cf94a, type: 3}
       propertyPath: m_fontSize
-      value: 434.5
+      value: 558.6
       objectReference: {fileID: 0}
     - target: {fileID: 4914094408161344014, guid: 372a69e3ddbe8634abf7c81a2c7cf94a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2841,7 +2841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087728230921887615, guid: e125cc998bb4fae4fa51ef7ba219ba5c, type: 3}
       propertyPath: m_fontSize
-      value: 38.4
+      value: 43.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4149,13 +4149,10 @@ MonoBehaviour:
   dropDuration: 0.5
   dropHeight: 0.2
   dropPitch: -80
-  closeRadius: 0.3
   hipWidth: 0.12
   hipDrop: 0.1
   throwAngle: 270
   invertRotation: 1
-  standDuration: 0.6
-  standRadius: 1.2
 --- !u!1 &1622995569
 GameObject:
   m_ObjectHideFlags: 0
@@ -5081,7 +5078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ReplayCam
   tori: {fileID: 1599534040}
   lookHeight: 1.8
-  fov: 70
+  fov: 50
 --- !u!1001 &1910338300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5749,6 +5746,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: skyRoll
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: skyPitch
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: wheelAngle
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: pullDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: pullStrength
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+      propertyPath: pullThreshold
+      value: 0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 5163377144132342198, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: opponentsLeg
       value: 
@@ -5800,7 +5821,7 @@ PrefabInstance:
     - target: {fileID: 8401644107375139260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: hizaGuruma
       value: 
-      objectReference: {fileID: 1599534050}
+      objectReference: {fileID: 2954488172783910242}
     - target: {fileID: 8401644107375139260, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
       propertyPath: deAshiBarai
       value: 
@@ -5822,7 +5843,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 697701048}
     m_RemovedComponents:
-    - {fileID: 391403811411524395, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -5830,6 +5851,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1599534064}
   m_SourcePrefab: {fileID: 100100000, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+--- !u!114 &2954488172783910242 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4794848548060346112, guid: 28b599ad1405eff42b37ae9d91d325b3, type: 3}
+  m_PrefabInstance: {fileID: 2954488172783910241}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599534040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ea3142275694240b6f068cc31f1c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HizaGuruma
 --- !u!1001 &6276813193211055551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6049,7 +6081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410829823291715344, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_fontSize
-      value: 522.05
+      value: 596.55
       objectReference: {fileID: 0}
     - target: {fileID: 3600360827372704881, guid: b0f4c5aaec3d47a4499927e020d8afc9, type: 3}
       propertyPath: m_fontSize

@@ -846,9 +846,10 @@ GameObject:
   - component: {fileID: 8401644107375139260}
   - component: {fileID: 3904007468433521092}
   - component: {fileID: 4184697372705908013}
-  - component: {fileID: 2155043538886507260}
-  - component: {fileID: 4794848548060346112}
   - component: {fileID: 8457196888569526478}
+  - component: {fileID: 4794848548060346112}
+  - component: {fileID: 2155043538886507260}
+  - component: {fileID: 7841349139848543807}
   m_Layer: 0
   m_Name: Tori
   m_TagString: Untagged
@@ -959,8 +960,10 @@ MonoBehaviour:
   balanceLimits: {x: 10, y: 0, z: 10}
   feet: {fileID: 4184697372705908013}
   deAshiBarai: {fileID: 2155043538886507260}
-  hizaGuruma: {fileID: 2155043538886507260}
+  hizaGuruma: {fileID: 4794848548060346112}
   haraiGoshi: {fileID: 8457196888569526478}
+  tomoeNage: {fileID: 7841349139848543807}
+  sweepDeadzone: 0.2
 --- !u!114 &3904007468433521092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,6 +984,8 @@ MonoBehaviour:
   hopHeight: 0.15
   crouchDepth: 0.1
   speedForFullBob: 1
+  pulseHeight: 0.12
+  pulseDuration: 0.6
 --- !u!114 &4184697372705908013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,6 +1048,59 @@ MonoBehaviour:
   turnSpeed: 480
   placeDuration: 0.3
   placeLift: 0.14
+--- !u!114 &8457196888569526478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdde4b99bf15f624fae5a125c2cd9478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HaraiGoshi
+  turnAngle: 160
+  turnTolerance: 12
+  contactRadius: 0.3
+  closeRadius: 0.6
+  standRadius: 1.2
+  outsideOffset: 0.5
+  forwardOffset: 0.8
+  throwLean: 15
+  leanInRate: 6
+  standUpRate: 4
+  releaseAngle: 130
+  standYawRate: 4
+  throwAngle: 270
+  invertRotation: 0
+  landForward: 1
+--- !u!114 &4794848548060346112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637787722469242256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ea3142275694240b6f068cc31f1c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HizaGuruma
+  contactRadius: 0.3
+  pullDuration: 0.8
+  rampTime: 0.15
+  pullStrength: 12
+  forwardBias: 0.4
+  breakFraction: 0.98
+  invertPullDirection: 0
+  pullThreshold: 0.3
+  wheelAngle: 180
+  invertWheel: 1
+  swingArc: 140
+  swingLift: 0.35
+  swingDuration: 0.5
+  invertSwing: 0
 --- !u!114 &2155043538886507260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,8 +1122,7 @@ MonoBehaviour:
   knockDuration: 0.5
   directionTolerance: 3
   invertDirectionCheck: 0
-  threshold: 0.2
---- !u!114 &4794848548060346112
+--- !u!114 &7841349139848543807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1074,45 +1131,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637787722469242256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ea3142275694240b6f068cc31f1c80, type: 3}
+  m_Script: {fileID: 11500000, guid: f36012baad985e9468d65f0758654a8c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HizaGuruma
-  contactRadius: 0.3
-  pullDuration: 0.8
-  rampTime: 0.15
-  pullStrength: 2.5
-  forwardBias: 0.4
-  breakFraction: 0.98
-  invertPullDirection: 0
-  threshold: 0.2
---- !u!114 &8457196888569526478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637787722469242256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdde4b99bf15f624fae5a125c2cd9478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HaraiGoshi
-  turnAngle: 160
-  turnTolerance: 12
-  contactRadius: 0.3
-  closeRadius: 0.6
-  standRadius: 1.2
-  outsideOffset: 0.5
-  forwardOffset: 0.8
-  threshold: 0
-  throwLean: 15
-  leanInRate: 6
-  standUpRate: 4
-  releaseAngle: 130
-  standYawRate: 4
-  throwAngle: 270
+  m_EditorClassIdentifier: Assembly-CSharp::TomoeNage
+  dropDuration: 0.35
+  dropHeight: 0.35
+  dropPitch: -75
+  hipWidth: 0.12
+  hipDrop: 0.1
+  throwAngle: 220
   invertRotation: 0
-  landForward: 1
 --- !u!1 &2269533135605912829
 GameObject:
   m_ObjectHideFlags: 0

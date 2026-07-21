@@ -39,7 +39,7 @@ public class ReplayScreen : MenuScreen
 
     private void Update()
     {
-        Vector2 move = InputReader.Instance.ReplayMove;
+        Vector2 move = InputReader.Instance.ReplayMove * 3;
         float up = 0;
         if (InputReader.Instance.ReplayUp)
             up = 1;

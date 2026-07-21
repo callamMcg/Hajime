@@ -10,9 +10,10 @@ public class Tori : Judoka
 
     // Techniques
     [SerializeField] private DeAshiBarai deAshiBarai;
-    [SerializeField] private Technique hizaGuruma; // typed as the base so it can be wired before the concrete class exists
+    [SerializeField] private HizaGuruma hizaGuruma; // concrete, so the wrong technique cannot be dropped in by mistake
     [SerializeField] private HaraiGoshi haraiGoshi;
     [SerializeField] private TomoeNage tomoeNage;
+    [SerializeField] private float sweepDeadzone = 0.2f; // pull below this has no direction to read a sweep from
     private Technique active;      // the technique currently running, if any
     private bool sweepArmed = true; // the button must be released between attempts
 
@@ -41,7 +42,7 @@ public class Tori : Judoka
             ukeFeet = opponent.GetComponent<FootManager>(),
         };
         deAshiBarai.Initialise(ctx);
-        hizaGuruma.Initialise(ctx);
+        hizaGuruma?.Initialise(ctx); // guarded so an unwired field cannot abort the rest of Start
         haraiGoshi.Initialise(ctx);
         tomoeNage?.Initialise(ctx); // guarded so an unwired field cannot abort the rest of Start
         // 3 - a de ashi barai whose pull fights the sweep becomes a hiza guruma
@@ -110,12 +111,19 @@ public class Tori : Judoka
 
     //------------------Private Functions------------------//
 
+    /* CHOOSE SWEEP
+     * The pull decides which sweep this is. Pulling the same way the sweeping
+     * foot travels wheels uke over the blocked leg - hiza guruma. Pulling
+     * against it takes the foot out from under him - de ashi barai. A pull too
+     * small to read a direction from falls to the plain foot sweep, as does an
+     * unwired hiza.
+     * sweepSide: +1 the right foot sweeps, -1 the left
+     */
     private Technique ChooseSweep(float sweepSide)
     {
-        if (pull.x * sweepSide < 0)
-            return deAshiBarai;
-        else
-            return hizaGuruma;
+        if (hizaGuruma == null) return deAshiBarai;
+        if (Mathf.Abs(pull.x) < sweepDeadzone) return deAshiBarai;
+        return Mathf.Sign(pull.x) == Mathf.Sign(sweepSide) ? hizaGuruma : deAshiBarai;
     }
 
     /* TRY BEGIN
